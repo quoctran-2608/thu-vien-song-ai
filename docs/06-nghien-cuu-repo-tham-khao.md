@@ -1,252 +1,558 @@
 # 6. Vai trò các công cụ và dự án tham khảo
 
-> Tài liệu này chỉ ghi **vai trò kiến trúc dự kiến** và những gì đáng học. Các thông tin dễ thay đổi như phiên bản mới nhất, số sao, tính năng hiện hành và giấy phép phải được kiểm chứng lại ở vòng rà nguồn bên ngoài trước khi chốt.
+**Ngày kiểm chứng gần nhất: 05/10/2026**
+
+> Tài liệu này phân biệt rõ ba điều: **dự án bên ngoài thật sự có gì**, **Thư Viện Sống học gì từ họ**, và **quyết định kiến trúc của chính Thư Viện Sống**. Chi tiết nguồn và phiên bản nằm trong [Báo cáo kiểm chứng công cụ ngày 05/10/2026](16-kiem-chung-cong-cu-2026-10-05.md).
 
 ## 6.1. Nguyên tắc sử dụng dự án bên ngoài
 
-Không bê nguyên một dự án lớn về làm “chủ” hệ thống.
+Không lấy nguyên một dự án lớn làm “chủ” hệ thống.
 
 Thay vào đó:
 
-- học điểm mạnh;
-- dùng qua giao diện riêng;
+- dùng đúng phần nó làm tốt;
+- kết nối qua bộ chuyển tiếp;
 - giữ dữ liệu chuẩn ở Thư Viện Sống;
-- có khả năng thay thế công cụ về sau.
+- đo chất lượng trên dữ liệu thật;
+- có khả năng thay công cụ về sau.
+
+Một tính năng có trong dự án bên ngoài không tự động trở thành một phần kiến trúc của Thư Viện Sống.
+
+---
 
 ## 6.2. Docling
 
-Vai trò dự kiến:
+### Họ thật sự có gì?
 
-> máy đọc và chuẩn hóa tài liệu có cấu trúc.
+Docling hiện hỗ trợ nhiều định dạng, trong đó có PDF, EPUB, HTML/XHTML, Markdown và nhiều định dạng văn phòng. Nó có thể xuất dữ liệu có cấu trúc và các dạng thuận tiện cho RAG.
 
-Điểm đáng học:
+### Ta học và dùng gì?
 
-- bảo tồn bố cục;
-- thứ tự đọc;
-- biểu diễn tài liệu có cấu trúc;
-- xử lý nhiều định dạng.
+- bảo tồn cấu trúc và thứ tự đọc;
+- giảm số bộ đọc tài liệu phải tự viết;
+- dùng một biểu diễn trung gian giàu cấu trúc.
 
-Quyết định:
+### Quyết định
 
-- có thể dùng làm máy đọc mặc định;
-- không để Docling sở hữu dữ liệu chuẩn.
+**Docling là ứng viên trình đọc mặc định để thử nghiệm.**
+
+Nhưng kết quả của Docling phải được chuyển vào mô hình dữ liệu chuẩn của Thư Viện Sống. Không để định dạng nội bộ của Docling trở thành nguồn chân lý.
+
+---
 
 ## 6.3. PaddleOCR
 
-Vai trò:
+### Họ thật sự có gì?
 
-> nhận dạng chữ cho trang ảnh.
+PaddleOCR 3.7.0 đã có PP-OCRv6; PaddleOCR-VL-1.6 là tuyến mạnh hơn cho trang có bố cục phức tạp. Tài liệu hiện liệt kê tiếng Việt trong phạm vi hỗ trợ của PP-OCRv6.
 
-Điểm đáng học:
+### Điểm cần thận trọng
 
-- dùng mô hình nhẹ cho trang dễ;
-- dùng mô hình hiểu bố cục mạnh hơn cho trang khó;
-- xử lý theo tầng thay vì dùng công cụ nặng cho mọi trang.
+Đã có báo cáo năm 2026 về từ điển PP-OCRv6 thiếu một số ký tự tiếng Việt có dấu. Vì vậy không được xem “có nhãn hỗ trợ tiếng Việt” là bằng chứng đủ về chất lượng tiếng Việt thực tế.
 
-Quyết định:
+### Quyết định
 
-- chỉ dùng khi trang thật sự cần nhận dạng chữ.
+- không nhận dạng chữ từ ảnh toàn bộ PDF;
+- trang thường: thử PP-OCRv6;
+- trang khó: thử PaddleOCR-VL-1.6 hoặc phương án mạnh tương đương;
+- tiếng Việt: bắt buộc có bộ thử riêng về dấu, từ, thứ tự đọc và trích dẫn;
+- câu trích quan trọng có độ tin cậy thấp phải kiểm lại ảnh trang.
+
+---
 
 ## 6.4. RAGFlow
 
-Vai trò dự kiến:
+### Họ thật sự có gì?
 
-- quản lý và tìm tài liệu;
-- truy hồi;
-- xếp hạng;
+RAGFlow hiện ở nhánh 1.0.0-rc1 tại ngày kiểm tra.
+
+Khả năng **Biên dịch tri thức** đã được xác minh là tính năng thật, gồm các dạng như:
+
+- Wiki;
+- Graph;
+- Tree;
+- PageIndex;
+- Mind Map;
+- Timeline;
+- Skills.
+
+### Ta học và dùng gì?
+
+- RAG tích hợp;
+- truy hồi/xếp hạng;
 - dẫn nguồn;
-- tác tử tìm kiếm;
-- các khả năng biên dịch tri thức nếu phù hợp.
+- thử các sản phẩm biên dịch tri thức;
+- quản lý luồng tác tử nếu phù hợp.
 
-Kiến trúc sử dụng:
+### Quyết định
 
-```text
-Thư Viện Sống
+RAGFlow đứng sau bộ chuyển tiếp:
+
+~~~text
+Kho dữ liệu chuẩn
 ↓
 bộ chuyển tiếp
 ↓
 RAGFlow
-```
+↓
+ứng viên / điểm / tham chiếu / sản phẩm biên dịch
+~~~
 
-Thư Viện Sống đưa vào dữ liệu chuẩn hoặc các đoạn đã chuẩn hóa, nhận lại các ứng viên, điểm xếp hạng và tham chiếu.
+Không dùng cơ sở dữ liệu của RAGFlow làm nguồn chân lý.
 
-Quyết định quan trọng:
+Wiki/Tree/Graph do RAGFlow sinh ra chỉ là **đầu ra máy**, không tự động trở thành Bộ não thứ hai chính thức.
 
-> **RAGFlow không phải nguồn dữ liệu chính.**
-
-Nếu xóa RAGFlow và dựng lại, hệ thống vẫn phải sống.
+---
 
 ## 6.5. Qdrant
 
-Vai trò dự kiến:
+### Họ thật sự có gì?
 
-> kho chuyên lưu và tìm các biểu diễn số của đoạn văn.
+Qdrant hiện không còn chỉ nên được mô tả là “cơ sở dữ liệu véc-tơ”.
 
-Quyết định:
+Nó hỗ trợ:
 
-- là bộ máy tìm theo ý nghĩa;
-- có thể thay thế;
-- dữ liệu véc-tơ không phải nguồn chân lý.
+- tìm theo ý nghĩa bằng véc-tơ dày;
+- tìm theo chữ/thưa, gồm BM25;
+- tìm kiếm kết hợp;
+- hợp nhất thứ hạng RRF;
+- truy vấn nhiều tầng;
+- nhiều véc-tơ;
+- các luồng xếp hạng lại;
+- lượng tử hóa để giảm bộ nhớ.
+
+### Điều thay đổi trong phương án
+
+Trước đây ta có thể cần một bộ máy tìm theo chữ riêng và Qdrant riêng. Hiện Qdrant có thể gom phần lớn chuỗi này vào một nơi.
+
+### Quyết định
+
+**Qdrant là ứng viên mặc định mạnh nhất cho chỉ mục kho nguồn ở bản đầu.**
+
+Phương án thử đầu tiên:
+
+~~~text
+dense
++
+sparse/BM25
+↓
+RRF
+↓
+30–50 ứng viên
+↓
+bộ xếp hạng lại
+↓
+3–8 bằng chứng
+~~~
+
+Chỉ mục Qdrant vẫn phải xây lại được từ kho dữ liệu chuẩn.
+
+---
 
 ## 6.6. QMD
 
-Vai trò dự kiến:
+### Họ thật sự có gì?
 
-> tìm trong kho Markdown của Bộ não thứ hai.
+QMD hiện là công cụ tìm kiếm cục bộ cho Markdown với:
 
-Phù hợp với:
-
-- tìm theo chữ;
+- BM25;
 - tìm theo ý nghĩa;
 - xếp hạng lại;
-- giao tiếp với AI.
+- MCP;
+- SQLite/sqlite-vec;
+- giao diện thư viện lập trình ổn định;
+- công cụ đánh giá Precision/Recall/MRR/F1.
 
-Quyết định:
+### Quyết định
 
-- dùng cho Bộ não thứ hai;
-- không mặc định dùng làm chỉ mục cho hàng triệu đoạn sách.
+QMD phù hợp rõ ràng với **Bộ não thứ hai Markdown**.
+
+Không mặc định dùng QMD làm chỉ mục chính cho toàn bộ kho sách lớn, vì kho nguồn có nhu cầu khác về lọc thông tin kèm theo, truy nguồn và vòng đời chỉ mục.
+
+---
 
 ## 6.7. PageIndex
 
-Vai trò:
+### Họ thật sự có gì?
 
-> đọc sâu tài liệu dài theo cấu trúc cây.
+PageIndex hiện đã có:
 
-Vị trí:
+- chế độ chạy cục bộ;
+- lập chỉ mục và truy hồi cục bộ;
+- dựng cây nhanh cho PDF có chữ;
+- lớp File System cho nhiều tài liệu.
 
-```text
-toàn thư viện
+Nhận định cũ rằng lớp nhiều tài liệu chủ yếu thuộc phía dịch vụ đã không còn đúng hoàn toàn.
+
+### Quyết định
+
+Ở bản đầu vẫn dùng:
+
+~~~text
+tìm toàn thư viện
 ↓
-RAG chọn vài tài liệu
+thu hẹp còn vài tài liệu
 ↓
 PageIndex
 ↓
-chương / mục liên quan
-↓
-đọc sâu
-```
+đọc sâu chương / mục / trang
+~~~
 
-Không phụ thuộc vào PageIndex cho bước chọn tài liệu toàn thư viện.
+Lý do không phải PageIndex thiếu khả năng, mà vì kiến trúc “tìm rẻ trước, đọc sâu sau” dễ đo, dễ thay và an toàn hơn.
+
+Sau này có thể đo PageIndex File System như bộ định tuyến toàn kho.
+
+---
 
 ## 6.8. claude-obsidian
 
-Những tư tưởng đáng học:
+### Họ thật sự có gì?
 
-- nguồn sống lâu hơn bản tóm tắt;
-- dữ liệu người dùng sở hữu;
-- mỗi khẳng định phải biết dựa vào đâu;
-- thay đổi phải kiểm toán được;
-- nhiều tác tử có thể tạo đề xuất nhưng áp dụng thay đổi cần được kiểm soát;
-- wiki vẫn hữu ích ngay cả khi không còn tác tử AI.
+Dự án thể hiện rất rõ:
 
-Quyết định:
+- nguồn do người dùng sở hữu;
+- nguồn bất biến theo nội dung;
+- sổ nguồn;
+- sổ khẳng định;
+- theo dõi mâu thuẫn và độ độc lập của nguồn;
+- nhiều tác tử tạo bản nháp;
+- một bộ điều phối áp dụng thay đổi theo giao dịch có thể phục hồi;
+- wiki Markdown vẫn hữu ích khi không còn AI.
 
-- học mạnh về kiến trúc Bộ não thứ hai;
-- không coi đây là bộ máy nhập liệu công nghiệp cho kho sách cực lớn.
+### Ta học gì?
 
-## 6.9. obsidian-wiki và các mô hình wiki do AI duy trì
+Ba bài học rất quan trọng:
 
-Điểm đáng học:
+> **Nguồn sống lâu hơn bản tóm tắt.**
 
-- nhập nguồn rồi biên dịch thành tri thức;
-- liên kết Markdown;
-- cập nhật theo phần thay đổi;
-- phát hiện trùng;
-- phát hiện mâu thuẫn;
-- phát hiện nội dung trôi khỏi nguồn.
+> **Khẳng định phải biết nó dựa vào đâu.**
 
-Quyết định:
+> **Ghi tri thức phải kiểm toán và phục hồi được.**
 
-- dùng làm hình mẫu cho trình duy trì Bộ não thứ hai.
+### Quyết định
 
-## 6.10. Hermes Agent và kiểu “wiki do AI biên dịch”
+Học mạnh về kiến trúc Bộ não thứ hai và truy nguồn. Không dùng làm bộ nhập kho sách quy mô lớn.
 
-Điểm đáng học:
+---
 
-> thông tin đã được tiêu hóa có thể được biên dịch một lần thành wiki thay vì mỗi câu hỏi đều tiêu hóa lại toàn bộ nguồn.
+## 6.9. obsidian-wiki
 
-Quyết định:
+### Họ thật sự có gì?
 
-- học cách đóng gói quy trình này thành năng lực tác tử;
-- vẫn giữ nguồn gốc làm trọng tài.
+Dự án có:
+
+- vùng nguồn thô;
+- nhiều giai đoạn nhập;
+- QMD;
+- đồng bộ GitHub;
+- HTTP/MCP;
+- Session Brain;
+- đóng gói vault như dịch vụ.
+
+Dự án vẫn tự mô tả là còn sớm.
+
+### Quyết định
+
+Học:
+
+- luồng nguồn → nhập → biên dịch → wiki;
+- cập nhật gia tăng;
+- cách đưa wiki ra cho AI truy cập.
+
+Không phụ thuộc vào repo này làm lõi.
+
+---
+
+## 6.10. Hermes Agent và LLM Wiki
+
+### Họ thật sự có gì?
+
+Hermes có kỹ năng đóng gói sẵn LLM Wiki, trong đó:
+
+- người dùng chọn nguồn;
+- tác tử tóm tắt, liên kết và tổ chức thành Markdown;
+- mâu thuẫn được ghi lại;
+- tri thức được “biên dịch” một lần để dùng lại;
+- có cách nạp dần nội dung theo nhu cầu.
+
+### Ta học gì?
+
+Đây là một bằng chứng thực tế cho hai nguyên tắc:
+
+> **biên dịch tri thức một lần, dùng lại nhiều lần;**
+
+và:
+
+> **chỉ nạp phần cần thiết khi cần.**
+
+### Quyết định
+
+Học mẫu thiết kế. Không dùng Hermes làm chủ kho nguồn.
+
+---
 
 ## 6.11. Cognee
 
-Điểm đáng học:
+### Họ thật sự có gì?
 
-- trí nhớ lâu dài của tác tử;
-- tư tưởng ghi nhớ, nhớ lại, cải thiện, quên;
-- biến phiên làm việc thành trí nhớ lâu dài.
+Cognee hiện dùng bốn thao tác cấp cao:
 
-Quyết định:
+- remember — ghi nhớ;
+- recall — nhớ lại;
+- improve — cải thiện;
+- forget — quên.
 
-- chưa đưa vào lõi phiên bản đầu;
-- tránh tạo quá nhiều kho dữ liệu trùng chức năng;
-- có thể xây giao diện của mình để sau này cắm Cognee hoặc công cụ tương đương.
+Nó xây trí nhớ máy từ nhiều loại dữ liệu bằng đồ thị, véc-tơ và dữ liệu mã.
+
+### Quyết định
+
+Không đưa vào lõi bản đầu.
+
+Có thể dùng sau này làm **trí nhớ máy của tác tử**, qua một giao diện riêng.
+
+Bộ não thứ hai chính thức vẫn là dữ liệu do Thư Viện Sống kiểm soát.
+
+---
 
 ## 6.12. LightRAG
 
-Điểm đáng học:
+### Họ thật sự có gì?
 
-> kết hợp tìm kiếm với đồ thị quan hệ.
+LightRAG kết hợp RAG với đồ thị và hiện có nhiều tùy chọn nhập liệu, chia đoạn, lưu trữ và triển khai cục bộ.
 
-Quyết định:
+### Quyết định
 
-- không xây đồ thị toàn thư viện ở bản đầu;
-- chỉ bật cho những miền thật sự cần truy vấn quan hệ.
+Không tạo đồ thị toàn thư viện từ ngày đầu.
+
+Chỉ thêm khi bộ câu hỏi thực tế chứng minh truy vấn quan hệ xuyên sách có giá trị đủ lớn.
+
+---
 
 ## 6.13. Graphiti
 
-Điểm đáng học:
+### Họ thật sự có gì?
 
-> mô hình hóa sự thật và quan hệ thay đổi theo thời gian.
+Graphiti là đồ thị ngữ cảnh có thời gian:
 
-Phù hợp hơn với:
+- giữ sự kiện nguồn;
+- quan hệ có thời điểm hiệu lực;
+- cập nhật gia tăng;
+- bảo tồn lịch sử;
+- tìm kiếm kết hợp chữ, nghĩa và đồ thị.
+
+### Quyết định
+
+Phù hợp với:
 
 - lịch sử quyết định;
 - trạng thái dự án;
-- ghi chú nghiên cứu thay đổi;
-- dữ liệu thời sự.
+- thông tin thay đổi;
+- sự kiện;
+- quan hệ có vòng đời.
 
 Không phải ưu tiên cho phần lớn sách bất biến.
 
+---
+
 ## 6.14. Mem0
 
-Vai trò tham khảo:
+### Họ thật sự có gì?
 
-> trí nhớ lâu dài cho tác tử và người dùng.
+Mem0 là lớp trí nhớ cho tác tử/ứng dụng.
 
-Không phải lõi kho bằng chứng sách.
+Một điểm cần thận trọng: dự án phân biệt một số benchmark của nền tảng quản lý có tối ưu riêng với bản thư viện mã nguồn mở.
+
+### Quyết định
+
+Dùng bổ trợ cho:
+
+- trí nhớ hội thoại;
+- trí nhớ người dùng;
+- tác tử/nhiệm vụ.
+
+Không dùng làm kho bằng chứng sách có truy nguồn chính xác.
+
+Không lấy benchmark của dịch vụ quản lý để suy ra chất lượng của bản mã nguồn mở.
+
+---
 
 ## 6.15. Khoj
 
-Vai trò tham khảo:
+### Họ thật sự có gì?
 
-- trải nghiệm “bộ não thứ hai” có thể dùng ngay;
-- hỏi đáp nhiều loại tài liệu;
-- tác tử và nghiên cứu.
+Khoj là sản phẩm “bộ não thứ hai” tự lưu trữ được, kết hợp tài liệu, web, tác tử và nghiên cứu.
 
-Quyết định:
+Giấy phép hiện tại là AGPL-3.0.
 
-- tham khảo trải nghiệm sản phẩm;
-- không thay thế mô hình dữ liệu chuẩn riêng.
+### Quyết định
 
-## 6.16. Kết luận
+Học:
 
-Không repo nào nên được lấy nguyên làm toàn bộ Thư Viện Sống.
+- trải nghiệm sản phẩm;
+- giao diện;
+- luồng tài liệu + web + tác tử.
 
-Cách hợp lý hơn:
+Không sao chép hoặc tích hợp mã vào lõi khi chưa đánh giá nghĩa vụ giấy phép AGPL.
 
-```text
-công cụ đọc / nhận dạng chữ
+---
+
+## 6.16. Qwen3-Embedding và Qwen3-Reranker
+
+### Qwen3-Embedding-0.6B
+
+Đã xác minh:
+
+- 0,6 tỷ tham số;
+- 100+ ngôn ngữ;
+- ngữ cảnh 32K;
+- tối đa 1024 chiều;
+- có thể chọn chiều đầu ra từ 32 đến 1024;
+- hỗ trợ Matryoshka;
+- Apache-2.0.
+
+**Điều chỉnh quan trọng:** 512 chiều không phải thông số gốc. Nếu dùng 512, đó là cấu hình thử nghiệm do Thư Viện Sống chọn.
+
+### Qwen3-Reranker-0.6B
+
+Đã xác minh:
+
+- 0,6 tỷ tham số;
+- 100+ ngôn ngữ;
+- ngữ cảnh 32K;
+- có chỉ dẫn theo nhiệm vụ.
+
+### Quyết định
+
+Hai mô hình này là cặp ứng viên đầu để đánh giá cục bộ, không phải lựa chọn bất biến.
+
+---
+
+## 6.17. BGE-M3
+
+### Họ thật sự có gì?
+
+BGE-M3 hỗ trợ:
+
+- hơn 100 ngôn ngữ;
+- 1024 chiều;
+- ngữ cảnh 8192;
+- tìm theo ý nghĩa;
+- tín hiệu thưa;
+- nhiều véc-tơ/ColBERT.
+
+### Quyết định
+
+BGE-M3 phải nằm trong bộ chuẩn so sánh với phương án Qwen3, đặc biệt nếu muốn một mô hình tạo nhiều tín hiệu tìm kiếm.
+
+---
+
+## 6.18. Kiến trúc được điều chỉnh sau vòng kiểm chứng
+
+### Nhập tài liệu
+
+~~~text
+PDF / EPUB / MOBI
 ↓
-KHO DỮ LIỆU CHUẨN CỦA MÌNH
+Docling là ứng viên đọc mặc định
 ↓
-hệ tìm bằng chứng + Bộ não thứ hai + đọc sâu
+trang có cần nhận dạng chữ?
+├── không → dùng chữ gốc
+└── có
+    ↓
+    PP-OCRv6
+    ↓
+    chưa đạt / bố cục khó
+    ↓
+    PaddleOCR-VL-1.6 hoặc tuyến dự phòng
 ↓
-gói bằng chứng
-↓
-AI
-```
+KHO DỮ LIỆU CHUẨN
+~~~
 
-Các dự án bên ngoài là các bộ máy chuyên môn có thể thay thế.
+### Tìm bằng chứng
+
+~~~text
+Qdrant
+├── dense
+└── sparse/BM25
+      ↓
+      RRF
+      ↓
+30–50 ứng viên
+      ↓
+Qwen3-Reranker-0.6B
+      ↓
+3–8 bằng chứng
+~~~
+
+BGE-M3 là đường chuẩn so sánh.
+
+### Bộ não thứ hai
+
+~~~text
+Markdown + Git
+↓
+QMD
+↓
+tìm theo chữ + ý nghĩa + xếp hạng
+~~~
+
+### Đọc sâu
+
+~~~text
+tìm toàn thư viện
+↓
+thu hẹp tài liệu
+↓
+PageIndex
+↓
+chương / mục / trang
+~~~
+
+### Đồ thị và trí nhớ tác tử
+
+Tắt mặc định ở bản đầu:
+
+- LightRAG;
+- Graphiti;
+- Cognee;
+- Mem0.
+
+---
+
+## 6.19. Kết luận
+
+### Nên dùng ngay trong thử nghiệm
+
+- Docling;
+- PaddleOCR;
+- Qdrant;
+- Qwen3-Embedding-0.6B;
+- Qwen3-Reranker-0.6B;
+- QMD;
+- Markdown + Git.
+
+### Nên tích hợp qua bộ chuyển tiếp và thử nghiệm
+
+- RAGFlow;
+- PageIndex.
+
+### Nên giữ làm nguồn thiết kế
+
+- claude-obsidian;
+- obsidian-wiki;
+- Hermes LLM Wiki.
+
+### Nên để giai đoạn sau
+
+- Cognee;
+- LightRAG;
+- Graphiti;
+- Mem0.
+
+### Chỉ tham khảo sản phẩm, chú ý giấy phép
+
+- Khoj.
+
+Kết luận lớn nhất của vòng kiểm chứng:
+
+> **Kiến trúc “dữ liệu chuẩn của mình, công cụ bên ngoài chỉ là bộ máy” vẫn đúng. Những công cụ đã mạnh lên, nhưng điều đó càng làm cho kiến trúc bộ chuyển tiếp và khả năng thay thế trở nên có giá trị.**
