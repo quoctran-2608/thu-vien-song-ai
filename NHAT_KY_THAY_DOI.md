@@ -18,7 +18,8 @@ Sau khi đối chiếu bản nghiên cứu dài với tài liệu trên GitHub, 
 - viết lại toàn bộ 14 tài liệu chuyên sâu hiện có;
 - bổ sung tài liệu cấu trúc repo kỹ thuật;
 - bổ sung chế độ nghiên cứu nghiêm ngặt;
-- bổ sung bảng kiểm bảo toàn ý tưởng để các phiên bản sau không vô tình xóa mất quyết định quan trọng.
+- bổ sung bảng kiểm bảo toàn ý tưởng để các phiên bản sau không vô tình xóa mất quyết định quan trọng;
+- đối chiếu lại bản “Bộ tài liệu chuyên sâu” gốc và phục hồi phần liên kết có chủ ý giữa các trang của Bộ não thứ hai.
 
 ### Các ý quan trọng được phục hồi hoặc làm rõ
 
@@ -28,6 +29,8 @@ Sau khi đối chiếu bản nghiên cứu dài với tài liệu trên GitHub, 
 - Đọc theo độ sâu thích ứng.
 - Gói bằng chứng là ranh giới giữa tìm kiếm và suy luận.
 - RAG có độ phủ rộng, Bộ não thứ hai có độ sâu tích lũy.
+- Các trang Bộ não thứ hai liên kết với nhau có chủ ý, không tạo liên kết máy móc.
+- Markdown là dữ liệu lâu dài; Obsidian chỉ là giao diện.
 - Không gian nghiên cứu không ghi thẳng vào Bộ não thứ hai.
 - Tìm bằng chứng phản bác.
 - “Không tìm thấy” không đồng nghĩa “không tồn tại”.
