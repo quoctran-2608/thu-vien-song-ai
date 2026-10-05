@@ -98,3 +98,22 @@ Khi kiểm tra dự án theo hướng phản biện, phát hiện tài liệu B�
 - chế độ cục bộ: phù hợp PDF có chữ, lập chỉ mục/truy hồi/trò chuyện bằng mô hình của người dùng;
 - OCR/hiểu ảnh, metadata, thư mục, MCP và File System nhiều tài liệu hiện thuộc phía đám mây;
 - kiến trúc Thư Viện Sống không dựa vào File System của PageIndex cho định tuyến toàn kho.
+
+
+### Phản biện rủi ro và giới hạn
+
+Đã bổ sung `docs/18-rui-ro-gioi-han-va-phan-bien.md`.
+
+Vòng này không tìm cách bảo vệ kiến trúc mà chủ động tìm điểm thất bại. Các phát hiện chính:
+
+- nguy cơ xây quá phức tạp trước khi chứng minh nhu cầu;
+- sai đầu vào/OCR/truy hồi có thể lan thành bằng chứng sai;
+- truy nguồn không đồng nghĩa nguồn đáng tin;
+- cần ranh giới “nội dung nguồn không đáng tin” để chống chèn lệnh gián tiếp;
+- cần phân quyền ngay ở lớp truy hồi;
+- cần thế hệ dữ liệu/chỉ mục và cơ chế nhất quán xuyên nhiều kho;
+- cần chính sách nguồn về bản quyền, độ nhạy cảm, xử lý đám mây và lưu giữ;
+- cần ngoại lệ xóa có kiểm toán cho nguyên tắc nguồn bất biến;
+- cần đánh giá kín/đối kháng để tránh tối ưu quá mức theo bộ câu hỏi chuẩn.
+
+Đã đính chính thêm phạm vi PageIndex: File System nhiều tài liệu hiện là tính năng đám mây.
