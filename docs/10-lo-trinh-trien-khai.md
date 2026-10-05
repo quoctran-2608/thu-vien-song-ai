@@ -86,7 +86,9 @@ Chỉ khi có bài toán thực sự cần:
 - Graphiti cho tri thức thay đổi theo thời gian;
 - các hệ trí nhớ tác tử như Cognee nếu chứng minh được giá trị.
 
-## Bản sản xuất 1.0
+## Mốc phần mềm sản xuất 1.0 — tương lai
+
+> Mốc này **khác** với “tài liệu/đặc tả v1.0” hiện tại của repo. Đây là phiên bản phần mềm tương lai sau khi các bản kỹ thuật 0.x đạt tiêu chí chất lượng.
 
 Hoàn thiện:
 
@@ -114,3 +116,10 @@ Hoàn thiện:
 ```
 
 Không đảo ngược thứ tự này.
+
+
+## Bắt đầu thực thi
+
+Để chuyển lộ trình này thành công việc cụ thể, xem:
+
+> [Hướng dẫn bắt đầu triển khai bản kỹ thuật 0.1](17-huong-dan-bat-dau-trien-khai-v0.1.md)
