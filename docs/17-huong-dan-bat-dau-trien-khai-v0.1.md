@@ -82,6 +82,18 @@ gán mã file nguồn
 không sửa file
 ```
 
+Với bản thử nghiệm lưu file cục bộ, có thể dùng cấu trúc:
+
+```text
+vault/
+└── sources/
+    └── sha256/
+        └── ab/
+            └── abcdef...pdf
+```
+
+Nếu dùng kho file/NAS/S3/MinIO thì giữ cùng tư tưởng bằng khóa đối tượng theo SHA-256.
+
 Mỗi file tối thiểu cần biết:
 
 - mã file;
