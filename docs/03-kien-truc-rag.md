@@ -1,122 +1,178 @@
-# 3. Kiến trúc RAG — trí nhớ bằng chứng
+# 3. Hệ tìm bằng chứng, RAG và đọc phân tầng
 
-## 3.1. RAG là gì trong dự án này?
+## 3.1. RAG là gì?
 
-RAG là cơ chế **tìm những phần tài liệu liên quan trước, rồi mới đưa phần nhỏ đó cho AI đọc**.
+RAG là viết tắt của *Retrieval-Augmented Generation*.
 
-Trong dự án này, RAG không chỉ là vector search. Nó gồm nhiều bước.
+Trong dự án này có thể hiểu đơn giản:
 
-## 3.2. Tìm theo chữ + tìm theo ý nghĩa
+> **tìm phần tài liệu thích hợp trước, rồi mới cho AI đọc và trả lời.**
 
-### Tìm theo chữ
+RAG không đồng nghĩa với cơ sở dữ liệu véc-tơ.
+
+## 3.2. Tìm theo chữ
 
 Mạnh với:
 
 - tên người;
+- tên sách;
 - thuật ngữ;
 - câu nguyên văn;
-- tên sách;
-- số hiệu;
+- mã tài liệu;
 - cụm từ hiếm.
 
-### Tìm theo ý nghĩa
+## 3.3. Tìm theo ý nghĩa
 
-Mạnh khi câu hỏi và tài liệu dùng từ khác nhau nhưng nói cùng một ý.
+Hệ thống biến văn bản thành một dãy số đại diện tương đối cho ý nghĩa, thường gọi là *embedding*.
 
-Ví dụ “buông chấp cái tôi” có thể liên quan đến đoạn dùng từ “không đồng hoá với ngã”.
+Nhờ vậy hai câu dùng từ khác nhau nhưng nói cùng một ý vẫn có thể tìm thấy nhau.
 
-## 3.3. Tìm kiếm kết hợp
-
-Luồng chuẩn:
+## 3.4. Tìm kiếm kết hợp
 
 ```text
-Câu hỏi
-  ↓
-Tìm theo chữ ─┐
-              ├→ hợp nhất thứ hạng → ứng viên
-Tìm ý nghĩa ──┘
-                         ↓
-                   xếp hạng lại
-                         ↓
-                   3–6 đoạn tốt
+tìm theo chữ ─┐
+              ├→ hợp nhất kết quả
+tìm theo ý ───┘
+              ↓
+         xếp hạng lại
+              ↓
+         vài đoạn tốt nhất
 ```
 
-Không đưa toàn bộ 30–50 ứng viên cho mô hình lớn.
+Không nên dùng duy nhất một phương pháp.
 
-## 3.4. Xếp hạng lại
+## 3.5. Xếp hạng lại
 
-Bộ xếp hạng lại đọc câu hỏi và một danh sách nhỏ các đoạn ứng viên để đánh giá mức liên quan chính xác hơn.
+Bộ xếp hạng lại đọc câu hỏi và một danh sách nhỏ các đoạn ứng viên để sắp lại chính xác hơn.
 
-Đề xuất: Qwen3-Reranker-0.6B hoặc mô hình tương đương chạy tại máy.
+Mục tiêu là để mô hình AI lớn cuối cùng chỉ đọc một số rất ít đoạn tốt.
 
-Đây là khoản tính toán nhỏ nhưng tiết kiệm rất nhiều context về sau.
+## 3.6. Kết quả tìm được chưa phải bằng chứng
 
-## 3.5. Chunking — chia đoạn theo cấu trúc
+Luồng đúng:
 
-Không cắt máy móc cứ 1.000 ký tự.
+```text
+kết quả tìm được
+↓
+ứng viên bằng chứng
+↓
+kiểm tra nguồn, vị trí, ngữ cảnh
+↓
+bằng chứng đã xác minh
+```
+
+Ở chế độ hỏi đáp thường, bước kiểm tra có thể nhẹ. Ở chế độ nghiên cứu nghiêm ngặt, bước này phải chặt.
+
+## 3.7. Chia đoạn theo cấu trúc
+
+Không cắt máy móc theo số ký tự.
 
 Ưu tiên:
 
-- ranh giới đoạn;
 - tiêu đề;
 - mục;
-- tiểu mục;
-- ranh giới trang khi cần trích dẫn.
+- đoạn;
+- ranh giới tự nhiên của nội dung.
 
-Một chunk nên mang theo đường dẫn ngữ cảnh:
+Mỗi đoạn nên mang theo đường dẫn:
 
 ```text
-Tên sách > Phần > Chương > Mục
+Tên sách
+> Phần
+> Chương
+> Mục
 ```
 
-Thông thường có thể thử khoảng 300–700 token, nhưng con số phải được kiểm chứng bằng bộ đánh giá thực tế.
+## 3.8. Tóm tắt phân tầng
 
-## 3.6. Tóm tắt nhiều tầng
+Có thể xây:
 
-Mỗi tài liệu có thể có:
+```text
+tóm tắt sách
+↓
+tóm tắt chương
+↓
+mô tả mục
+↓
+đoạn nguồn
+```
 
-- tóm tắt sách;
-- tóm tắt chương;
-- mô tả mục;
-- đoạn gốc.
+Câu hỏi tổng quát đi từ trên xuống. Câu hỏi nguyên văn có thể đi thẳng tới bằng chứng.
 
-Câu hỏi tổng quát đi từ trên xuống; câu hỏi nguyên văn đi thẳng vào tầng bằng chứng.
+## 3.9. Đọc theo độ sâu thích ứng
 
-## 3.7. Gói bằng chứng
+### Câu đơn giản
 
-Sau truy hồi, hệ thống tạo một gói nhỏ gồm:
+Ưu tiên Bộ não thứ hai.
+
+### Cần kiểm chứng
+
+Đọc vài đoạn nguồn.
+
+### Cần đọc một cuốn
+
+Đi qua mục lục và chương.
+
+### Cần đọc sâu
+
+Dùng cấu trúc cây hoặc PageIndex.
+
+### Cần nghiên cứu lớn
+
+Tạo không gian nghiên cứu riêng.
+
+Nguyên tắc:
+
+> **AI chỉ đọc sâu đến mức nhiệm vụ thật sự cần.**
+
+## 3.10. PageIndex đặt ở đâu?
+
+```text
+toàn thư viện
+↓
+hệ tìm kiếm chọn vài cuốn
+↓
+PageIndex
+↓
+đi theo cây chương/mục
+↓
+đọc sâu
+```
+
+Không nên mặc định dùng PageIndex để duyệt toàn bộ thư viện.
+
+## 3.11. Hai chỉ mục riêng
+
+### Chỉ mục kho sách
+
+Giữ bằng chứng.
+
+### Chỉ mục Bộ não thứ hai
+
+Giữ tri thức đã tiêu hóa.
+
+Câu “ta biết gì?” và câu “ta biết điều đó từ đâu?” đi theo hai đường khác nhau.
+
+## 3.12. Gói bằng chứng
+
+Gói bằng chứng là tập nhỏ mà AI cuối cùng đọc, có thể gồm:
 
 - câu hỏi;
-- 3–8 đoạn tốt nhất;
-- tên sách/chương/trang;
-- vài ghi chú từ Bộ não thứ hai nếu cần;
-- cờ độ tin cậy.
+- phạm vi;
+- một ít tri thức liên quan;
+- 4–8 bằng chứng tốt nhất;
+- nguồn và vị trí;
+- bằng chứng phản bác nếu có;
+- điểm chưa chắc chắn.
 
-Mục tiêu là để mô hình lớn đọc khoảng vài nghìn token thay vì hàng chục nghìn token.
+Gói bằng chứng vừa giảm lượng chữ phải đọc, vừa tạo ranh giới rõ giữa hệ tìm kiếm và hệ suy luận.
 
-## 3.8. PageIndex đặt ở đâu?
+## 3.13. Kinh tế lượng chữ đưa cho AI
 
-PageIndex phù hợp sau khi đã chọn được một vài cuốn sách:
+Cách ngây thơ có thể đưa hàng chục đoạn, tức hàng chục nghìn đơn vị chữ.
 
-```text
-Toàn thư viện
-→ RAG chọn 3 cuốn
-→ PageIndex đi theo mục lục/cây của từng cuốn
-→ tìm chương/mục
-→ đọc sâu
-```
+Phương án tốt hơn chỉ đưa vài bằng chứng tốt nhất và một lượng nhỏ tri thức liên quan.
 
-Không dùng PageIndex làm lớp tìm kiếm toàn kho mặc định vì có thể tăng chi phí suy luận.
+Không có tỷ lệ tiết kiệm cố định cho mọi trường hợp, nhưng nguyên tắc là:
 
-## 3.9. RAGFlow đặt ở đâu?
-
-RAGFlow là một động cơ rất mạnh để:
-
-- nhập tài liệu;
-- truy hồi;
-- xếp hạng;
-- dẫn nguồn;
-- tác tử tìm kiếm;
-- biên dịch tri thức.
-
-Nhưng trong kiến trúc này, RAGFlow là một **bộ chuyển tiếp cắm thêm**, không phải nơi giữ dữ liệu chuẩn duy nhất.
+> **đừng bắt mô hình lớn đọc những gì có thể loại bỏ từ trước.**
