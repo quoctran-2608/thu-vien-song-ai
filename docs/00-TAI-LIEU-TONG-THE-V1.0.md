@@ -22,13 +22,13 @@ Nói ngắn gọn hơn:
 
 > **Thư Viện Sống AI phải vừa là thư viện, vừa là hệ thống nghiên cứu, vừa là trí nhớ lâu dài cho AI.**
 
-Dữ liệu thật phải thuộc về hệ thống của mình. Các phần mềm như RAGFlow, QMD, PageIndex, Qdrant hay bất kỳ mô hình AI nào chỉ là các bộ máy có thể thay thế.
+Đây cũng là tinh thần cốt lõi của phương án ban đầu: dữ liệu thuộc về hệ thống của mình, còn các phần mềm như RAGFlow, QMD hay PageIndex chỉ là các bộ máy có thể thay thế.
 
 ---
 
-# 2. Bài toán cần giải quyết
+# 2. Bài toán mà hệ thống phải giải quyết
 
-Một kho sách lớn có thể chứa đồng thời:
+Một kho sách lớn thường chứa lẫn rất nhiều loại tài liệu:
 
 - PDF có lớp chữ tốt;
 - PDF có chữ nhưng mã hóa lỗi;
@@ -37,13 +37,14 @@ Một kho sách lớn có thể chứa đồng thời:
 - EPUB;
 - MOBI;
 - nhiều ấn bản của cùng một tác phẩm;
-- nhiều bản dịch;
 - tài liệu nhiều ngôn ngữ;
 - trang cũ, mờ, cong, lệch;
 - văn bản hai cột;
-- sách có nhiều chú thích;
-- bảng biểu và hình ảnh;
-- bài nghiên cứu;
+- sách nhiều chú thích;
+- bảng biểu;
+- hình ảnh;
+- tài liệu nghiên cứu;
+- bài viết;
 - ghi chú;
 - kết quả nghiên cứu cũ.
 
@@ -57,22 +58,24 @@ lấy chữ
 → đưa hết cho AI
 ```
 
-thì hệ thống sớm gặp các vấn đề:
+thì hệ thống sớm gặp nhiều vấn đề:
 
 - mất cấu trúc sách;
-- không phân biệt tác phẩm và ấn bản;
+- không phân biệt được tác phẩm và ấn bản;
 - khó truy đúng trang;
-- dễ lấy một đoạn “na ná” nhưng không thật sự chứng minh điều cần nói;
+- tìm được đoạn “na ná” nhưng không thật sự chứng minh điều cần nói;
 - đưa quá nhiều chữ cho AI;
-- AI phải đọc lại những thứ đã nghiên cứu;
-- bản tóm tắt ngày càng tách khỏi nguồn;
-- thay một phần mềm có thể kéo theo việc xây lại toàn bộ kho.
+- AI phải đọc lại những thứ đã nghiên cứu trước đây;
+- bản tóm tắt dần bị tách khỏi nguồn gốc;
+- thay một phần mềm có thể kéo theo việc phải xây lại toàn bộ kho.
 
-Vì vậy dự án phải được thiết kế theo hướng: **nguồn bền vững, dữ liệu chuẩn, tìm kiếm có kiểm chứng, trí nhớ tích lũy và công cụ thay thế được**.
+Vì vậy dự án này phải được thiết kế từ đầu theo hướng khác.
 
 ---
 
-# 3. Kiến trúc bốn lớp
+# 3. Kết luận kiến trúc ngay từ đầu
+
+Phương án cuối cùng gồm bốn lớp:
 
 ```text
 1. KHO NGUỒN GỐC
@@ -92,7 +95,7 @@ tri thức đã được đọc, tổng hợp và liên kết
         ↓
 
 4. KHÔNG GIAN NGHIÊN CỨU
-bộ nhớ nhỏ cho vấn đề đang xử lý
+một bộ nhớ nhỏ cho vấn đề đang xử lý
 
         ↓
 
@@ -112,6 +115,8 @@ Có thể nhớ bằng bốn câu:
 ---
 
 # 4. Hiến pháp của hệ thống
+
+Có một số nguyên tắc không phải là lựa chọn kỹ thuật thông thường. Chúng là những nguyên tắc không nên bị phá khi hệ thống phát triển.
 
 ## 4.1. AI không phải là nguồn
 
@@ -134,6 +139,8 @@ Căn cứ của một kết luận phải đến từ tài liệu hoặc nguồn
 
 ## 4.2. Nguồn gốc phải được bảo tồn
 
+File nguồn phải được giữ nguyên.
+
 AI không sửa trực tiếp:
 
 - PDF;
@@ -142,7 +149,7 @@ AI không sửa trực tiếp:
 - ảnh trang;
 - văn bản thô lấy từ tài liệu.
 
-Nếu cần làm sạch văn bản, phải giữ cả:
+Nếu cần làm sạch văn bản, phải lưu:
 
 ```text
 văn bản thô
@@ -150,7 +157,7 @@ văn bản thô
 văn bản đã làm sạch
 ```
 
-Không ghi đè dữ liệu thô.
+chứ không ghi đè văn bản thô.
 
 ---
 
@@ -202,7 +209,9 @@ file nguồn
 
 ## 4.5. Một kết quả tìm được chưa phải là bằng chứng
 
-Hệ tìm kiếm trả về một đoạn chỉ có nghĩa:
+Hệ tìm kiếm có thể trả về một đoạn vì đoạn đó có nhiều từ giống câu hỏi.
+
+Điều đó chỉ có nghĩa:
 
 > “đoạn này đáng xem”.
 
@@ -226,17 +235,21 @@ bằng chứng đã xác minh
 
 ## 4.6. Một trích dẫn có thật chưa chắc chứng minh được khẳng định
 
-Một lỗi nguy hiểm là:
+Một lỗi rất nguy hiểm của AI là:
 
 - tài liệu có thật;
 - số trang có thật;
 - đoạn trích có thật;
 
-nhưng đoạn đó không thực sự hỗ trợ điều AI đang nói.
+nhưng:
 
-Vì vậy hệ thống nghiên cứu sâu phải kiểm tra:
+> đoạn đó không thực sự hỗ trợ điều AI đang nói.
+
+Vì vậy hệ thống nghiên cứu sâu phải kiểm tra cả:
 
 > **“đoạn này có thực sự hỗ trợ khẳng định không?”**
+
+chứ không chỉ kiểm tra xem nguồn có tồn tại hay không.
 
 ---
 
@@ -244,18 +257,23 @@ Vì vậy hệ thống nghiên cứu sâu phải kiểm tra:
 
 AI không được ép tất cả câu hỏi thành kết luận chắc chắn.
 
-Các câu trả lời hợp lệ có thể là:
+Một kết quả hoàn toàn hợp lệ có thể là:
 
-- chưa đủ bằng chứng trong phạm vi tài liệu đã tìm;
-- các nguồn hiện có mâu thuẫn nhau;
-- chưa thể kết luận;
-- không tìm thấy trong kho nguồn đã khảo sát.
+> Chưa đủ bằng chứng trong phạm vi tài liệu đã tìm.
+
+Hoặc:
+
+> Các nguồn hiện có mâu thuẫn nhau.
+
+Hoặc:
+
+> Chưa thể kết luận.
 
 ---
 
 ## 4.8. Không để phần mềm bên ngoài sở hữu dữ liệu
 
-Tiêu chuẩn dễ kiểm tra:
+Tiêu chuẩn rất dễ kiểm tra là:
 
 > Nếu xóa hoàn toàn RAGFlow rồi cài lại, kho dữ liệu chuẩn vẫn còn.
 
@@ -263,11 +281,13 @@ Tiêu chuẩn dễ kiểm tra:
 
 > Nếu không dùng PageIndex nữa, cấu trúc chương/mục/trang vẫn còn.
 
+Bản phương án ban đầu cũng đặt rất rõ tiêu chuẩn này.
+
 ---
 
 ## 4.9. Nhiều AI có thể nghiên cứu, nhưng chỉ một nơi được ghi chính thức
 
-Nhiều tác tử AI có thể cùng:
+Nhiều tác tử AI — tức các tiến trình AI đảm nhận những nhiệm vụ khác nhau — có thể cùng:
 
 - tìm;
 - đọc;
@@ -276,7 +296,7 @@ Nhiều tác tử AI có thể cùng:
 
 Nhưng không được cùng sửa trực tiếp một trang tri thức.
 
-Quy trình:
+Quy trình đúng:
 
 ```text
 nhiều AI
@@ -290,11 +310,29 @@ một bộ ghi duy nhất
 ghi chính thức
 ```
 
+Bản kiến trúc ban đầu coi đây là một cơ chế bắt buộc.
+
 ---
 
 ## 4.10. Mọi thay đổi lớn phải phục hồi được
 
-Nếu một lần cập nhật cần sửa ba file, không được để trạng thái mới sửa xong một file rồi gặp lỗi.
+Nếu một lần cập nhật cần sửa:
+
+```text
+Vô-ngã.md
+Duyên-khởi.md
+index.md
+```
+
+thì không được để tình trạng:
+
+```text
+sửa xong Vô-ngã.md
+↓
+gặp lỗi
+↓
+hai file còn lại chưa sửa
+```
 
 Phải:
 
@@ -302,7 +340,10 @@ Phải:
 
 Sau đó lưu lịch sử bằng Git.
 
+Ý tưởng giao dịch cập nhật này đã được mô tả rất rõ trong phương án ban đầu.
+
 ---
+
 
 ## 4.11. Công cụ mới phải qua kiểm thử
 
@@ -327,7 +368,9 @@ Mục tiêu đúng là:
 
 ---
 
-# 5. Lớp 1 — Kho nguồn gốc
+# 5. Bốn lớp của Thư Viện Sống
+
+## 5.1. Lớp 1 — Kho nguồn gốc
 
 Đây là nơi chứa:
 
@@ -343,26 +386,24 @@ Mục tiêu đúng là:
 
 Kho nguồn gốc trả lời:
 
-> **Tài liệu thật sự là gì?**
+> **Tài liệu thực sự là gì?**
 
 Nó không trả lời:
 
 > “AI hiểu gì về tài liệu?”
 
-Mỗi file cần có dấu vân tay số, thí dụ SHA-256, để nhận biết chính xác phiên bản file.
-
 ---
 
-# 6. Lớp 2 — Kho dữ liệu chuẩn và hệ tìm bằng chứng
+## 5.2. Lớp 2 — Kho dữ liệu chuẩn và hệ tìm bằng chứng
 
 Đây là lớp biến tài liệu thành dạng máy có thể xử lý ổn định.
+
+Ví dụ:
 
 ```text
 Tác phẩm
 ↓
 Ấn bản
-↓
-Nguồn file
 ↓
 Chương / mục
 ↓
@@ -375,15 +416,17 @@ Khối nội dung
 
 Lớp này trả lời:
 
-- thông tin nằm ở đâu;
-- trang nào;
-- ấn bản nào;
-- đoạn nào có liên quan;
-- nguồn nào đã được xử lý bằng cách nào.
+> “Thông tin nằm ở đâu?”
+
+> “Trang nào?”
+
+> “Ấn bản nào?”
+
+> “Đoạn nào có liên quan?”
 
 ---
 
-# 7. Lớp 3 — Bộ não thứ hai
+## 5.3. Lớp 3 — Bộ não thứ hai
 
 Đây là tri thức đã được tiêu hóa.
 
@@ -391,13 +434,20 @@ Ví dụ:
 
 ```text
 Khái niệm/
+    Vô ngã.md
+    Duyên khởi.md
+    Tánh không.md
+
 Nhân vật/
-Tác phẩm/
+
 Truyền thống/
+
 So sánh/
+
 Tranh luận/
-Mốc thời gian/
+
 Tổng hợp/
+
 Câu hỏi mở/
 ```
 
@@ -405,15 +455,17 @@ Bộ não thứ hai trả lời:
 
 > “Ta đã hiểu gì về vấn đề này?”
 
-Nó không thay thế nguồn gốc.
-
 ---
 
-# 8. Lớp 4 — Không gian nghiên cứu
+## 5.4. Lớp 4 — Không gian nghiên cứu
 
-Đây là bàn làm việc tạm thời cho một vấn đề.
+Đây là bàn làm việc tạm thời.
 
-Ví dụ:
+Ví dụ một câu hỏi:
+
+> Quan niệm giác ngộ khác nhau thế nào giữa các nhóm tài liệu?
+
+Hệ thống có thể tạo:
 
 ```text
 research/
@@ -432,63 +484,74 @@ Khi nghiên cứu xong:
 
 - phần tạm có thể lưu lại;
 - kết quả tốt được đề xuất đưa vào Bộ não thứ hai;
-- kết luận chưa chắc chắn không tự động trở thành tri thức chính thức.
+- kết luận chưa chắc chắn không được tự động trở thành tri thức chính thức.
 
 ---
 
-# 9. Số hóa PDF đúng cách
+# 6. Số hóa tài liệu đúng cách
 
-## 9.1. Không nhận dạng chữ từ ảnh toàn bộ PDF
+## 6.1. Không nhận dạng chữ từ ảnh toàn bộ PDF
 
-Đối với từng trang:
+Đây là một trong những nguyên tắc tiết kiệm tài nguyên quan trọng nhất.
+
+Đối với mỗi trang PDF:
 
 ```text
 kiểm tra trang
 ↓
 có lớp chữ tốt?
-├── có → lấy chữ trực tiếp
-└── không → nhận dạng chữ từ ảnh
+├── có
+│   ↓
+│ lấy chữ trực tiếp
+│
+└── không
+    ↓
+nhận dạng chữ từ ảnh
 ```
 
-Có thể kiểm tra:
+Có thể dùng các tín hiệu như:
 
 - có lớp chữ hay không;
-- lượng ký tự;
+- số lượng ký tự;
 - Unicode có hợp lệ không;
-- chữ có bị rác không;
+- chữ có bị rác hay không;
 - thứ tự đọc có hợp lý không.
 
-Một cuốn 500 trang có thể chỉ cần nhận dạng chữ từ ảnh ở một phần nhỏ.
+Một cuốn 500 trang có thể chỉ có vài chục trang thực sự cần nhận dạng chữ từ ảnh.
 
 ---
 
-## 9.2. Trang dễ và trang khó không nên xử lý giống nhau
+## 6.2. Trang dễ và trang khó không nên xử lý giống nhau
 
 Có thể dùng nhiều tầng:
 
 ```text
 trang cần nhận dạng chữ
 ↓
-công cụ nhận dạng thông thường
+PP-OCRv6
 ↓
 đủ tốt?
 ├── có → dùng kết quả
 └── không
      ↓
-công cụ hiểu bố cục mạnh hơn
+PaddleOCR-VL hoặc công cụ mạnh hơn
 ```
 
-Tên công cụ cụ thể có thể thay đổi; nguyên tắc nhiều tầng mới là phần cần giữ lâu dài.
+PP-OCRv6 là một họ mô hình nhận dạng chữ.
+
+PaddleOCR-VL là mô hình có khả năng hiểu bố cục trang phức tạp hơn.
+
+Tên công cụ cụ thể có thể thay đổi sau này; nguyên tắc nhiều tầng mới là phần cần giữ lâu dài.
 
 ---
 
-# 10. EPUB và MOBI
+# 7. EPUB và MOBI phải được xử lý khác PDF
 
 ## EPUB
 
 EPUB thường đã có:
 
-- XHTML;
+- HTML/XHTML;
 - mục lục;
 - tiêu đề;
 - chương;
@@ -496,9 +559,13 @@ EPUB thường đã có:
 
 Không nên biến EPUB thành ảnh rồi nhận dạng chữ.
 
+Cần lấy trực tiếp cấu trúc có sẵn.
+
+---
+
 ## MOBI
 
-Có thể chuẩn hóa bằng Calibre:
+MOBI có thể được chuẩn hóa qua Calibre:
 
 ```text
 MOBI
@@ -510,9 +577,9 @@ EPUB hoặc HTML
 
 ---
 
-# 11. Bảo tồn văn bản thô và văn bản sạch
+# 8. Bảo tồn văn bản thô và văn bản sạch
 
-Mỗi đoạn quan trọng nên giữ:
+Mỗi đoạn quan trọng nên giữ tối thiểu:
 
 ```text
 text_raw
@@ -531,34 +598,54 @@ Kèm theo:
 - vị trí trên trang nếu có;
 - ảnh trang nếu cần.
 
----
-
-# 12. Chống trùng và bảo tồn ấn bản
-
-## Trùng tuyệt đối
-
-Dùng SHA-256.
-
-## Gần trùng
-
-Có thể dùng các dấu vân tay nội dung như MinHash hoặc SimHash.
-
-## Không đánh mất ấn bản
-
-Cùng một tác phẩm có thể có:
-
-- nhiều lần xuất bản;
-- nhiều bản dịch;
-- nhiều bản scan;
-- nhiều định dạng.
-
-Không được vì phát hiện gần trùng mà gộp mất thông tin lịch sử.
+Như vậy khi phát hiện lỗi làm sạch hoặc lỗi nhận dạng chữ, ta vẫn quay lại được nguồn ban đầu.
 
 ---
 
-# 13. Hai cách nhìn kho dữ liệu chuẩn
+# 9. Dấu vân tay số và chống trùng
 
-## 13.1. Cách nhìn theo thực thể
+Mỗi file nguồn cần có SHA-256.
+
+Có thể hiểu SHA-256 là:
+
+> **dấu vân tay số của file.**
+
+Nếu hai file có cùng dấu vân tay thì chúng giống nhau tuyệt đối.
+
+Ngoài ra còn cần phát hiện các bản gần giống:
+
+- cùng sách nhưng khác định dạng;
+- cùng ấn bản nhưng scan khác nhau;
+- hai file chỉ khác vài trang;
+- PDF và EPUB có cùng nội dung.
+
+Có thể dùng các kỹ thuật tạo dấu vân tay nội dung như MinHash hoặc SimHash nếu cần.
+
+Quan trọng:
+
+> **không được vì phát hiện gần trùng mà làm mất thông tin về ấn bản.**
+
+---
+
+# 10. Kho dữ liệu chuẩn — trái tim của toàn hệ thống
+
+Không phải RAGFlow.
+
+Không phải Qdrant.
+
+Không phải Obsidian.
+
+Mà chính là:
+
+> **mô hình dữ liệu chuẩn.**
+
+Bản phương án ban đầu cũng đặt phần này ở vị trí trung tâm.
+
+---
+
+# 11. Hai cách nhìn kho dữ liệu chuẩn
+
+## 11.1. Cách nhìn theo thực thể
 
 ```text
 Tác phẩm
@@ -576,15 +663,67 @@ Khối
 Đoạn tìm kiếm
 ```
 
-## 13.2. Cách nhìn theo tầng dữ liệu
+### Tác phẩm
+
+Ví dụ:
+
+> một cuốn sách về mặt nội dung trí tuệ.
+
+### Ấn bản
+
+Ví dụ:
+
+- bản năm 1995;
+- bản dịch năm 2008;
+- tái bản năm 2022.
+
+### Nguồn file
+
+PDF/EPUB/MOBI cụ thể.
+
+### Chương / mục
+
+Cấu trúc logic.
+
+### Trang
+
+Trang vật lý hoặc vị trí tương đương.
+
+### Khối
+
+Có thể là:
+
+- tiêu đề;
+- đoạn văn;
+- bảng;
+- chú thích;
+- hình.
+
+### Đoạn tìm kiếm
+
+Phần văn bản được chuẩn bị để hệ tìm kiếm sử dụng.
+
+---
+
+## 11.2. Cách nhìn theo tầng dữ liệu
 
 ### Tầng 0 — Danh mục
 
-Tên sách, tác giả, dịch giả, nhà xuất bản, năm, ngôn ngữ, chủ đề.
+- tên sách;
+- tác giả;
+- dịch giả;
+- nhà xuất bản;
+- năm;
+- ngôn ngữ;
+- chủ đề.
 
 ### Tầng 1 — Cấu trúc
 
-Mục lục, phần, chương, mục, số trang.
+- mục lục;
+- phần;
+- chương;
+- mục;
+- số trang.
 
 ### Tầng 2 — Tìm kiếm
 
@@ -592,13 +731,22 @@ Các đoạn văn đã được chuẩn bị để tìm.
 
 ### Tầng 3 — Nguồn
 
-File gốc, văn bản thô, văn bản sạch, ảnh trang, vị trí chữ, độ tin cậy.
+- file gốc;
+- văn bản thô;
+- văn bản sạch;
+- ảnh trang;
+- vị trí chữ;
+- độ tin cậy.
 
-Hai cách nhìn bổ sung cho nhau.
+Hai cách nhìn này không thay thế nhau.
+
+Một cách giải thích **các đối tượng**.
+
+Cách kia giải thích **vai trò của dữ liệu**.
 
 ---
 
-# 14. Chia đoạn theo cấu trúc
+# 12. Chia đoạn theo cấu trúc, không chia máy móc
 
 Không nên:
 
@@ -607,7 +755,7 @@ cứ 1.000 ký tự
 → cắt
 ```
 
-Nên ưu tiên:
+mà nên ưu tiên:
 
 ```text
 tiêu đề
@@ -619,6 +767,8 @@ mục
 ranh giới tự nhiên của nội dung
 ```
 
+Sau đó mới cân đối độ dài.
+
 Một đoạn tìm kiếm nên luôn biết mình thuộc:
 
 ```text
@@ -628,38 +778,56 @@ Tên sách
 > Mục
 ```
 
+Nhờ đó AI không đọc một đoạn bị tách khỏi ngữ cảnh.
+
 ---
 
-# 15. RAG — cơ chế tìm trước khi AI trả lời
+# 13. RAG là gì?
 
 RAG là viết tắt của *Retrieval-Augmented Generation*.
 
-Trong dự án này có thể hiểu:
+Trong dự án này có thể hiểu đơn giản là:
 
 > **tìm phần tài liệu thích hợp trước, rồi mới cho AI đọc và trả lời.**
 
-RAG không đồng nghĩa với “cơ sở dữ liệu véc-tơ”.
+Không nên hiểu RAG đơn giản là:
+
+> “cơ sở dữ liệu véc-tơ”.
+
+RAG là cả một chuỗi xử lý.
 
 ---
 
-# 16. Tìm theo chữ + tìm theo ý nghĩa + xếp hạng lại
+# 14. Không được chỉ tìm theo ý nghĩa
 
-## Tìm theo chữ
+Có hai nhóm tìm kiếm khác nhau.
 
-Mạnh với:
+## 14.1. Tìm theo chữ
+
+Rất mạnh với:
 
 - tên người;
-- tên sách;
+- tên tác phẩm;
 - câu nguyên văn;
 - thuật ngữ;
 - mã tài liệu;
 - cụm từ hiếm.
 
-## Tìm theo ý nghĩa
+---
 
-Giúp tìm các đoạn nói cùng ý nhưng dùng từ khác.
+## 14.2. Tìm theo ý nghĩa
 
-## Kết hợp
+Hệ thống biến đoạn văn thành một dãy số đại diện tương đối cho ý nghĩa.
+
+Nhờ vậy câu:
+
+> “buông bỏ sự đồng nhất với cái tôi”
+
+có thể tìm được đoạn dùng từ khác nhưng nói cùng ý.
+
+---
+
+## 14.3. Phương án tốt nhất: kết hợp cả hai
 
 ```text
 TÌM THEO CHỮ
@@ -670,20 +838,20 @@ TÌM THEO CHỮ
                   ↓
              XẾP HẠNG LẠI
                   ↓
-              VÀI ĐOẠN TỐT
+               3–8 ĐOẠN
                   ↑
         ┌─────────┘
         │
 TÌM THEO Ý NGHĨA
 ```
 
-Bộ xếp hạng lại đọc câu hỏi và một danh sách nhỏ các kết quả ứng viên để sắp lại chính xác hơn.
+Bộ xếp hạng lại là một mô hình nhỏ đọc câu hỏi và các kết quả ứng viên để sắp lại thứ tự chính xác hơn.
 
 ---
 
-# 17. Một kết quả tìm được phải qua cửa kiểm tra bằng chứng
+# 15. Một kết quả tìm được phải đi qua “cửa bằng chứng”
 
-Không nên:
+Không nên có luồng:
 
 ```text
 tìm được
@@ -691,7 +859,7 @@ tìm được
 đưa thẳng cho AI
 ```
 
-Nên:
+Nên có:
 
 ```text
 kết quả tìm được
@@ -700,22 +868,22 @@ kết quả tìm được
 ↓
 kiểm tra:
 - đúng nguồn?
-- đúng vị trí?
-- đủ ngữ cảnh?
-- thật sự liên quan?
+- đúng trang?
+- có đủ ngữ cảnh?
+- có thật sự liên quan?
 ↓
 bằng chứng
 ```
 
-Ở chế độ hỏi đáp thường, bước kiểm tra có thể nhẹ.
+Ở chế độ hỏi đáp đơn giản, bước kiểm tra có thể nhẹ.
 
-Ở chế độ nghiên cứu nghiêm ngặt, bước này phải chặt.
+Ở chế độ nghiên cứu nghiêm ngặt, bước này phải mạnh hơn.
 
 ---
 
-# 18. Tóm tắt phân tầng
+# 16. Tóm tắt nhiều tầng
 
-Mỗi tài liệu có thể có:
+Mỗi tài liệu có thể có các lớp tóm tắt:
 
 ```text
 SÁCH
@@ -727,13 +895,20 @@ MỤC
 ĐOẠN GỐC
 ```
 
-Câu hỏi tổng quát đi từ trên xuống.
+Ví dụ:
 
-Câu hỏi cần nguyên văn có thể đi thẳng tới tầng bằng chứng.
+- tóm tắt sách: vài trăm đơn vị chữ;
+- tóm tắt chương: ngắn hơn;
+- mô tả mục: rất ngắn;
+- văn bản gốc: chỉ đọc khi cần.
+
+Nhờ đó câu hỏi tổng quát không cần tìm thẳng vào hàng triệu đoạn.
 
 ---
 
-# 19. Đọc theo độ sâu thích ứng
+# 17. Đọc theo độ sâu thích ứng
+
+Đây là một nguyên tắc trung tâm.
 
 Không phải câu hỏi nào cũng cần cùng lượng dữ liệu.
 
@@ -755,7 +930,7 @@ Bộ não thứ hai
 2–5 đoạn bằng chứng
 ```
 
-## Cần đọc một cuốn
+## Cần đọc một cuốn sâu hơn
 
 ```text
 mục lục
@@ -767,7 +942,7 @@ chọn mục
 đọc đoạn
 ```
 
-## Cần kiểm tra nguyên văn
+## Cần kiểm tra câu nguyên văn
 
 ```text
 trang nguồn
@@ -783,15 +958,15 @@ nhiều sách
 không gian nghiên cứu
 ```
 
-Nguyên tắc:
+Nguyên tắc có thể diễn đạt bằng một câu:
 
 > **AI chỉ đọc sâu đến mức nhiệm vụ thật sự cần.**
 
 ---
 
-# 20. PageIndex nên đứng ở đâu?
+# 18. PageIndex được đặt ở đâu?
 
-PageIndex là một cách tổ chức tài liệu theo cây để đi từ:
+PageIndex là một phương pháp tổ chức tài liệu thành dạng cây để AI đi theo:
 
 ```text
 sách
@@ -803,7 +978,11 @@ mục
 đoạn
 ```
 
-Vị trí hợp lý:
+Nó đặc biệt hữu ích với sách dài.
+
+Nhưng không nên dùng làm lớp tìm kiếm mặc định cho toàn thư viện.
+
+Luồng hợp lý:
 
 ```text
 toàn thư viện
@@ -812,24 +991,23 @@ hệ tìm kiếm chọn vài cuốn
 ↓
 PageIndex
 ↓
-đọc sâu bên trong các cuốn đó
+đi sâu bên trong những cuốn đó
 ```
 
-Không nên mặc định dùng nó làm lớp tìm kiếm toàn thư viện.
+Đây cũng là vị trí được đề xuất trong phương án ban đầu.
 
 ---
-
-# 21. Hai chỉ mục phải tách nhau
+# 19. Hai chỉ mục phải tách nhau
 
 Không nên trộn:
 
 ```text
-hàng triệu đoạn sách
+10 triệu đoạn sách
 +
-các trang tri thức đã tổng hợp
+5.000 trang tri thức
 ```
 
-vào một chỉ mục duy nhất.
+vào một nơi rồi coi chúng giống nhau.
 
 Nên có:
 
@@ -838,7 +1016,7 @@ CHỈ MỤC KHO SÁCH
 = bằng chứng
 
 CHỈ MỤC BỘ NÃO THỨ HAI
-= hiểu biết đã tiêu hóa
+= tri thức đã tiêu hóa
 ```
 
 Khi hỏi:
@@ -853,13 +1031,15 @@ Khi hỏi:
 
 ưu tiên kho sách.
 
+Bản kiến trúc ban đầu gọi đây là hai loại trí nhớ: **trí nhớ hiểu biết** và **trí nhớ bằng chứng**.
+
 ---
 
-# 22. Gói bằng chứng
+# 20. Gói bằng chứng
 
-Một trong những phần quan trọng nhất là **gói bằng chứng**.
+Một trong những phần quan trọng nhất của kiến trúc là **gói bằng chứng**.
 
-Đây là gói nhỏ mà AI cuối cùng đọc.
+Đây là gói nhỏ mà AI cuối cùng đọc để suy luận.
 
 Có thể gồm:
 
@@ -884,21 +1064,21 @@ Bằng chứng phản bác nếu có
 Điểm chưa chắc chắn
 ```
 
-Gói bằng chứng không chỉ để tiết kiệm chi phí. Nó còn là **đơn vị trung gian giữa hệ tìm kiếm và AI suy luận**.
-
 ---
 
-# 23. Vì sao gói bằng chứng tiết kiệm chi phí?
+# 21. Vì sao gói bằng chứng tiết kiệm rất nhiều chi phí?
 
 Cách ngây thơ có thể lấy:
 
 ```text
-30 đoạn × 800 đơn vị chữ
+30 đoạn
+×
+800 đơn vị chữ
 ```
 
 rồi đưa tất cả cho AI.
 
-Phương án tốt hơn có thể chỉ cần:
+Trong khi phương án tốt hơn có thể chỉ cần:
 
 ```text
 4–8 đoạn tốt nhất
@@ -906,19 +1086,23 @@ Phương án tốt hơn có thể chỉ cần:
 một ít tri thức tổng hợp
 ```
 
-Con số chỉ mang tính minh họa, không phải tỷ lệ tiết kiệm cố định.
+Bản thiết kế ban đầu minh họa khoảng vài nghìn đơn vị chữ thay vì hàng chục nghìn. Con số cụ thể chỉ là ví dụ, không phải mức tiết kiệm bảo đảm cho mọi trường hợp.
 
-Điểm quan trọng:
+Điểm quan trọng là:
 
-> **chi phí lớn thường nằm ở việc để mô hình lớn đọc quá nhiều thứ không cần thiết ở mỗi câu hỏi.**
+> **chi phí lớn không chỉ nằm ở việc tạo chỉ mục. Nó còn nằm ở việc cho mô hình lớn đọc quá nhiều thứ không cần thiết ở mỗi câu hỏi.**
 
 ---
 
-# 24. Bộ não thứ hai là gì?
+# 22. Bộ não thứ hai là gì?
 
-Bộ não thứ hai không phải thư mục chứa bản tóm tắt từng cuốn.
+Bộ não thứ hai không phải:
 
-Nó phải tổ chức theo tri thức:
+> một thư mục chứa bản tóm tắt từng cuốn sách.
+
+Một Bộ não thứ hai tốt phải tổ chức theo tri thức.
+
+Ví dụ:
 
 ```text
 Khái niệm/
@@ -932,19 +1116,46 @@ Tổng hợp/
 Câu hỏi mở/
 ```
 
-Một trang như:
+Một trang:
 
 ```text
 Vô-ngã.md
 ```
 
-có thể tổng hợp từ nhiều sách và nhiều cuộc nghiên cứu.
+có thể tham chiếu đến:
+
+- sách A;
+- sách B;
+- sách C;
+- tác giả D;
+- một nghiên cứu trước đó.
+
+Nó phải liên kết với:
+
+```text
+[[Ngũ uẩn]]
+[[Duyên khởi]]
+[[Tánh không]]
+[[Chấp thủ]]
+```
 
 ---
 
-# 25. Bộ não thứ hai không thay thế sách gốc
+# 23. Bộ não thứ hai không thay thế sách gốc
 
-Nếu hệ thống liên tục tóm tắt bản tóm tắt, sai lệch có thể tăng dần.
+Nếu hệ thống cứ tóm tắt rồi lại tóm tắt bản tóm tắt:
+
+```text
+nguồn X
+↓
+tóm tắt X'
+↓
+tổng hợp X''
+↓
+tổng hợp lại X'''
+```
+
+sai lệch có thể tăng dần.
 
 Do đó:
 
@@ -952,13 +1163,19 @@ Do đó:
 
 > **Kho nguồn là nơi kiểm tra điều đó có đúng hay không.**
 
+Hai lớp phải tồn tại song song.
+
 ---
 
-# 26. RAG có độ phủ rộng, Bộ não thứ hai có độ sâu tích lũy
+# 24. RAG có độ phủ rộng, Bộ não thứ hai có độ sâu tích lũy
 
-Giả sử thư viện có 100.000 sách.
+Giả sử thư viện có:
 
-Không nên cho AI đọc sâu cả 100.000 sách ngay khi nhập.
+```text
+100.000 sách
+```
+
+Không nên cho AI đọc 100.000 sách ngay khi nhập để tạo một siêu wiki.
 
 Thay vào đó:
 
@@ -974,37 +1191,23 @@ Bộ não thứ hai
 chỉ phát triển sâu ở những chủ đề thực sự được sử dụng
 ```
 
-Chủ đề dùng nhiều ngày càng được tổng hợp sâu.
+Chủ đề dùng nhiều:
 
-Chủ đề chưa dùng vẫn nằm trong thư viện để tìm khi cần.
+> ngày càng được tổng hợp sâu hơn.
 
----
+Chủ đề chưa dùng:
 
-# 27. Cấu trúc một trang tri thức
+> vẫn nằm trong thư viện và có thể tìm khi cần.
 
-Một trang quan trọng nên phân biệt:
-
-```text
-THÔNG TIN TỪ NGUỒN
-
-TỔNG HỢP CỦA AI
-
-ĐIỂM MÂU THUẪN
-
-ĐIỂM CHƯA CHẮC CHẮN
-
-CÂU HỎI CẦN NGHIÊN CỨU THÊM
-
-NGUỒN
-```
+Đây là cách giảm rất lớn chi phí tạo Bộ não thứ hai.
 
 ---
 
-# 28. Sổ khẳng định
+# 25. Sổ khẳng định
 
-Markdown dễ đọc cho con người là chưa đủ.
+Một trang Markdown dễ đọc cho con người là chưa đủ.
 
-Những kết luận quan trọng nên có bản ghi có cấu trúc.
+Những kết luận quan trọng nên có một bản ghi có cấu trúc.
 
 Ví dụ:
 
@@ -1022,11 +1225,13 @@ Trang:
 126–128
 ```
 
+Bản thiết kế ban đầu đã đưa “sổ khẳng định” thành một phần chính thức của kiến trúc.
+
 ---
 
-# 29. Khẳng định cần hai chiều trạng thái
+# 26. Khẳng định cần có hai chiều trạng thái
 
-## 29.1. Nó được tạo bằng cách nào?
+## 26.1. Nó được tạo ra bằng cách nào?
 
 ### TRÍCH XUẤT
 
@@ -1040,7 +1245,9 @@ AI rút ra từ bằng chứng.
 
 AI kết hợp nhiều nguồn.
 
-## 29.2. Bằng chứng hỗ trợ đến đâu?
+---
+
+## 26.2. Bằng chứng hỗ trợ nó đến đâu?
 
 ### ĐƯỢC HỖ TRỢ
 
@@ -1066,32 +1273,56 @@ Hiện chưa xác định được.
 
 Có bằng chứng mạnh chống lại.
 
-Hai chiều này không nên trộn thành một.
+Hai chiều này không nên trộn làm một.
 
 ---
 
-# 30. Phải tách nguyên văn, bản dịch và suy luận
+# 27. Phải tách nguyên văn, bản dịch và suy luận
 
 Ít nhất nên phân biệt:
 
 ```text
 1. Nguyên văn nguồn
+
 2. Bản dịch xuất bản
+
 3. Bản dịch làm việc do AI tạo
+
 4. Diễn đạt lại
+
 5. Diễn giải của tác giả/học giả
+
 6. Tổng hợp của AI
 ```
 
-Không được để người đọc hiểu nhầm bản dịch AI là bản dịch xuất bản.
+Điều đặc biệt quan trọng:
+
+> **không được để người đọc hiểu nhầm bản dịch AI là bản dịch xuất bản.**
 
 ---
 
-# 31. Không gian nghiên cứu
+# 28. Không gian nghiên cứu
 
 Đối với câu hỏi khó, AI không nên vừa nghiên cứu vừa sửa Bộ não thứ hai.
 
-Quy trình:
+Phải tạo một không gian tạm.
+
+Ví dụ:
+
+```text
+research/
+└── 2026-10-giac-ngo/
+    ├── cau-hoi.md
+    ├── pham-vi.md
+    ├── tai-lieu-ung-vien.json
+    ├── bang-chung/
+    ├── ghi-chu/
+    ├── mau-thuan.md
+    ├── tong-hop.md
+    └── truy-nguon.json
+```
+
+Bản thiết kế ban đầu cũng đặt rõ chuỗi:
 
 ```text
 nghiên cứu
@@ -1107,9 +1338,11 @@ kiểm chứng
 Bộ não thứ hai
 ```
 
+
+
 ---
 
-# 32. Tìm bằng chứng phản bác
+# 29. Tìm bằng chứng phản bác
 
 Trong nghiên cứu sâu, hệ thống không chỉ tìm thứ ủng hộ kết luận.
 
@@ -1130,7 +1363,7 @@ Nếu tìm thấy:
 - giảm mức chắc chắn;
 - hoặc ghi rõ mâu thuẫn.
 
-Đặc biệt cần chú ý các kết luận dùng từ:
+Đây là cơ chế đặc biệt hữu ích khi kết luận chứa các từ như:
 
 - tất cả;
 - luôn luôn;
@@ -1141,17 +1374,17 @@ Nếu tìm thấy:
 
 ---
 
-# 33. “Không tìm thấy” không đồng nghĩa “không tồn tại”
+# 30. “Không tìm thấy” không đồng nghĩa “không tồn tại”
 
-Nếu tìm trong một kho tài liệu mà không thấy X, không nên kết luận:
+Nếu tìm trong một kho tài liệu mà không thấy bằng chứng cho X, kết luận đúng không nên là:
 
 > “Không có bằng chứng nào cho X.”
 
-Nên nói:
+Nên là:
 
 > **“Không tìm thấy bằng chứng cho X trong phạm vi tài liệu đã khảo sát.”**
 
-Kết quả âm nên ghi:
+Kết quả tìm kiếm âm nên ghi được:
 
 ```text
 đã tìm kho nào
@@ -1162,13 +1395,15 @@ ngày nào
 phạm vi có hạn chế gì
 ```
 
+Điều này đặc biệt quan trọng với nghiên cứu lịch sử và học thuật.
+
 ---
 
-# 34. Nhiều nguồn đồng ý chưa chắc là nhiều bằng chứng độc lập
+# 31. Nhiều nguồn đồng ý chưa chắc là nhiều bằng chứng độc lập
 
-Ba cuốn sách có thể nói cùng một điều vì đều dựa trên một nguồn chung.
+Ba cuốn sách có thể cùng nói một điều vì cả ba đều chép từ một nguồn chung.
 
-Trong nghiên cứu sâu có thể cần theo dõi:
+Do đó trong nghiên cứu rất sâu, có thể cần theo dõi:
 
 - chuỗi trích dẫn;
 - quan hệ bản dịch;
@@ -1176,11 +1411,13 @@ Trong nghiên cứu sâu có thể cần theo dõi:
 - nguồn chung;
 - phụ thuộc văn bản.
 
-Không cần xây toàn bộ ngay ở bản đầu, nhưng mô hình dữ liệu không nên chặn khả năng này.
+Đây không phải tính năng cần xây ngay ở bản đầu.
+
+Nhưng mô hình dữ liệu không nên chặn khả năng bổ sung sau này.
 
 ---
 
-# 35. Kiểm tra câu trích
+# 32. Kiểm tra câu trích
 
 Với nghiên cứu cần độ chính xác cao:
 
@@ -1194,11 +1431,17 @@ nằm đúng vị trí?
 đúng phiên bản?
 ```
 
-Nếu AI diễn đạt lại, phải ghi rõ đó là diễn đạt lại.
+Nếu câu không giống nguồn:
+
+> không được trình bày như trích dẫn nguyên văn.
+
+Nếu AI diễn đạt lại:
+
+> phải ghi rõ đó là diễn đạt lại.
 
 ---
 
-# 36. Kiểm tra khẳng định với bằng chứng
+# 33. Kiểm tra khẳng định với bằng chứng
 
 Một khẳng định có thể được đánh giá:
 
@@ -1207,7 +1450,7 @@ TRỰC TIẾP
 = nguồn nói gần như chính xác điều đó
 
 MẠNH
-= cách diễn đạt lại hợp lý
+= là cách diễn đạt lại hợp lý
 
 YẾU
 = có liên quan nhưng cần thêm giả định
@@ -1219,24 +1462,24 @@ MÂU THUẪN
 = có bằng chứng chống lại
 ```
 
-Ở chế độ nghiêm ngặt:
+Trong nghiên cứu nghiêm ngặt:
 
-- TRỰC TIẾP: được dùng;
-- MẠNH: được dùng;
-- YẾU: phải ghi giới hạn;
-- KHÔNG ĐỦ: không được biến thành kết luận chắc chắn;
-- MÂU THUẪN: phải trình bày như một điểm tranh luận.
+- `TRỰC TIẾP` được dùng;
+- `MẠNH` được dùng;
+- `YẾU` phải ghi giới hạn;
+- `KHÔNG ĐỦ` không được biến thành kết luận chắc chắn;
+- `MÂU THUẪN` phải được trình bày như một điểm tranh luận.
 
 ---
 
-# 37. Hồ sơ của mỗi lần nghiên cứu
+# 34. Hồ sơ của mỗi lần nghiên cứu
 
 Một nghiên cứu sâu nên có mã riêng.
 
-Lưu:
+Ví dụ:
 
 ```text
-mã lần nghiên cứu
+run_id
 câu hỏi
 ngày chạy
 
@@ -1257,19 +1500,27 @@ phiên bản hướng dẫn
 kết quả cuối
 ```
 
-Nhờ đó có thể trả lời:
+Nhờ đó về sau có thể hỏi:
 
-> “Tại sao hệ thống từng đưa ra kết luận này?”
+> Tại sao hệ thống từng đưa ra kết luận này?
+
+và tái dựng quá trình.
 
 ---
 
-# 38. Cập nhật Bộ não thứ hai theo phần thay đổi
+# 35. Bộ não thứ hai phải cập nhật theo phần thay đổi
 
-Giả sử hôm qua có 10.000 sách, hôm nay thêm 3 sách.
+Giả sử:
+
+```text
+hôm qua: 10.000 sách
+
+hôm nay: thêm 3 sách
+```
 
 Không được đọc lại 10.003 sách.
 
-Cần một **bảng kê xử lý** — trong tài liệu kỹ thuật thường gọi là `manifest`.
+Ta cần một **bảng kê xử lý**, trong tài liệu kỹ thuật thường gọi là `manifest`.
 
 Nó lưu:
 
@@ -1292,90 +1543,242 @@ tính dấu vân tay
      ↓
     xử lý
      ↓
-    tìm trang tri thức có thể bị ảnh hưởng
+    tìm những trang tri thức có thể bị ảnh hưởng
      ↓
-    chỉ xem xét cập nhật các trang đó
+    chỉ xem xét cập nhật những trang đó
 ```
+
+Cách cập nhật gia tăng này đã được nhấn mạnh trong phương án ban đầu.
 
 ---
 
-# 39. Bộ não thứ hai có thể tự bảo trì nhưng không được tự bịa
+# 36. Bộ não thứ hai có thể tự bảo trì nhưng không được tự bịa
 
 Hệ thống có thể định kỳ tìm:
 
 - liên kết chết;
 - trang không có liên kết;
-- hai trang trùng;
+- hai trang trùng nhau;
 - khẳng định thiếu nguồn;
 - mâu thuẫn;
 - trang quá dài;
 - trang quá nhỏ;
 - chủ đề xuất hiện nhiều nhưng chưa có trang riêng.
 
-Khi thấy nguồn A nói X và nguồn B nói ngược lại, không được tự động xóa một bên.
+Nhưng khi thấy:
 
-Phải giữ cả hai và đánh dấu tình trạng chưa giải quyết nếu chưa đủ căn cứ.
+```text
+Nguồn A nói X
+Nguồn B nói ngược lại
+```
 
----
+hệ thống không được tự động xóa một bên.
 
-# 40. Vai trò của các công cụ bên ngoài
+Nó phải ghi:
 
-Thông tin tính năng hiện hành phải được kiểm chứng lại trước khi chốt triển khai. Về mặt kiến trúc, vai trò dự kiến như sau.
+```text
+A:
+...
 
-## Docling
+B:
+...
 
-Máy đọc và chuẩn hóa tài liệu có cấu trúc.
+Tình trạng:
+chưa thể giải quyết
+```
 
-## PaddleOCR
-
-Nhận dạng chữ cho trang ảnh.
-
-## RAGFlow
-
-Bộ máy RAG mạnh có thể kết nối qua giao diện riêng.
-
-Không dùng làm nguồn dữ liệu duy nhất.
-
-## Qdrant
-
-Kho chuyên tìm các biểu diễn số của đoạn văn.
-
-## QMD
-
-Tìm trong các trang Markdown của Bộ não thứ hai.
-
-## PageIndex
-
-Đọc sâu tài liệu dài theo cây chương/mục.
-
-## LightRAG
-
-Quan hệ tri thức xuyên tài liệu khi thật sự cần đồ thị.
-
-## Graphiti
-
-Theo dõi thông tin và quan hệ thay đổi theo thời gian.
-
-## Cognee
-
-Nguồn tham khảo về trí nhớ lâu dài cho tác tử AI.
-
-## Obsidian
-
-Giao diện con người thuận tiện cho Markdown, không phải nơi sở hữu dữ liệu.
+Đây là cách “tự chữa” đáng tin hơn là để AI tự quyết định lịch sử.
 
 ---
 
-# 41. AI chỉ nên thấy một bộ công cụ nhỏ
+# 37. Vai trò của RAGFlow
 
-Giao diện cấp cao có thể gồm:
+RAGFlow là một hệ thống RAG khá đầy đủ.
+
+Trong kiến trúc này, nó có thể giúp:
+
+- quản lý tài liệu;
+- tìm kiếm;
+- chia đoạn;
+- xếp hạng;
+- dẫn nguồn;
+- chạy các tác tử;
+- biên dịch tri thức.
+
+Nhưng:
+
+> **RAGFlow là động cơ, không phải lõi dữ liệu.**
+
+Có thể hình dung:
+
+```text
+Thư Viện Sống
+↓
+bộ chuyển tiếp
+↓
+RAGFlow
+```
+
+Ta đưa cho nó:
+
+```text
+tài liệu
+đoạn
+thông tin kèm theo
+```
+
+và nhận:
+
+```text
+ứng viên
+điểm xếp hạng
+tham chiếu
+```
+
+Nếu sau này thay RAGFlow:
+
+> giao diện cấp cao của Thư Viện Sống không đổi.
+
+---
+
+# 38. Vai trò của QMD
+
+QMD là một công cụ tìm trong Markdown.
+
+Nó phù hợp với:
+
+```text
+brain/
+```
+
+hơn là trở thành nơi duy nhất lập chỉ mục toàn bộ hàng triệu trang sách.
+
+Nó có thể giúp Bộ não thứ hai kết hợp:
+
+- tìm theo chữ;
+- tìm theo ý nghĩa;
+- xếp hạng kết quả.
+
+---
+
+# 39. Vai trò của PageIndex
+
+PageIndex hỗ trợ:
+
+> đọc sâu tài liệu dài theo cấu trúc cây.
+
+Vai trò:
+
+```text
+RAG
+↓
+chọn vài sách
+↓
+PageIndex
+↓
+chọn chương
+↓
+chọn mục
+↓
+đọc sâu
+```
+
+---
+
+# 40. Vai trò của LightRAG và đồ thị tri thức
+
+LightRAG và các hệ đồ thị có thể hữu ích khi câu hỏi là:
+
+> tác giả nào liên hệ với khái niệm nào?
+
+> trường phái nào ảnh hưởng đến trường phái nào?
+
+> những ý tưởng nào nối nhiều tài liệu lại với nhau?
+
+Nhưng không nên xây đồ thị toàn bộ thư viện ngay từ ngày đầu.
+
+Nguyên tắc:
+
+> **chỉ xây đồ thị khi bài toán thật sự cần quan hệ.**
+
+---
+
+# 41. Vai trò của Graphiti
+
+Graphiti hữu ích hơn với thông tin thay đổi theo thời gian.
+
+Ví dụ:
+
+```text
+2024
+hệ thống dùng A
+
+2025
+chuyển sang B
+
+2026
+chuyển sang C
+```
+
+Nó có thể hữu ích với:
+
+- lịch sử quyết định;
+- nghiên cứu đang thay đổi;
+- thông tin thời sự;
+- trạng thái dự án.
+
+Đối với sách cổ hoặc tài liệu bất biến, nó không phải ưu tiên ban đầu.
+
+---
+
+# 42. Vai trò của Cognee
+
+Cognee có những ý tưởng đáng tham khảo về trí nhớ của tác tử AI:
+
+```text
+ghi nhớ
+nhớ lại
+cải thiện
+quên
+```
+
+Nhưng không cần đưa Cognee vào lõi ngay.
+
+Thư Viện Sống nên có giao diện của riêng mình.
+
+Sau này mới quyết định dùng bộ máy nào ở phía sau.
+
+---
+
+# 43. Obsidian chỉ là giao diện
+
+Markdown mới là dữ liệu.
+
+Obsidian có thể giúp:
+
+- đọc;
+- viết;
+- xem mạng liên kết;
+- duyệt wiki.
+
+Nhưng nếu ngày mai không dùng Obsidian:
+
+> toàn bộ Bộ não thứ hai vẫn phải đọc được bằng trình soạn thảo khác, trình duyệt, AI hoặc công cụ dòng lệnh.
+
+---
+
+# 44. AI chỉ nên thấy một bộ công cụ rất nhỏ
+
+Không nên đưa hàng trăm lệnh cấp thấp cho AI.
+
+Giao diện cấp cao có thể chỉ gồm:
 
 ```text
 search_library()
 = tìm trong thư viện
 
 get_book_outline()
-= lấy mục lục/cấu trúc sách
+= lấy cấu trúc một cuốn
 
 search_book()
 = tìm trong một cuốn
@@ -1396,34 +1799,44 @@ read_brain_page()
 = đọc trang tri thức
 
 research()
-= mở nghiên cứu sâu
+= mở một nghiên cứu sâu
 ```
 
-AI không cần biết phía sau là Qdrant, QMD, RAGFlow, PageIndex hay công cụ khác.
+Ý tưởng này đã có rất rõ trong phương án ban đầu.
+
+AI không cần biết phía sau là:
+
+- Qdrant;
+- QMD;
+- RAGFlow;
+- PageIndex;
+- hay một công cụ khác.
 
 ---
 
-# 42. MCP là gì?
+# 45. MCP là gì?
 
 MCP là tên một chuẩn giao tiếp giúp AI gọi công cụ và dữ liệu bên ngoài theo cách thống nhất.
+
+Trong Thư Viện Sống:
 
 ```text
 AI
 ↓
 MCP của Thư Viện Sống
 ↓
-lệnh cấp cao
+các lệnh cấp cao
 ↓
-bộ chuyển tiếp
-↓
-công cụ thật
+các bộ máy phía sau
 ```
 
-Nhờ vậy thay công cụ phía sau không nhất thiết làm thay đổi cách AI sử dụng thư viện.
+Nhờ vậy:
+
+> thay công cụ phía sau không nhất thiết làm thay đổi cách AI sử dụng thư viện.
 
 ---
 
-# 43. Luồng hỏi đáp tổng thể
+# 46. Luồng hỏi đáp tổng thể
 
 ```text
 CÂU HỎI
@@ -1458,9 +1871,13 @@ RAG          Bộ não thứ hai      PageIndex
                 Bộ não thứ hai
 ```
 
+Đây là vòng khép kín quan trọng nhất của toàn hệ thống.
+
 ---
 
-# 44. Vòng đời tri thức
+# 47. Vòng đời tri thức
+
+Có thể tóm tắt toàn bộ dự án bằng:
 
 ```text
 ĐỌC
@@ -1482,20 +1899,20 @@ LẦN SAU ĐỌC TỐT HƠN
 
 ---
 
-# 45. Chế độ nghiên cứu nghiêm ngặt
+# 48. Chế độ nghiên cứu nghiêm ngặt
 
-Không phải câu hỏi nào cũng cần quy trình nặng.
+Không phải câu hỏi nào cũng cần quy trình rất nặng.
 
-Chế độ này dùng khi:
+Vì vậy nên có một chế độ riêng cho:
 
 - nghiên cứu học thuật;
 - viết sách;
 - nghiên cứu lịch sử;
 - đối chiếu nhiều nguồn;
-- cần trích dẫn chính xác;
+- câu hỏi có yêu cầu trích dẫn chính xác;
 - kết luận có rủi ro cao.
 
-Luồng:
+Khi bật chế độ này:
 
 ```text
 xác định phạm vi nguồn
@@ -1515,11 +1932,11 @@ kết luận có giới hạn
 
 ---
 
-# 46. Chế độ kho nguồn đóng
+# 49. Chế độ kho nguồn đóng
 
-Có thể yêu cầu:
+Đôi khi người dùng muốn:
 
-> chỉ dùng những tài liệu nằm trong kho đã chỉ định.
+> chỉ được dùng những tài liệu nằm trong kho đã chỉ định.
 
 Khi đó:
 
@@ -1532,9 +1949,11 @@ Khi đó:
 
 ---
 
-# 47. Kiểm thử chất lượng
+# 50. Kiểm thử chất lượng
 
-## 47.1. Kiểm thử số hóa
+Hệ thống cần kiểm thử ở nhiều tầng.
+
+## 50.1. Kiểm thử số hóa
 
 Đo:
 
@@ -1547,24 +1966,36 @@ Khi đó:
 - bảng;
 - trang nhiều cột.
 
-Nên dùng vài trăm trang đại diện cho nhiều kiểu khó.
+Nên dùng vài trăm trang đại diện cho những loại tài liệu khó khác nhau.
 
-## 47.2. Kiểm thử tìm kiếm
+---
 
-Tạo bộ câu hỏi chuẩn.
+## 50.2. Kiểm thử tìm kiếm
 
-Mỗi câu biết trước sách/chương/trang đúng.
+Tạo một bộ câu hỏi chuẩn.
 
-So sánh:
+Ví dụ:
+
+```text
+Câu hỏi:
+Tác giả A nói gì về X?
+
+Đáp án mong đợi:
+book_328
+trang 71–74
+```
+
+Sau đó so sánh:
 
 - chỉ tìm theo chữ;
 - chỉ tìm theo ý nghĩa;
 - tìm kết hợp;
 - thêm xếp hạng lại;
-- thêm phân tầng.
+- thêm tìm phân tầng.
 
-## 47.3. Kiểm thử trích dẫn
+---
 
+## 50.3. Kiểm thử trích dẫn
 Kiểm tra:
 
 - đúng sách;
@@ -1573,7 +2004,9 @@ Kiểm tra:
 - đúng đoạn;
 - đoạn có thật sự hỗ trợ câu trả lời.
 
-## 47.4. Kiểm thử Bộ não thứ hai
+---
+
+## 50.4. Kiểm thử Bộ não thứ hai
 
 Tìm:
 
@@ -1586,7 +2019,7 @@ Tìm:
 
 ---
 
-# 48. Bộ kiểm thử cố định
+# 51. Bộ kiểm thử cố định
 
 Mỗi khi thay:
 
@@ -1601,11 +2034,15 @@ Mỗi khi thay:
 
 phải chạy lại cùng một bộ câu hỏi chuẩn.
 
-Nếu chất lượng giảm, không triển khai chỉ vì công cụ mới hơn.
+Nếu chất lượng giảm:
+
+> không triển khai chỉ vì công cụ mới hơn.
+
+Bản kiến trúc ban đầu cũng đặt rõ nguyên tắc này.
 
 ---
 
-# 49. Những gì không nên làm ở phiên bản đầu
+# 52. Những gì không nên làm ở phiên bản đầu
 
 Không nên:
 
@@ -1617,11 +2054,11 @@ Không nên:
 - dùng duy nhất tìm kiếm véc-tơ;
 - đưa quá nhiều đoạn cho mô hình lớn;
 - cho AI tự sửa trực tiếp Bộ não thứ hai;
-- xây Bộ não thứ hai của toàn bộ thư viện trước khi biết chủ đề nào thực sự cần.
+- xây Second Brain của toàn bộ thư viện trước khi biết chủ đề nào thực sự cần.
 
 ---
 
-# 50. Phần nào nên dùng lại, phần nào phải tự kiểm soát?
+# 53. Phần nào nên dùng lại, phần nào phải tự kiểm soát?
 
 ## Không nên tự viết lại từ đầu
 
@@ -1633,6 +2070,8 @@ Không nên:
 - PageIndex;
 - QMD;
 - công cụ đồ thị.
+
+---
 
 ## Phải thuộc quyền kiểm soát của Thư Viện Sống
 
@@ -1647,11 +2086,13 @@ Không nên:
 - kiểm tra chất lượng;
 - giao diện công cụ cho AI.
 
+Đây cũng là ranh giới được chốt rất rõ trong phương án kiến trúc trước đó.
+
 ---
 
-# 51. Công nghệ dự kiến cho giai đoạn đầu
+# 54. Công nghệ dự kiến cho giai đoạn đầu
 
-Đây là lựa chọn triển khai hiện tại, không phải hiến pháp bất biến.
+Đây là lựa chọn triển khai hiện tại, không phải “hiến pháp” bất biến.
 
 | Nhiệm vụ | Lựa chọn dự kiến |
 |---|---|
@@ -1659,10 +2100,10 @@ Không nên:
 | Giao diện dịch vụ | FastAPI |
 | Cơ sở dữ liệu thông tin | PostgreSQL hoặc giải pháp nhẹ hơn ở giai đoạn thử nghiệm |
 | File lớn | ổ đĩa/NAS hoặc MinIO/S3 |
-| Đọc tài liệu | Docling kết hợp công cụ đọc PDF phù hợp |
+| Đọc PDF/EPUB | Docling kết hợp công cụ đọc PDF phù hợp |
 | MOBI | Calibre |
 | Nhận dạng chữ | PaddleOCR |
-| Tìm theo ý nghĩa | Qdrant hoặc công cụ tương đương |
+| Tìm theo ý nghĩa | Qdrant hoặc động cơ tương đương |
 | RAG đầy đủ | RAGFlow qua bộ chuyển tiếp nếu phù hợp |
 | Tìm trong Markdown | QMD |
 | Bộ não thứ hai | Markdown + Git |
@@ -1670,11 +2111,11 @@ Không nên:
 | Giao tiếp AI | MCP + HTTP |
 | Đồ thị | chưa bật mặc định |
 
-Các lựa chọn cụ thể phải được kiểm chứng trên dữ liệu thật.
+Các lựa chọn cụ thể cần được kiểm chứng lại bằng dữ liệu thật và bộ kiểm thử trước khi triển khai sản xuất.
 
 ---
 
-# 52. Lộ trình xây dựng
+# 55. Lộ trình xây dựng
 
 ## Giai đoạn thử nghiệm
 
@@ -1689,7 +2130,11 @@ Chọn 200–500 trang đại diện.
 - tìm kiếm;
 - trích dẫn.
 
+---
+
 ## Bản kỹ thuật 0.1 — Nguồn và bằng chứng
+
+Xây chắc:
 
 ```text
 nguồn bất biến
@@ -1703,6 +2148,8 @@ tìm kiếm
 trích dẫn
 ```
 
+---
+
 ## Bản kỹ thuật 0.2 — Bộ não thứ hai
 
 Thêm:
@@ -1712,6 +2159,8 @@ Thêm:
 - sổ khẳng định;
 - QMD;
 - Git.
+
+---
 
 ## Bản kỹ thuật 0.3 — Nghiên cứu sâu
 
@@ -1724,6 +2173,8 @@ Thêm:
 - kiểm tra mâu thuẫn;
 - tự bảo trì.
 
+---
+
 ## Bản kỹ thuật 0.4 — Đọc sâu và điều phối
 
 Thêm:
@@ -1733,6 +2184,8 @@ Thêm:
 - bộ chọn cách xử lý;
 - các bộ chuyển tiếp.
 
+---
+
 ## Bản kỹ thuật 0.5 — Quan hệ phức tạp
 
 Chỉ khi có nhu cầu thực:
@@ -1741,6 +2194,8 @@ Chỉ khi có nhu cầu thực:
 - LightRAG;
 - Graphiti;
 - các hệ trí nhớ khác.
+
+---
 
 ## Bản sản xuất 1.0
 
@@ -1756,19 +2211,27 @@ Hoàn thiện:
 
 ---
 
-# 53. Thứ tự ưu tiên
+# 56. Thứ tự ưu tiên phải giữ
 
-Nếu buộc phải chọn:
+Nếu buộc phải chọn thứ tự:
 
 ```text
 1. Đúng nguồn
+
 2. Đúng cấu trúc
+
 3. Đúng trang
+
 4. Tìm đúng
+
 5. Trích dẫn đúng
+
 6. Giảm lượng chữ AI phải đọc
+
 7. Tích lũy hiểu biết
+
 8. Tự động hóa
+
 9. Đồ thị và tính năng nâng cao
 ```
 
@@ -1776,9 +2239,15 @@ Không nên đảo ngược thứ tự này.
 
 ---
 
-# 54. Điểm khác biệt thực sự
+# 57. Điểm khác biệt thực sự của dự án
 
-Thư Viện Sống AI không phải “RAGFlow + Obsidian”.
+Nếu làm đúng, Thư Viện Sống AI không phải:
+
+> RAGFlow + Obsidian.
+
+Cũng không phải:
+
+> một công cụ tìm kiếm sách.
 
 Kiến trúc thật sự là:
 
@@ -1807,13 +2276,15 @@ BỘ NÃO THỨ HAI
 
 ---
 
-# 55. Mô hình dễ nhớ nhất
+# 58. Mô hình dễ nhớ nhất
 
 Có thể coi hệ thống có hai nhân vật.
 
 ## Người thủ thư
 
-Hệ tìm bằng chứng đóng vai người thủ thư cực giỏi.
+RAG đóng vai:
+
+> **thủ thư cực giỏi.**
 
 Nó biết:
 
@@ -1822,9 +2293,13 @@ Nó biết:
 - trang nào;
 - đoạn nào.
 
+---
+
 ## Học giả
 
-Bộ não thứ hai đóng vai học giả tích lũy hiểu biết qua nhiều lần nghiên cứu.
+Bộ não thứ hai đóng vai:
+
+> **học giả tích lũy hiểu biết qua nhiều lần nghiên cứu.**
 
 Nó biết:
 
@@ -1834,19 +2309,25 @@ Nó biết:
 - các nguồn mâu thuẫn ở đâu;
 - còn câu hỏi gì chưa giải quyết.
 
+---
+
 ## Khi kết hợp
 
 > Học giả đưa ra hiểu biết.
 
 > Thủ thư mang bằng chứng đến kiểm tra.
 
+Đó là mô hình tối ưu hơn nhiều so với chỉ có một trong hai.
+
 ---
 
-# 56. Câu kết luận quan trọng nhất
+# 59. Câu kết luận quan trọng nhất
+
+Toàn bộ kiến trúc có thể rút lại thành:
 
 > **Hãy xây một thư viện số làm trí nhớ gốc; phía trên là hệ tìm bằng chứng để tìm đúng sách, đúng chương, đúng trang; phía trên nữa là Bộ não thứ hai để giữ những gì AI đã hiểu và đã kiểm chứng. Mỗi câu hỏi chỉ cho AI đọc lượng thông tin tối thiểu cần thiết, còn mọi tri thức mới chỉ được ghi nhớ sau khi có thể truy ngược về nguồn.**
 
-Câu ngắn hơn:
+Và nếu phải nói bằng một câu ngắn hơn nữa:
 
 > **RAG giúp tìm đúng bằng chứng. Bộ não thứ hai giúp không phải học lại từ đầu. Sách gốc luôn là trọng tài cuối cùng.**
 
