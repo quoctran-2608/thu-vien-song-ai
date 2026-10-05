@@ -40,6 +40,20 @@ Sau khi đối chiếu bản nghiên cứu dài với tài liệu trên GitHub, 
 - Nhiều tác tử được nghiên cứu nhưng chỉ một bộ ghi áp dụng thay đổi.
 - Các bộ máy bên ngoài phải thay thế được.
 
-### Trạng thái kiểm chứng bên ngoài
+### Vòng kiểm chứng công cụ bên ngoài — Bước 6
 
-Các mô tả dễ thay đổi theo thời gian về dự án bên ngoài chưa được coi là đã chốt. Chúng sẽ được rà lại bằng nguồn chính thức ở bước kiểm chứng tiếp theo.
+Đã kiểm chứng bằng nguồn hiện hành ngày 05/10/2026 và bổ sung báo cáo riêng.
+
+Các thay đổi nhận thức quan trọng:
+
+- Qdrant hiện có thể đảm nhiệm phần lớn tìm kiếm kết hợp, không chỉ lưu véc-tơ.
+- PageIndex đã có chế độ cục bộ và lớp nhiều tài liệu.
+- RAGFlow Biên dịch tri thức với Wiki/Graph/Tree/PageIndex/... là tính năng thật.
+- QMD đã có giao diện thư viện ổn định và công cụ đánh giá.
+- Docling hỗ trợ trực tiếp nhiều định dạng, gồm EPUB.
+- PP-OCRv6 có liệt kê tiếng Việt nhưng phải kiểm thử riêng vì từng có báo cáo thiếu ký tự có dấu.
+- Qwen3-Embedding-0.6B có tối đa 1024 chiều; 512 chỉ là cấu hình có thể chọn để thử.
+- Mem0 phân biệt benchmark của nền tảng quản lý với bản mã nguồn mở.
+- Khoj dùng AGPL-3.0 nên cần thận trọng nếu tái sử dụng mã.
+
+Kiến trúc cốt lõi không đổi: dữ liệu chuẩn thuộc về Thư Viện Sống, các công cụ ngoài là bộ máy có thể thay.
