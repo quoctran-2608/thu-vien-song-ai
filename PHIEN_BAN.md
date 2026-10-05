@@ -94,3 +94,26 @@ Hai điểm tồn đọng của Bước 7 đã được xử lý trong Bước 8
 Mốc phát hành tài liệu:
 
 > [Phát hành tài liệu v1.0](PHAT_HANH_V1.0.md)
+
+
+## Phản biện sau khi chốt v1.0
+
+Sau khi chốt tài liệu v1.0, dự án được rà lại theo vai trò phản biện, tập trung vào các điều kiện có thể làm hệ thống thất bại trong thực tế.
+
+Tài liệu:
+
+> [Phản biện: rủi ro, giới hạn và điều kiện thất bại](docs/18-rui-ro-gioi-han-va-phan-bien.md)
+
+Các rủi ro ưu tiên cao nhất gồm:
+
+- xây quá nhiều lớp trước khi bản 0.1 chứng minh giá trị;
+- sai âm thầm ở bước đọc/OCR/truy nguồn;
+- truy hồi bỏ sót bằng chứng;
+- nguồn có truy xuất nhưng bản thân nguồn không đáng tin;
+- chèn lệnh độc hại gián tiếp qua tài liệu;
+- phân quyền tìm kiếm và rò dữ liệu;
+- Bộ não thứ hai tích lũy tri thức sai/lỗi thời;
+- khó đồng bộ nhất quán giữa dữ liệu chuẩn, Markdown và các chỉ mục;
+- bản quyền, quyền xử lý dữ liệu và yêu cầu xóa.
+
+Vòng phản biện cũng phát hiện và đã đính chính một lỗi trong Bước 6: PageIndex có chế độ cục bộ, nhưng PageIndex File System nhiều tài liệu hiện là tính năng đám mây.
