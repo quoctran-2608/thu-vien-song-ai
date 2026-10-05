@@ -328,7 +328,32 @@ Nơi nhận tài liệu mới hoặc ghi chú cần xử lý.
 
 ### `sources/`
 
-Nguồn hoặc tham chiếu tới nguồn.
+Nguồn bất biến hoặc tham chiếu tới nguồn.
+
+Ở bản thử nghiệm chạy trên file cục bộ, nên ưu tiên cách lưu theo dấu vân tay SHA-256, thí dụ:
+
+```text
+vault/
+└── sources/
+    └── sha256/
+        └── ab/
+            └── abcdef...pdf
+```
+
+Trong đó `ab` là hai ký tự đầu của SHA-256 để tránh một thư mục chứa quá nhiều file.
+
+Nếu dùng NAS/S3/MinIO, có thể áp dụng cùng tư tưởng cho khóa đối tượng:
+
+```text
+sources/sha256/ab/abcdef...
+```
+
+Mục tiêu không phải bắt buộc đúng tên thư mục này, mà là:
+
+- cùng một nội dung có địa chỉ ổn định;
+- không ghi đè nguồn;
+- có thể kiểm tra file bằng SHA-256;
+- cơ sở dữ liệu chỉ tham chiếu tới nguồn, không biến công cụ tìm kiếm thành nơi duy nhất giữ file.
 
 ### `brain/`
 
