@@ -1,65 +1,95 @@
-# 1. Bài toán và mục tiêu
+# 1. Bài toán, mục tiêu và nguyên tắc nền tảng
 
 ## 1.1. Bài toán thực tế
 
-Kho tài liệu có thể chứa đồng thời:
+Kho tài liệu có thể chứa:
 
 - PDF có lớp chữ tốt;
-- PDF có lớp chữ nhưng mã hoá lỗi;
-- PDF scan từng trang;
+- PDF có chữ nhưng mã hóa lỗi;
+- PDF chỉ là ảnh quét;
 - PDF hỗn hợp chữ và ảnh;
 - EPUB;
 - MOBI;
-- sách nhiều ngôn ngữ;
-- sách cũ, mờ, lệch, cong trang;
-- tài liệu có nhiều chú thích, nhiều cột, bảng, hình.
+- nhiều ấn bản;
+- nhiều bản dịch;
+- tài liệu nhiều ngôn ngữ;
+- trang mờ, cong, lệch;
+- văn bản hai cột;
+- chú thích, bảng và hình.
 
-Nếu chỉ “chuyển tất cả thành chữ rồi nhét vào vector database”, hệ thống sẽ nhanh chóng gặp bốn vấn đề:
+Nếu chỉ lấy chữ, cắt thành các đoạn bằng nhau rồi tìm theo véc-tơ, hệ thống sẽ nhanh chóng gặp các vấn đề:
 
 1. mất cấu trúc sách;
-2. khó truy nguồn;
-3. tìm kiếm trả nhiều đoạn gần giống nhưng không đúng ý;
-4. AI phải đọc quá nhiều context, gây tốn token và dễ nhiễu.
+2. khó truy đúng trang và đúng ấn bản;
+3. lấy được đoạn gần nghĩa nhưng không thật sự chứng minh kết luận;
+4. đưa quá nhiều chữ cho AI;
+5. AI phải đọc lại những thứ đã nghiên cứu;
+6. thay công cụ có thể kéo theo việc phải xây lại dữ liệu.
 
 ## 1.2. Mục tiêu thật sự
 
-Hệ thống phải giúp AI làm được năm việc:
+Hệ thống phải giúp AI:
 
 ### Tìm đúng
 
-Tìm đúng sách, đúng chương, đúng đoạn, đúng trang.
+Tìm đúng tác phẩm, ấn bản, chương, mục, trang và đoạn.
 
-### Hiểu được cấu trúc
+### Hiểu cấu trúc
 
-AI biết một đoạn thuộc chương nào, quan hệ với mục nào và nằm trong ấn bản nào.
+Biết một đoạn thuộc đâu và có quan hệ thế nào với phần còn lại.
 
-### Tổng hợp được nhiều nguồn
+### Tổng hợp nhiều nguồn
 
-Có thể so sánh hàng chục sách mà không phải đưa nguyên hàng chục sách vào context.
+Có thể nghiên cứu hàng chục sách mà không phải đưa nguyên hàng chục sách vào một lần hỏi.
 
-### Tích lũy được hiểu biết
+### Tích lũy hiểu biết
 
-Một câu hỏi nghiên cứu tốt hôm nay phải làm hệ thống thông minh hơn ngày mai, thay vì mất đi khi đóng cuộc trò chuyện.
+Kết quả nghiên cứu tốt hôm nay phải giúp lần nghiên cứu sau tốt hơn.
 
 ### Kiểm chứng được
 
-Bất cứ nhận định quan trọng nào cũng có thể quay lại đúng nguồn và trang để kiểm tra.
+Mọi khẳng định quan trọng phải lần ngược được về bằng chứng.
 
-## 1.3. Các yêu cầu phi chức năng
+## 1.3. Hiến pháp của hệ thống
 
-- Chi phí nhập liệu thấp.
-- Không dùng OCR hoặc LLM lớn khi không cần.
-- Có thể chạy phần lớn tại máy.
-- Không bị khoá vào một nhà cung cấp.
-- Có thể thay embedding, reranker, vector database, RAG engine.
-- Có lịch sử thay đổi rõ ràng.
-- Có bộ kiểm thử chất lượng.
-- Có khả năng xử lý gia tăng: chỉ xử lý tài liệu mới hoặc phần thay đổi.
+### AI không phải là nguồn
 
-## 1.4. Điều không nên lấy làm mục tiêu
+AI là công cụ đọc, tìm, so sánh và suy luận. Quyền uy của kết luận phải đến từ bằng chứng.
 
-Không cố làm một AI “nhớ toàn bộ sách trong trọng số mô hình”. Fine-tuning không thay thế được kho nguồn có dẫn trang.
+### Nguồn phải bất biến
 
-Không cố xây graph toàn bộ ngay từ đầu. Graph chỉ có giá trị nếu phục vụ loại câu hỏi cần quan hệ phức tạp.
+Không sửa file nguồn hoặc văn bản thô của một lần xử lý.
 
-Không coi “câu trả lời nghe hợp lý” là thước đo chất lượng. Thước đo phải là khả năng tìm đúng bằng chứng và truy nguồn.
+### Kho dữ liệu chuẩn phải độc lập với công cụ
+
+RAGFlow, QMD, PageIndex, Qdrant hay mô hình AI đều có thể thay mà không làm mất dữ liệu cốt lõi.
+
+### Kết quả tìm được chưa phải bằng chứng
+
+Một kết quả tìm kiếm chỉ là ứng viên. Bằng chứng phải được kiểm tra về nguồn, vị trí, ngữ cảnh và mức hỗ trợ.
+
+### Trích dẫn có thật chưa chắc chứng minh được khẳng định
+
+Hệ thống phải kiểm tra quan hệ giữa điều AI nói và đoạn được dẫn.
+
+### Không đủ bằng chứng là một kết quả hợp lệ
+
+AI được phép kết luận “chưa đủ dữ liệu” hoặc “các nguồn mâu thuẫn”.
+
+## 1.4. Các yêu cầu phi chức năng
+
+- chi phí nhập liệu thấp;
+- không nhận dạng chữ từ ảnh khi không cần;
+- có thể chạy phần lớn tại máy;
+- không bị khóa vào một nhà cung cấp;
+- có lịch sử thay đổi;
+- có bộ kiểm thử;
+- xử lý gia tăng, không làm lại toàn bộ khi chỉ thêm vài tài liệu;
+- có thể phục hồi sau lỗi.
+
+## 1.5. Điều không lấy làm mục tiêu
+
+- Không cố nhét toàn bộ thư viện vào trọng số của mô hình AI.
+- Không xây đồ thị tri thức toàn kho ngay từ đầu.
+- Không coi câu trả lời nghe hợp lý là đủ tốt.
+- Không xem cơ sở dữ liệu véc-tơ là nguồn chân lý.
