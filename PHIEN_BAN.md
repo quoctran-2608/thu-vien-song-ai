@@ -89,7 +89,7 @@ Biên bản:
 Hai điểm tồn đọng của Bước 7 đã được xử lý trong Bước 8:
 
 - repo đã dùng **Apache License 2.0**, kèm `NOTICE`;
-- infographic README đã được thay từ bản 200×283 px sang bản 280×396 px, vẫn giữ dung lượng nhẹ.
+- infographic README đã được thay từ bản 200×283 px sang bản 230×325 px, vẫn giữ dung lượng nhẹ.
 
 Mốc phát hành tài liệu:
 
