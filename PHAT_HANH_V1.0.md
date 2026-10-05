@@ -24,6 +24,12 @@ Nó **không phải** bản phần mềm sản xuất 1.0.
 
 Nội dung gốc do dự án tạo trong repo này được phát hành theo **Apache License 2.0**; xem `LICENSE` và `NOTICE`.
 
+## Hình thức phát hành
+
+- Infographic trong README đã được thay bằng bản 280×396 px, nhẹ nhưng rõ hơn bản thu nhỏ trước.
+- README đã dẫn tới tài liệu tổng thể, hướng dẫn triển khai 0.1 và mốc phát hành này.
+- Repo công khai chỉ chứa tài liệu/mã có thể công khai; kho sách thật và dữ liệu nội bộ phải nằm ngoài repo này.
+
 Tài liệu, mã nguồn, mô hình, dữ liệu và dự án bên thứ ba được nhắc tới vẫn giữ giấy phép của chính chúng.
 
 ## Trạng thái kỹ thuật
