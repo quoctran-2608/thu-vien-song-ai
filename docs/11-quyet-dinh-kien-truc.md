@@ -1,61 +1,115 @@
-# 11. Các quyết định kiến trúc
+# 11. Các quyết định kiến trúc quan trọng
+
+Tài liệu này không chỉ ghi “chọn gì” mà còn ghi **vì sao** để các phiên bản sau không vô tình quay lại phương án đã loại bỏ.
 
 ## QĐ-001 — Nguồn gốc bất biến
 
-**Quyết định:** không sửa file nguồn và text thô của một phiên bản xử lý.
+**Chọn:** không sửa file nguồn và văn bản thô của một phiên bản xử lý.
 
-**Lý do:** mọi kết quả AI cần có thể kiểm toán và tái tạo.
+**Vì sao:** mọi kết quả phải kiểm toán và tái tạo được.
 
-## QĐ-002 — Không lấy RAGFlow làm lõi dữ liệu
+## QĐ-002 — Dữ liệu chuẩn thuộc về Thư Viện Sống
 
-**Quyết định:** RAGFlow là adapter/động cơ, không phải nguồn dữ liệu duy nhất.
+**Chọn:** RAGFlow, Qdrant, QMD, PageIndex và mô hình AI chỉ là bộ máy.
 
-**Lý do:** tránh khoá công nghệ và bảo vệ khả năng thay thế lâu dài.
+**Vì sao:** tránh khóa công nghệ và bảo vệ khả năng sống lâu dài.
 
-## QĐ-003 — Hai trí nhớ tách biệt
+**Tiêu chuẩn kiểm tra:** xóa một bộ máy và dựng lại không làm mất tri thức cốt lõi.
 
-**Quyết định:** corpus index và brain index là hai lớp riêng.
+## QĐ-003 — Hai loại trí nhớ tách biệt
 
-**Lý do:** bằng chứng và hiểu biết có vòng đời, độ tin cậy và cách truy hồi khác nhau.
+**Chọn:** kho bằng chứng và Bộ não thứ hai dùng hai lớp dữ liệu/chỉ mục khác nhau.
 
-## QĐ-004 — OCR theo tầng
+**Vì sao:** “ta biết gì” và “ta biết từ đâu” là hai câu hỏi khác nhau.
 
-**Quyết định:** chỉ OCR trang cần thiết, từ công cụ nhẹ đến mạnh.
+## QĐ-004 — Không nhận dạng chữ toàn bộ PDF
 
-**Lý do:** giảm chi phí và giảm lỗi do OCR không cần thiết.
+**Chọn:** quyết định theo từng trang.
 
-## QĐ-005 — Hybrid retrieval + reranking
+**Vì sao:** giảm chi phí, giảm lỗi và giữ chất lượng chữ gốc khi PDF đã có lớp chữ tốt.
 
-**Quyết định:** kết hợp từ khóa và ý nghĩa, sau đó xếp hạng lại.
+## QĐ-005 — Tìm kiếm kết hợp
 
-**Lý do:** sách có cả câu hỏi nguyên văn và câu hỏi ngữ nghĩa; một phương pháp đơn lẻ không đủ.
+**Chọn:** tìm theo chữ + theo ý nghĩa + xếp hạng lại.
 
-## QĐ-006 — Gói bằng chứng nhỏ
+**Vì sao:** tên riêng, câu nguyên văn và khái niệm diễn đạt khác nhau cần các cách tìm khác nhau.
 
-**Quyết định:** AI lớn chỉ đọc số ít đoạn tốt nhất và tri thức liên quan.
+## QĐ-006 — Chia đoạn theo cấu trúc
 
-**Lý do:** tiết kiệm token, giảm nhiễu và tăng khả năng kiểm chứng.
+**Chọn:** ưu tiên chương/mục/đoạn tự nhiên.
 
-## QĐ-007 — Sổ khẳng định
+**Không chọn:** cắt mù theo số ký tự.
 
-**Quyết định:** mọi tri thức quan trọng phân loại TRICH_XUAT/SUY_LUAN/MO_HO.
+**Vì sao:** giữ ngữ cảnh và giúp truy nguồn tốt hơn.
 
-**Lý do:** chống trôi nguồn và chống AI biến suy luận thành sự kiện.
+## QĐ-007 — Đọc theo độ sâu thích ứng
 
-## QĐ-008 — Single Writer
+**Chọn:** chỉ đọc sâu đến mức câu hỏi cần.
 
-**Quyết định:** nhiều tác tử được đề xuất, chỉ một bộ ghi áp dụng thay đổi chính thức.
+**Vì sao:** giảm lượng chữ và tránh nhiễu.
 
-**Lý do:** tránh xung đột và bảo đảm giao dịch có thể phục hồi.
+## QĐ-008 — Gói bằng chứng nhỏ
 
-## QĐ-009 — Không graph toàn kho ở bản đầu
+**Chọn:** mô hình AI cuối chỉ đọc số ít bằng chứng tốt nhất cùng một ít tri thức liên quan.
 
-**Quyết định:** graph là tính năng bật theo use case.
+**Vì sao:** tiết kiệm chi phí và tăng khả năng kiểm chứng.
 
-**Lý do:** chi phí cao, độ phức tạp lớn, chưa chắc tăng chất lượng cho phần lớn câu hỏi.
+## QĐ-009 — Kết quả tìm được chưa phải bằng chứng
 
-## QĐ-010 — Mọi thay động cơ phải benchmark
+**Chọn:** có cửa kiểm tra giữa tìm kiếm và bằng chứng.
 
-**Quyết định:** không thay model chỉ vì mới hơn.
+**Vì sao:** đoạn gần nghĩa chưa chắc hỗ trợ kết luận.
 
-**Lý do:** dữ liệu thực của kho sách là tiêu chuẩn quyết định.
+## QĐ-010 — Sổ khẳng định
+
+**Chọn:** tách cách tạo khẳng định với tình trạng bằng chứng.
+
+**Vì sao:** tránh biến suy luận thành sự kiện.
+
+## QĐ-011 — Nghiên cứu tạm không ghi thẳng vào Bộ não thứ hai
+
+**Chọn:** nghiên cứu → kiểm chứng → đề xuất → ghi chính thức.
+
+**Vì sao:** bảo vệ trí nhớ lâu dài khỏi kết luận chưa chắc chắn.
+
+## QĐ-012 — Một bộ ghi duy nhất
+
+**Chọn:** nhiều tác tử có thể đề xuất, chỉ một bộ phận áp dụng thay đổi.
+
+**Vì sao:** tránh xung đột và giúp kiểm toán.
+
+## QĐ-013 — Cập nhật có tính toàn vẹn
+
+**Chọn:** ghi toàn bộ hoặc không ghi.
+
+**Vì sao:** không để wiki ở trạng thái nửa cũ nửa mới.
+
+## QĐ-014 — Không xây đồ thị toàn kho ở bản đầu
+
+**Chọn:** đồ thị là khả năng bật theo bài toán.
+
+**Vì sao:** chi phí và độ phức tạp cao trong khi nhiều câu hỏi không cần.
+
+## QĐ-015 — Second Brain phát triển theo nhu cầu
+
+**Chọn:** lập chỉ mục rộng, tiêu hóa sâu có chọn lọc.
+
+**Vì sao:** không lãng phí chi phí đọc hàng chục nghìn sách chưa bao giờ được dùng.
+
+## QĐ-016 — Không tìm thấy không đồng nghĩa không tồn tại
+
+**Chọn:** kết quả âm phải ghi phạm vi đã tìm.
+
+**Vì sao:** không thể biến giới hạn của corpus thành khẳng định tuyệt đối.
+
+## QĐ-017 — Công cụ mới phải được kiểm thử
+
+**Chọn:** thay đổi dựa trên bộ kiểm thử của dữ liệu thật.
+
+**Vì sao:** “mới hơn” hoặc “mạnh hơn trên bảng xếp hạng chung” chưa chắc tốt hơn cho thư viện này.
+
+## QĐ-018 — Không dùng huấn luyện lại mô hình để thay RAG
+
+**Chọn:** kiến thức sách nằm trong kho có truy nguồn.
+
+**Vì sao:** huấn luyện lại không giải quyết tốt yêu cầu trang, ấn bản và bằng chứng cụ thể.
