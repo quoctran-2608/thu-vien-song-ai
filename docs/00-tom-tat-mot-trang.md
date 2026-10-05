@@ -1,81 +1,71 @@
 # Tóm tắt một trang
 
+> Đây là bản đọc nhanh. Nếu muốn hiểu đầy đủ, đọc [Tài liệu tổng thể phiên bản 1.0](00-TAI-LIEU-TONG-THE-V1.0.md).
+
 ## Mục tiêu
 
-Biến kho PDF, EPUB, MOBI thành một thư viện mà AI có thể:
+Xây một nền tảng giúp AI:
 
-- tìm đúng sách, chương, đoạn, trang;
+- tìm đúng tài liệu, chương, mục, trang và đoạn;
 - tổng hợp nhiều nguồn;
-- nhớ lại kết quả nghiên cứu cũ;
-- tự tích lũy một Bộ não thứ hai;
-- luôn quay lại được nguồn gốc để kiểm chứng;
-- giảm tối đa lượng chữ phải gửi vào mô hình AI ở mỗi câu hỏi.
+- phân biệt nguồn với suy luận;
+- ghi nhớ kết quả nghiên cứu tốt;
+- luôn quay lại được bằng chứng;
+- giảm lượng chữ phải đưa cho mô hình AI ở mỗi câu hỏi.
 
-## Phương án tốt nhất
+## Bốn lớp chính
 
-Xây bốn lớp:
+```text
+KHO NGUỒN GỐC
+↓
+KHO DỮ LIỆU CHUẨN + HỆ TÌM BẰNG CHỨNG
+↓
+BỘ NÃO THỨ HAI
+↓
+KHÔNG GIAN NGHIÊN CỨU
+```
 
-1. **Kho nguồn gốc**: PDF/EPUB/MOBI/ảnh trang, giữ nguyên.
-2. **Kho dữ liệu chuẩn + RAG**: sách → ấn bản → chương → mục → trang → khối → đoạn tìm kiếm.
-3. **Bộ não thứ hai**: các trang tri thức do AI tổng hợp có nguồn, liên kết và lịch sử.
-4. **Bộ nhớ làm việc**: gói nhỏ chỉ chứa bằng chứng và tri thức liên quan đến câu hỏi hiện tại.
+## Hai loại trí nhớ
 
-## Cách xử lý tài liệu
+**Trí nhớ bằng chứng** trả lời:
 
-- PDF có chữ tốt: lấy trực tiếp, không OCR.
-- PDF scan: OCR theo từng trang.
-- Trang dễ: PP-OCRv6.
-- Trang khó: PaddleOCR-VL.
-- EPUB: lấy XHTML và mục lục trực tiếp.
-- MOBI: chuyển sang EPUB/HTML bằng Calibre.
+> Điều này lấy từ sách nào, trang nào, đoạn nào?
 
-Luôn giữ song song `văn_bản_thô` và `văn_bản_làm_sạch`.
+**Trí nhớ hiểu biết** trả lời:
 
-## Cách tìm kiếm
+> Sau nhiều lần đọc và nghiên cứu, hệ thống đã hiểu được gì?
 
-Không chọn một trong hai mà kết hợp:
+## Nguyên tắc cốt lõi
 
-- tìm theo chữ cho tên riêng, thuật ngữ, câu nguyên văn;
-- tìm theo ý nghĩa cho câu hỏi diễn đạt khác từ;
-- trộn kết quả;
-- dùng bộ xếp hạng lại để chỉ giữ vài đoạn tốt nhất.
+- AI không phải là nguồn.
+- Nguồn gốc phải được giữ nguyên.
+- Một kết quả tìm được chưa tự động là bằng chứng.
+- Một trích dẫn có thật chưa chắc chứng minh được khẳng định.
+- Không đủ bằng chứng là một kết quả hợp lệ.
+- Dữ liệu chuẩn phải độc lập với RAGFlow, QMD, PageIndex, Qdrant và mọi mô hình AI.
+- Nhiều AI có thể nghiên cứu nhưng chỉ một bộ phận được ghi chính thức vào Bộ não thứ hai.
+- Công cụ mới phải được kiểm thử trên dữ liệu thật trước khi thay công cụ cũ.
 
-AI lớn chỉ nhận một **gói bằng chứng** khoảng vài đoạn thay vì hàng chục đoạn.
+## Cách AI đọc
 
-## Bộ não thứ hai
+AI không đọc toàn bộ thư viện.
 
-Bộ não thứ hai không phải bản sao của sách. Nó là phần tri thức đã được tiêu hoá:
+Nó đọc theo độ sâu thích ứng:
 
-- khái niệm;
-- tác giả;
-- so sánh;
-- điểm đồng thuận;
-- điểm mâu thuẫn;
-- câu hỏi mở;
-- kết quả nghiên cứu trước.
+```text
+câu đơn giản
+→ vài trang tri thức
 
-Mỗi khẳng định quan trọng phải biết nó lấy từ đâu. Sách gốc vẫn là trọng tài cuối cùng.
+cần kiểm chứng
+→ vài đoạn nguồn
 
-## Công nghệ đề xuất
+cần đọc sâu
+→ chương / mục
 
-- Docling/PyMuPDF: đọc tài liệu.
-- Calibre: MOBI.
-- PaddleOCR: OCR.
-- PostgreSQL: dữ liệu mô tả.
-- Qdrant hoặc RAGFlow qua bộ chuyển tiếp: kho truy hồi sách.
-- Qwen3-Embedding-0.6B: tìm theo ý nghĩa.
-- Qwen3-Reranker-0.6B: xếp hạng lại.
-- Markdown + Git: Bộ não thứ hai.
-- QMD: tìm trong Markdown.
-- PageIndex: đọc sâu một số sách dài khi đã chọn được sách.
-- MCP/HTTP: giao diện cho AI.
-
-## Quyết định quan trọng nhất
-
-Không để RAGFlow, QMD, Obsidian, PageIndex hay bất kỳ repo nào sở hữu dữ liệu cốt lõi.
-
-Dữ liệu chuẩn + truy nguồn + sổ khẳng định + Bộ não thứ hai phải thuộc repo của mình. Các dự án bên ngoài chỉ là động cơ thay thế được.
+cần nghiên cứu lớn
+→ không gian nghiên cứu riêng
+```
 
 ## Một câu để nhớ
 
-> **RAG là trí nhớ bằng chứng. Bộ não thứ hai là trí nhớ hiểu biết. Kết hợp cả hai để AI vừa đúng, vừa nhanh, vừa tích lũy được tri thức.**
+> **RAG giúp tìm đúng bằng chứng. Bộ não thứ hai giúp không phải học lại từ đầu. Nguồn gốc luôn là trọng tài cuối cùng.**
