@@ -91,3 +91,34 @@ Chạy lại cùng một bộ câu hỏi chuẩn sau mỗi thay đổi để xem
 ## Tác tử AI
 
 Một tiến trình AI được giao một vai trò hoặc nhiệm vụ cụ thể, thí dụ tìm tài liệu, kiểm chứng hoặc bảo trì Bộ não thứ hai.
+
+
+## BM25
+
+Một cách tìm theo chữ, ưu tiên những từ/cụm từ có tính phân biệt cao trong tập tài liệu. Hữu ích với tên riêng, câu nguyên văn và thuật ngữ.
+
+## RRF — hợp nhất thứ hạng đối ứng
+
+Cách gộp nhiều danh sách kết quả tìm kiếm dựa trên thứ hạng của mỗi kết quả. Nó giúp kết hợp tìm theo chữ và tìm theo ý nghĩa mà không cần các điểm số của hai hệ phải cùng thang đo.
+
+## Precision — độ chính xác của tập kết quả
+
+Trong các kết quả hệ thống trả về, tỷ lệ bao nhiêu là đúng hoặc thật sự liên quan.
+
+## Recall — tỷ lệ tìm thấy
+
+Trong các nguồn đúng đáng lẽ phải tìm được, hệ thống tìm thấy được bao nhiêu.
+
+**Recall@5** và **Recall@10** xem nguồn đúng có xuất hiện trong 5 hoặc 10 kết quả đầu hay không.
+
+## MRR — thứ hạng đối ứng trung bình
+
+Đo việc nguồn đúng xuất hiện sớm đến mức nào. Nguồn đúng đứng càng gần đầu danh sách thì điểm càng cao.
+
+## nDCG — chất lượng thứ hạng có trọng số
+
+Đánh giá thứ tự kết quả khi các kết quả có nhiều mức độ liên quan khác nhau, không chỉ đúng/sai tuyệt đối.
+
+## F1 — điểm cân bằng
+
+Một chỉ số kết hợp Precision và Recall để tránh tối ưu một phía mà làm phía còn lại quá kém.
