@@ -117,3 +117,12 @@ Các rủi ro ưu tiên cao nhất gồm:
 - bản quyền, quyền xử lý dữ liệu và yêu cầu xóa.
 
 Vòng phản biện cũng phát hiện và đã đính chính một lỗi trong Bước 6: PageIndex có chế độ cục bộ, nhưng PageIndex File System nhiều tài liệu hiện là tính năng đám mây.
+
+
+## Kế hoạch khắc phục rủi ro
+
+Sau vòng phản biện, dự án đã nghiên cứu biện pháp giảm thiểu cho từng rủi ro, kèm ước lượng xác suất đưa rủi ro xuống mức chấp nhận được và nguồn lực cần thiết.
+
+> [Kế hoạch khắc phục rủi ro: giải pháp, xác suất thành công và nguồn lực](docs/19-ke-hoach-khac-phuc-rui-ro.md)
+
+Các tỷ lệ phần trăm trong tài liệu này là **ước lượng kỹ thuật**, không phải xác suất thống kê đã được chứng minh. Chúng dùng để ưu tiên nguồn lực và phải được cập nhật khi bản 0.1 có số liệu thực nghiệm.
