@@ -1,4 +1,4 @@
-# Phiên bản 1.0
+# Phiên bản tài liệu và đặc tả 1.0
 
 Ngày chốt nền tảng nghiên cứu: **05/10/2026**
 
@@ -6,7 +6,17 @@ Ngày chốt nền tảng nghiên cứu: **05/10/2026**
 
 Phiên bản 1.0 hiện là **bộ đặc tả nghiên cứu và kiến trúc nền tảng**, chưa phải bản phần mềm sản xuất hoàn chỉnh.
 
+> **Lưu ý:** “v1.0” ở đây là phiên bản tài liệu/đặc tả. Mốc “phần mềm sản xuất 1.0” trong lộ trình là một mục tiêu tương lai sau các bản kỹ thuật 0.x.
+
+Nhánh `v1.0` trên GitHub được dùng làm mốc tài liệu và hiện được đồng bộ với trạng thái tài liệu đã duyệt.
+
 Bộ tài liệu đã được rà soát và viết lại để khắc phục tình trạng bản lưu trong repo bị rút gọn so với quá trình nghiên cứu.
+
+## Bắt đầu triển khai
+
+Kỹ sư mới nên bắt đầu tại:
+
+> [Hướng dẫn bắt đầu triển khai bản kỹ thuật 0.1](docs/17-huong-dan-bat-dau-trien-khai-v0.1.md)
 
 ## Tài liệu chính
 
