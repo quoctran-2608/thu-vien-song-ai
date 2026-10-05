@@ -18,6 +18,10 @@ Kỹ sư muốn bắt đầu xây ngay nên đọc:
 
 👉 **[Hướng dẫn bắt đầu triển khai bản kỹ thuật 0.1](docs/17-huong-dan-bat-dau-trien-khai-v0.1.md)**
 
+Mốc tài liệu đã chốt:
+
+👉 [Phát hành tài liệu v1.0](PHAT_HANH_V1.0.md)
+
 ## Đọc tài liệu nào trước?
 
 ### Muốn hiểu toàn bộ dự án
@@ -176,3 +180,13 @@ Nếu bỏ PageIndex, cấu trúc sách vẫn còn.
 ## 9. Một câu để nhớ
 
 > **RAG giúp tìm đúng bằng chứng. Bộ não thứ hai giúp không phải học lại từ đầu. Sách gốc luôn là trọng tài cuối cùng.**
+
+
+## 10. Giấy phép
+
+Nội dung gốc do dự án tạo trong repo này được phát hành theo **Apache License 2.0**.
+
+- Xem [LICENSE](LICENSE).
+- Xem [NOTICE](NOTICE) để biết phạm vi thông báo bản quyền và nội dung bên thứ ba.
+
+Các dự án, mô hình, thư viện, sách, dữ liệu và tài liệu bên thứ ba được nhắc tới vẫn giữ giấy phép và bản quyền của chính chúng.
