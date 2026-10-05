@@ -53,7 +53,7 @@ Các thay đổi nhận thức quan trọng:
 - Docling hỗ trợ trực tiếp nhiều định dạng, gồm EPUB.
 - PP-OCRv6 có liệt kê tiếng Việt nhưng phải kiểm thử riêng vì từng có báo cáo thiếu ký tự có dấu.
 - Qwen3-Embedding-0.6B có tối đa 1024 chiều; 512 chỉ là cấu hình có thể chọn để thử.
-- Mem0 phân biệt benchmark của nền tảng quản lý với bản mã nguồn mở.
+- Mem0 phân biệt kết quả đánh giá của nền tảng quản lý với bản mã nguồn mở.
 - Khoj dùng AGPL-3.0 nên cần thận trọng nếu tái sử dụng mã.
 
 Kiến trúc cốt lõi không đổi: dữ liệu chuẩn thuộc về Thư Viện Sống, các công cụ ngoài là bộ máy có thể thay.
