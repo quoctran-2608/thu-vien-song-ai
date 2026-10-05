@@ -2141,11 +2141,15 @@ xếp hạng lại
 
 Thông số hiện hành cho phép tối đa 1024 chiều và có thể chọn chiều đầu ra nhỏ hơn. Nếu dùng 512 chiều thì đó là **cấu hình thử nghiệm của Thư Viện Sống**, không phải thông số gốc của mô hình.
 
-### PageIndex đã có chế độ cục bộ và lớp nhiều tài liệu
+### PageIndex có chế độ cục bộ, nhưng lớp nhiều tài liệu hiện thuộc đám mây
 
-Khả năng này mạnh hơn nhận định cũ. Tuy vậy, ở bản đầu vẫn giữ nguyên chiến lược:
+Kiểm chứng lại cho thấy PageIndex cục bộ có thể lập chỉ mục, truy hồi và trò chuyện trên PDF có chữ, nhưng PageIndex File System nhiều tài liệu hiện được mô tả là **tính năng đám mây**. Nhận định trước đây rằng hai khả năng này cùng có ở chế độ cục bộ là không chính xác.
 
-> **tìm rẻ trên toàn thư viện trước → thu hẹp → dùng PageIndex đọc sâu.**
+Vì vậy ở bản đầu càng nên giữ nguyên chiến lược:
+
+> **tìm rẻ trên toàn thư viện bằng hệ của Thư Viện Sống → thu hẹp → dùng PageIndex cục bộ để đọc sâu một số PDF có chữ.**
+
+Nếu muốn dùng PageIndex Cloud cho nhiều tài liệu, phải đánh giá riêng quyền riêng tư, chi phí và phụ thuộc nhà cung cấp.
 
 ### RAGFlow Biên dịch tri thức là tính năng thật
 
