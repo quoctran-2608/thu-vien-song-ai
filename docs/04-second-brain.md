@@ -2,25 +2,13 @@
 
 ## 4.1. Vì sao RAG chưa đủ?
 
-RAG rất giỏi tìm bằng chứng nhưng mỗi lần hỏi có xu hướng phải tìm và tiêu hoá lại tài liệu.
+RAG rất giỏi tìm nguồn, nhưng mỗi lần hỏi có thể phải tìm và tiêu hóa lại tài liệu.
 
-Bộ não thứ hai giải quyết câu hỏi khác:
+Bộ não thứ hai giải quyết câu hỏi:
 
-> “Sau nhiều lần đọc và nghiên cứu, hệ thống đã hiểu được gì và những hiểu biết đó liên hệ với nhau ra sao?”
+> **Sau nhiều lần đọc và nghiên cứu, hệ thống đã hiểu được gì?**
 
-## 4.2. Mô hình LLM Wiki
-
-Cảm hứng quan trọng đến từ mô hình:
-
-```text
-raw/    = nguyên liệu gốc
-wiki/   = tri thức AI đã biên dịch
-quy tắc = hiến pháp cho AI duy trì wiki
-```
-
-Trong dự án này, tư tưởng đó được mở rộng thành một lớp có truy nguồn và kiểm toán chặt hơn.
-
-## 4.3. Wiki không phải bản tóm tắt từng cuốn
+## 4.2. Bộ não thứ hai không phải bản tóm tắt từng sách
 
 Nếu chỉ có:
 
@@ -29,93 +17,155 @@ Sách A → tóm tắt A
 Sách B → tóm tắt B
 ```
 
-thì chưa phải Bộ não thứ hai mạnh.
+thì chưa phải một Bộ não thứ hai mạnh.
 
-Bộ não thứ hai cần có các trang xuyên nguồn:
+Nó cần các trang xuyên nguồn:
 
 - khái niệm;
 - tác giả;
-- trường phái;
+- truyền thống;
 - so sánh;
 - tranh luận;
 - tổng hợp;
-- câu hỏi mở;
-- kết quả nghiên cứu.
+- câu hỏi mở.
 
-Ví dụ một trang `Vô ngã.md` có thể tổng hợp từ nhiều sách và liên kết sang `Duyên khởi`, `Ngũ uẩn`, `Tánh không`.
+## 4.3. Cấu trúc gợi ý
 
-## 4.4. Sổ khẳng định
-
-Mỗi ý quan trọng được lưu như một khẳng định có cấu trúc:
-
-```yaml
-id: C1258
-noi_dung: "..."
-loai: TRICH_XUAT | SUY_LUAN | MO_HO
-nguon:
-  - tai_lieu: book_183
-    trang: 126-128
-muc_tin_cay: 0.97
+```text
+brain/
+├── khai-niem/
+├── nhan-vat/
+├── tac-pham/
+├── truyen-thong/
+├── so-sanh/
+├── tranh-luan/
+├── tong-hop/
+└── cau-hoi-mo/
 ```
 
-Điều này ngăn AI trộn “điều sách nói” với “điều AI suy ra”.
+## 4.4. Cấu trúc một trang tri thức
 
-## 4.5. Tự duy trì nhưng không tự bịa
+Một trang quan trọng nên phân biệt:
 
-Bộ não thứ hai có thể tự kiểm tra:
+```text
+THÔNG TIN TỪ NGUỒN
+
+TỔNG HỢP CỦA AI
+
+ĐIỂM MÂU THUẪN
+
+ĐIỂM CHƯA CHẮC CHẮN
+
+CÂU HỎI CẦN NGHIÊN CỨU THÊM
+
+NGUỒN
+```
+
+## 4.5. RAG có độ phủ rộng, Bộ não thứ hai có độ sâu
+
+Nếu có hàng chục nghìn sách:
+
+- tất cả có thể được số hóa và lập chỉ mục;
+- Bộ não thứ hai chỉ phát triển sâu ở những chủ đề thực sự được dùng.
+
+Không nên cho AI tiêu hóa toàn bộ thư viện ngay ngày đầu.
+
+## 4.6. Sổ khẳng định
+
+Một khẳng định quan trọng cần bản ghi có cấu trúc:
+
+```text
+mã
+nội dung
+nguồn
+vị trí
+cách tạo
+tình trạng bằng chứng
+```
+
+### Cách tạo khẳng định
+
+- TRÍCH_XUẤT: nguồn nói trực tiếp;
+- SUY_LUẬN: AI rút ra từ bằng chứng;
+- TỔNG_HỢP: AI kết hợp nhiều nguồn.
+
+### Tình trạng bằng chứng
+
+- ĐƯỢC_HỖ_TRỢ;
+- CÓ_TRANH_LUẬN;
+- HỖ_TRỢ_YẾU;
+- CHƯA_ĐỦ_DỮ_LIỆU;
+- CHƯA_BIẾT;
+- BỊ_PHẢN_BÁC.
+
+Hai chiều này không nên trộn thành một.
+
+## 4.7. Phân biệt nguyên văn, bản dịch và suy luận
+
+Tối thiểu nên tách:
+
+1. nguyên văn nguồn;
+2. bản dịch xuất bản;
+3. bản dịch làm việc do AI tạo;
+4. diễn đạt lại;
+5. diễn giải của tác giả/học giả;
+6. tổng hợp của AI.
+
+Không được để người đọc hiểu nhầm bản dịch AI là bản dịch xuất bản.
+
+## 4.8. Cập nhật gia tăng
+
+Khi thêm vài tài liệu mới vào thư viện lớn:
+
+- xử lý tài liệu mới;
+- xác định các trang tri thức có thể bị ảnh hưởng;
+- chỉ xem xét cập nhật các trang đó.
+
+Không đọc lại toàn bộ thư viện.
+
+## 4.9. Bảng kê xử lý
+
+Một bảng kê xử lý, thường gọi là `manifest`, nên biết:
+
+- file nào đã xử lý;
+- dấu vân tay số;
+- phiên bản xử lý;
+- kết quả gì đã sinh ra;
+- phần nào có thể bị ảnh hưởng.
+
+## 4.10. Nhiều AI nhưng một bộ ghi
+
+```text
+AI 1 ─┐
+AI 2 ─┼→ đề xuất → kiểm tra → một bộ ghi → Git
+AI 3 ─┘
+```
+
+Nhiều AI được đọc và đề xuất. Chỉ một bộ phận được ghi chính thức.
+
+## 4.11. Mỗi cập nhật phải có tính toàn vẹn
+
+Nếu cần sửa nhiều trang, phải:
+
+> **ghi tất cả hoặc không ghi gì.**
+
+Không để wiki ở trạng thái nửa cũ nửa mới.
+
+## 4.12. Tự bảo trì nhưng không tự bịa
+
+Có thể tự kiểm tra:
 
 - liên kết hỏng;
 - trang mồ côi;
-- khái niệm trùng;
+- trang trùng;
 - khẳng định thiếu nguồn;
-- mâu thuẫn giữa các trang;
-- chủ đề xuất hiện nhiều nhưng chưa có trang riêng.
+- mâu thuẫn;
+- trang quá dài hoặc quá nhỏ.
 
-Nhưng khi thấy mâu thuẫn, hệ thống không được âm thầm chọn một bên và xoá bên còn lại.
+Nhưng khi hai nguồn bất đồng, không được tự động xóa một bên hoặc chọn người thắng nếu chưa đủ căn cứ.
 
-## 4.6. Cập nhật gia tăng
+## 4.13. QMD trong kiến trúc
 
-Khi thêm ba cuốn mới vào thư viện 10.000 cuốn:
+QMD phù hợp làm công cụ tìm trong kho Markdown của Bộ não thứ hai.
 
-- chỉ xử lý ba cuốn mới;
-- xác định các trang wiki có thể bị ảnh hưởng;
-- chỉ cập nhật các trang đó;
-- không đọc lại toàn bộ kho.
-
-## 4.7. Một bộ ghi duy nhất
-
-Nhiều tác tử có thể nghiên cứu song song, nhưng chỉ một bộ phận có quyền ghi chính thức.
-
-```text
-Tác tử A ─┐
-Tác tử B ─┼→ đề xuất → kiểm tra → bộ ghi duy nhất → Git commit
-Tác tử C ─┘
-```
-
-Điều này tránh xung đột và giúp mọi thay đổi phục hồi được.
-
-## 4.8. Bộ não làm việc tạm thời
-
-Ngoài Bộ não thứ hai lâu dài, mỗi nghiên cứu sâu nên có một không gian tạm:
-
-```text
-research/chu-de-X/
-  question.md
-  evidence/
-  notes/
-  contradictions.md
-  synthesis.md
-```
-
-Chỉ kết quả đã kiểm chứng mới được đề xuất đưa vào Bộ não thứ hai.
-
-## 4.9. QMD trong kiến trúc
-
-QMD rất phù hợp để tìm trong wiki Markdown vì có thể kết hợp:
-
-- tìm theo chữ;
-- tìm theo ý nghĩa;
-- xếp hạng lại;
-- giao diện MCP.
-
-Không nhất thiết dùng cùng chỉ mục với hàng triệu đoạn sách.
+Nó không phải nơi sở hữu dữ liệu. Markdown và Git mới là phần bền lâu.
