@@ -82,7 +82,7 @@ Xem biên bản: `docs/_kiem-ke/kiem-toan-v1.0-buoc-7-2026-10-05.md`.
 - thêm `LICENSE` theo Apache License 2.0;
 - thêm `NOTICE` để làm rõ phạm vi bản quyền và nội dung bên thứ ba;
 - thêm `PHAT_HANH_V1.0.md` làm mốc phát hành tài liệu/đặc tả v1.0;
-- thay infographic 200×283 px bằng bản 280×396 px, vẫn tối ưu dung lượng cho README;
+- thay infographic 200×283 px bằng bản 230×325 px, vẫn tối ưu dung lượng cho README;
 - cập nhật README, thông tin repo, tài liệu phiên bản và biên bản kiểm toán;
 - chuẩn bị đồng bộ nhánh `v1.0` với commit chốt cuối của `main`.
 
