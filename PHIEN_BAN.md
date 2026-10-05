@@ -86,7 +86,11 @@ Biên bản:
 
 > [Kiểm toán tài liệu phiên bản 1.0 — Bước 7](docs/_kiem-ke/kiem-toan-v1.0-buoc-7-2026-10-05.md)
 
-Hai điểm còn cần quyết định/xử lý ở bước chốt cuối:
+Hai điểm tồn đọng của Bước 7 đã được xử lý trong Bước 8:
 
-- giấy phép của chính repo;
-- thay infographic thu nhỏ bằng bản chất lượng cao hơn.
+- repo đã dùng **Apache License 2.0**, kèm `NOTICE`;
+- infographic README đã được thay từ bản 200×283 px sang bản 280×396 px, vẫn giữ dung lượng nhẹ.
+
+Mốc phát hành tài liệu:
+
+> [Phát hành tài liệu v1.0](PHAT_HANH_V1.0.md)
