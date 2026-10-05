@@ -2163,6 +2163,9 @@ Nguyên tắc cuối cùng vẫn không đổi:
 
 # 55. Lộ trình xây dựng
 
+> Nếu bắt đầu triển khai ngay, xem [Hướng dẫn bắt đầu triển khai bản kỹ thuật 0.1](17-huong-dan-bat-dau-trien-khai-v0.1.md). Tài liệu đó chuyển các nguyên tắc dưới đây thành thứ tự công việc, dữ liệu thử và tiêu chí hoàn thành cụ thể.
+
+
 ## Giai đoạn thử nghiệm
 
 Chọn 200–500 trang đại diện.
