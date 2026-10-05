@@ -70,3 +70,23 @@ Xem chi tiết tại:
 > [Kiểm chứng công cụ và dự án tham khảo — 05/10/2026](docs/16-kiem-chung-cong-cu-2026-10-05.md)
 
 Kết quả kiểm chứng **không biến các phiên bản công cụ thành cam kết bất biến**. Trước khi triển khai sản xuất vẫn phải kiểm tra lại phiên bản, giấy phép, yêu cầu phần cứng và chạy bộ đánh giá trên dữ liệu thật.
+
+
+## Kiểm toán tài liệu Bước 7
+
+Repo đã được kiểm toán lại như một người mới đọc dự án:
+
+- phân biệt rõ phiên bản tài liệu và phiên bản phần mềm;
+- bổ sung điểm bắt đầu triển khai bản 0.1;
+- kiểm tra lại liên kết nội bộ;
+- chuẩn hóa thêm tiếng Việt;
+- ghi rõ trạng thái công khai của repo.
+
+Biên bản:
+
+> [Kiểm toán tài liệu phiên bản 1.0 — Bước 7](docs/_kiem-ke/kiem-toan-v1.0-buoc-7-2026-10-05.md)
+
+Hai điểm còn cần quyết định/xử lý ở bước chốt cuối:
+
+- giấy phép của chính repo;
+- thay infographic thu nhỏ bằng bản chất lượng cao hơn.
