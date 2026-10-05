@@ -51,6 +51,12 @@ Việc thay RAGFlow, QMD, PageIndex, Qdrant, mô hình biểu diễn ý nghĩa h
 - Bộ não thứ hai;
 - lịch sử nghiên cứu.
 
-## Phần còn phải kiểm chứng trước khi chốt kỹ thuật triển khai
+## Kiểm chứng công cụ bên ngoài
 
-Thông tin hiện hành về các dự án bên ngoài như Docling, PaddleOCR, RAGFlow, QMD, PageIndex, Cognee, LightRAG, Graphiti và các mô hình AI sẽ được kiểm tra lại bằng nguồn chính thức trước khi chốt lựa chọn triển khai.
+Vòng kiểm chứng ngày **05/10/2026** đã hoàn thành cho các thành phần chính: Docling, PaddleOCR, RAGFlow, Qdrant, QMD, PageIndex, claude-obsidian, obsidian-wiki, Hermes Agent/LLM Wiki, Cognee, LightRAG, Graphiti, Mem0, Khoj, Qwen3-Embedding, Qwen3-Reranker và BGE-M3.
+
+Xem chi tiết tại:
+
+> [Kiểm chứng công cụ và dự án tham khảo — 05/10/2026](docs/16-kiem-chung-cong-cu-2026-10-05.md)
+
+Kết quả kiểm chứng **không biến các phiên bản công cụ thành cam kết bất biến**. Trước khi triển khai sản xuất vẫn phải kiểm tra lại phiên bản, giấy phép, yêu cầu phần cứng và chạy bộ đánh giá trên dữ liệu thật.
