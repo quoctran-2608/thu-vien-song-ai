@@ -4,8 +4,6 @@
 
 > Nền tảng tri thức kết hợp **thư viện số có cấu trúc + RAG (tìm bằng chứng) + Bộ não thứ hai (tích lũy hiểu biết) + không gian nghiên cứu tạm thời**, nhằm giúp AI đọc, tìm, kiểm chứng, tổng hợp và ghi nhớ tri thức từ kho sách lớn với chi phí thấp và khả năng thay thế công nghệ lâu dài.
 
-![Minh hoạ RAG và Bộ não thứ hai](assets/infographic-rag-second-brain.png)
-
 ## 1. Tầm nhìn
 
 Mục tiêu của dự án không phải tạo thêm một ứng dụng “hỏi đáp PDF”. Mục tiêu là xây một **hệ điều hành tri thức** có thể sống nhiều năm, trong đó:
