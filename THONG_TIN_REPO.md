@@ -49,8 +49,9 @@ Nếu sau này cần chứa dữ liệu thật, nên:
 
 ## Giấy phép của chính repo
 
-Tại thời điểm kiểm toán Bước 7, repo **chưa có file LICENSE**.
+Repo hiện dùng **Apache License 2.0** cho nội dung gốc do dự án tạo.
 
-Vòng kiểm toán không tự chọn giấy phép vì đây là quyết định của chủ repo.
+- Văn bản giấy phép: `LICENSE`.
+- Thông báo phạm vi và nội dung bên thứ ba: `NOTICE`.
 
-Trước khi khuyến khích người khác tái sử dụng mã/tài liệu hoặc đóng góp, cần chọn giấy phép phù hợp cho chính dự án.
+Việc nhắc tới hoặc liên kết một dự án, mô hình, thư viện, sách hay tài liệu bên thứ ba **không làm thay đổi giấy phép hoặc bản quyền của nội dung đó**.
