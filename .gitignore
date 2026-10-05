@@ -1,0 +1,14 @@
+# Dữ liệu nguồn thật không đưa vào repo tài liệu mẫu
+vault/sources/*
+!vault/sources/.gitkeep
+
+# Dữ liệu sinh ra cục bộ
+.cache/
+.tmp/
+__pycache__/
+*.pyc
+.env
+
+# Hệ điều hành
+.DS_Store
+Thumbs.db
