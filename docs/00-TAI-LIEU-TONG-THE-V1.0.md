@@ -2092,26 +2092,72 @@ Không nên:
 
 # 54. Công nghệ dự kiến cho giai đoạn đầu
 
-Đây là lựa chọn triển khai hiện tại, không phải “hiến pháp” bất biến.
+Các lựa chọn dưới đây đã được **kiểm chứng lại bằng nguồn hiện hành ngày 05/10/2026**. Chi tiết xem [Báo cáo kiểm chứng công cụ ngày 05/10/2026](16-kiem-chung-cong-cu-2026-10-05.md).
 
-| Nhiệm vụ | Lựa chọn dự kiến |
+Đây vẫn là lựa chọn triển khai để thử nghiệm, không phải “hiến pháp” bất biến.
+
+| Nhiệm vụ | Lựa chọn dự kiến sau kiểm chứng |
 |---|---|
 | Ngôn ngữ chính | Python |
 | Giao diện dịch vụ | FastAPI |
 | Cơ sở dữ liệu thông tin | PostgreSQL hoặc giải pháp nhẹ hơn ở giai đoạn thử nghiệm |
 | File lớn | ổ đĩa/NAS hoặc MinIO/S3 |
-| Đọc PDF/EPUB | Docling kết hợp công cụ đọc PDF phù hợp |
-| MOBI | Calibre |
-| Nhận dạng chữ | PaddleOCR |
-| Tìm theo ý nghĩa | Qdrant hoặc động cơ tương đương |
-| RAG đầy đủ | RAGFlow qua bộ chuyển tiếp nếu phù hợp |
-| Tìm trong Markdown | QMD |
+| Đọc và chuẩn hóa tài liệu | Docling là ứng viên mặc định để thử |
+| MOBI | Calibre hoặc tuyến chuyển đổi phù hợp trước khi nhập |
+| Nhận dạng chữ trang thường | PP-OCRv6, nhưng phải kiểm thử tiếng Việt riêng |
+| Trang bố cục khó | PaddleOCR-VL-1.6 hoặc tuyến dự phòng tương đương |
+| Chỉ mục kho nguồn | Qdrant với tìm theo ý nghĩa + tìm thưa/BM25 + hợp nhất thứ hạng |
+| Mô hình biểu diễn ý nghĩa đầu tiên để thử | Qwen3-Embedding-0.6B |
+| Mô hình xếp hạng lại đầu tiên để thử | Qwen3-Reranker-0.6B |
+| Đường chuẩn so sánh | BGE-M3 |
+| RAG đầy đủ / biên dịch tri thức | RAGFlow qua bộ chuyển tiếp |
+| Tìm trong Bộ não thứ hai | QMD |
 | Bộ não thứ hai | Markdown + Git |
-| Đọc sâu sách dài | PageIndex khi cần |
+| Đọc sâu sách dài | PageIndex sau khi đã thu hẹp phạm vi |
 | Giao tiếp AI | MCP + HTTP |
-| Đồ thị | chưa bật mặc định |
+| Đồ thị / trí nhớ tác tử nâng cao | chưa bật mặc định; LightRAG, Graphiti, Cognee, Mem0 chỉ thử khi có bài toán |
 
-Các lựa chọn cụ thể cần được kiểm chứng lại bằng dữ liệu thật và bộ kiểm thử trước khi triển khai sản xuất.
+## Điều chỉnh quan trọng sau vòng kiểm chứng
+
+### Qdrant không còn chỉ là “kho véc-tơ”
+
+Qdrant hiện có thể đảm nhiệm cả tìm theo ý nghĩa, tìm thưa/BM25, hợp nhất thứ hạng và truy vấn nhiều tầng. Vì vậy bản đầu có thể đơn giản hơn:
+
+~~~text
+Qdrant
+├── tìm theo ý nghĩa
+└── tìm theo chữ/thưa
+      ↓
+hợp nhất thứ hạng
+      ↓
+30–50 ứng viên
+      ↓
+xếp hạng lại
+      ↓
+3–8 bằng chứng
+~~~
+
+### Qwen3-Embedding-0.6B không cố định ở 512 chiều
+
+Thông số hiện hành cho phép tối đa 1024 chiều và có thể chọn chiều đầu ra nhỏ hơn. Nếu dùng 512 chiều thì đó là **cấu hình thử nghiệm của Thư Viện Sống**, không phải thông số gốc của mô hình.
+
+### PageIndex đã có chế độ cục bộ và lớp nhiều tài liệu
+
+Khả năng này mạnh hơn nhận định cũ. Tuy vậy, ở bản đầu vẫn giữ nguyên chiến lược:
+
+> **tìm rẻ trên toàn thư viện trước → thu hẹp → dùng PageIndex đọc sâu.**
+
+### RAGFlow Biên dịch tri thức là tính năng thật
+
+RAGFlow hiện có Wiki, Graph, Tree, PageIndex, Mind Map, Timeline và Skills trong lớp Biên dịch tri thức. Các đầu ra này vẫn phải được xem là **sản phẩm của bộ máy bên ngoài**, không tự động trở thành Bộ não thứ hai chính thức.
+
+### Tiếng Việt là tiêu chí kiểm thử bắt buộc của nhận dạng chữ
+
+PP-OCRv6 có liệt kê hỗ trợ tiếng Việt, nhưng đã có báo cáo năm 2026 về thiếu ký tự tiếng Việt có dấu trong từ điển ở một thời điểm. Vì vậy phải đo trên dữ liệu thật trước khi chọn tuyến OCR sản xuất.
+
+Nguyên tắc cuối cùng vẫn không đổi:
+
+> **Công cụ có thể mạnh lên hoặc thay đổi, nhưng dữ liệu chuẩn và khả năng truy nguồn phải thuộc về Thư Viện Sống.**
 
 ---
 
