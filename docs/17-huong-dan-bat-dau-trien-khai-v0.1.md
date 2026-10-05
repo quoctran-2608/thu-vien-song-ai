@@ -6,6 +6,8 @@ Tài liệu này trả lời câu hỏi:
 
 Đây không phải hướng dẫn cài đặt một sản phẩm đã hoàn thiện. Repo hiện là **bộ đặc tả kiến trúc**; mã triển khai sản xuất chưa được xây đầy đủ.
 
+Trước khi triển khai dữ liệu thật hoặc mở quyền cho nhiều người dùng, phải đọc thêm [Kế hoạch khắc phục rủi ro](19-ke-hoach-khac-phuc-rui-ro.md), đặc biệt các mục P0 về quyền dữ liệu, phân quyền truy hồi, chèn lệnh gián tiếp và nhất quán chỉ mục.
+
 Mục tiêu của bản kỹ thuật 0.1 là chứng minh một vòng nhỏ nhưng hoàn chỉnh:
 
 ```text
