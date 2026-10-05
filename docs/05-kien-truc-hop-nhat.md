@@ -1,4 +1,4 @@
-# 5. Kiến trúc hợp nhất RAG + Bộ não thứ hai
+# 5. Kiến trúc hợp nhất: từ câu hỏi tới tri thức lâu dài
 
 ## 5.1. Hai loại trí nhớ
 
@@ -6,85 +6,167 @@
 
 Trả lời:
 
-> “Nguồn nào, trang nào, đoạn nào chứng minh điều này?”
+> Điều này nằm ở nguồn nào?
 
 ### Trí nhớ hiểu biết
 
 Trả lời:
 
-> “Chúng ta đã hiểu và tổng hợp gì về vấn đề này?”
+> Ta đã hiểu gì về điều này?
 
-Hai lớp không được trộn thành một thứ.
+Hai loại trí nhớ có vòng đời và cách kiểm chứng khác nhau nên phải tách.
 
-## 5.2. Luồng câu hỏi
+## 5.2. Bộ chọn cách xử lý câu hỏi
 
-```mermaid
-flowchart TD
-    Q[Câu hỏi] --> R[Bộ định tuyến]
-    R -->|Cần nguyên văn / nguồn| A[RAG bằng chứng]
-    R -->|Cần hiểu tổng quát| B[Bộ não thứ hai]
-    R -->|Cần đọc sâu sách| C[PageIndex theo tài liệu]
-    A --> E[Gói bằng chứng]
-    B --> E
-    C --> E
-    E --> V[Bộ kiểm chứng]
-    V --> L[AI trả lời]
-    V --> P{Có tri thức mới đáng giữ?}
-    P -->|Có| U[Đề xuất cập nhật]
-    U --> B
-```
-
-## 5.3. Bộ định tuyến ý định
+Không chạy toàn bộ hệ thống cho mọi câu hỏi.
 
 Ví dụ:
 
-- “Câu X xuất hiện ở đâu?” → ưu tiên tìm theo chữ.
-- “Tác giả A giải thích X thế nào?” → tìm kết hợp + xếp hạng.
-- “So sánh 30 sách về X” → Bộ não thứ hai trước, sau đó tìm bằng chứng bổ sung.
-- “Đọc kỹ chương này” → PageIndex hoặc cấu trúc chương/mục.
+### Tìm câu nguyên văn
 
-Không chạy mọi động cơ cho mọi câu hỏi.
+```text
+tìm theo chữ
+→ kiểm tra vài kết quả
+→ trả vị trí
+```
 
-## 5.4. Tách hai chỉ mục
+### Tác giả nói gì về X?
 
-### Chỉ mục kho sách
+```text
+tìm theo chữ
++
+tìm theo ý nghĩa
+→ xếp hạng lại
+→ vài đoạn tốt
+```
 
-Lớn, tối ưu cho bằng chứng và trang.
+### So sánh X qua nhiều sách
 
-### Chỉ mục Bộ não thứ hai
+```text
+Bộ não thứ hai
+↓
+xác định khái niệm / sách liên quan
+↓
+tìm bằng chứng gốc
+↓
+không gian nghiên cứu
+↓
+tổng hợp
+```
 
-Nhỏ hơn, tối ưu cho trang Markdown đã tổng hợp.
+## 5.3. Luồng hỏi đáp tổng thể
 
-Câu “ta biết gì?” và câu “ta biết điều đó từ đâu?” đi qua hai đường khác nhau.
+```text
+CÂU HỎI
+   ↓
+BỘ CHỌN CÁCH XỬ LÝ
+   │
+   ├───────────────┬────────────────┐
+   ↓               ↓                ↓
+tìm chính xác   hỏi tổng hợp     đọc sách dài
+   ↓               ↓                ↓
+RAG          Bộ não thứ hai      PageIndex
+   │               │                │
+   └───────────────┴────────────────┘
+                   ↓
+             GÓI BẰNG CHỨNG
+                   ↓
+                AI ĐỌC
+                   ↓
+              KIỂM CHỨNG
+                   ↓
+                TRẢ LỜI
+                   ↓
+       có tri thức đáng lưu?
+             ┌─────┴─────┐
+             ↓           ↓
+           không        có
+             ↓           ↓
+            xong      đề xuất
+                         ↓
+                     kiểm tra
+                         ↓
+                Bộ não thứ hai
+```
 
-## 5.5. Ranh giới tự viết và dùng lại
+## 5.4. Không gian nghiên cứu
+
+Câu hỏi khó có một bàn làm việc tạm:
+
+```text
+research/
+└── chu-de/
+    ├── cau-hoi.md
+    ├── pham-vi.md
+    ├── tai-lieu-ung-vien.json
+    ├── bang-chung/
+    ├── ghi-chu/
+    ├── mau-thuan.md
+    ├── tong-hop.md
+    └── truy-nguon.json
+```
+
+Không viết thẳng kết quả chưa kiểm chứng vào Bộ não thứ hai.
+
+## 5.5. Vòng đời tri thức
+
+```text
+ĐỌC
+↓
+TÌM
+↓
+HIỂU
+↓
+NGHIÊN CỨU
+↓
+KIỂM CHỨNG
+↓
+GHI NHỚ
+↓
+LẦN SAU ĐỌC TỐT HƠN
+```
+
+Đây là điểm khác biệt lớn nhất so với ứng dụng RAG thông thường.
+
+## 5.6. Ranh giới tự viết và dùng lại
 
 ### Không tự viết lại
 
-- OCR;
-- PDF parser;
-- vector database;
-- embedding model;
-- reranker;
+- máy đọc PDF;
+- công cụ nhận dạng chữ;
+- cơ sở dữ liệu véc-tơ;
+- mô hình biểu diễn ý nghĩa;
+- mô hình xếp hạng lại;
 - PageIndex;
 - QMD;
-- graph engine.
+- công cụ đồ thị.
 
-### Tự viết
+### Phải tự kiểm soát
 
 - mô hình dữ liệu chuẩn;
 - truy nguồn;
-- bộ định tuyến;
+- mã tài liệu và mã đoạn;
+- bộ chọn cách xử lý;
 - sổ khẳng định;
-- trình biên dịch Bộ não thứ hai;
-- giao dịch cập nhật wiki;
-- bộ kiểm thử;
-- MCP cấp cao thống nhất.
+- gói bằng chứng;
+- không gian nghiên cứu;
+- trình duy trì Bộ não thứ hai;
+- cơ chế cập nhật an toàn;
+- bộ đánh giá;
+- giao diện thống nhất cho AI.
 
-Đây là phần tạo giá trị lâu dài của repo.
+## 5.7. Nguyên tắc thay thế công cụ
 
-## 5.6. Nguyên tắc thay thế động cơ
+AI chỉ gọi các lệnh cấp cao của Thư Viện Sống.
 
-Mọi động cơ phải đứng sau một giao diện riêng của dự án.
+Công cụ phía sau có thể thay mà không làm thay đổi cách AI sử dụng hệ thống.
 
-Ví dụ `search_library()` có thể hôm nay gọi Qdrant, mai gọi RAGFlow mà tác tử AI không cần biết.
+## 5.8. Tiêu chuẩn sống sót
+
+Một công cụ ngoài chỉ là bộ máy nếu ta có thể xóa nó, dựng lại nó và vẫn còn:
+
+- nguồn;
+- dữ liệu chuẩn;
+- sổ khẳng định;
+- Bộ não thứ hai;
+- lịch sử nghiên cứu.
