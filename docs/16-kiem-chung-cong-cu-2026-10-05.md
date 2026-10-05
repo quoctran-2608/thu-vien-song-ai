@@ -29,7 +29,7 @@ Thông tin phiên bản và tính năng dưới đây là ảnh chụp tại ng�
 | Cognee | 1.6.2; Apache-2.0 | Trí nhớ máy cho tác tử, tùy chọn về sau |
 | LightRAG | 1.5.7; MIT | Đồ thị + RAG khi bài toán quan hệ chứng minh được giá trị |
 | Graphiti | 0.30.2; Apache-2.0 | Đồ thị có thời gian cho dữ liệu thay đổi |
-| Mem0 | Python SDK 2.2.1; Apache-2.0 | Trí nhớ tác tử/người dùng, không làm kho bằng chứng sách |
+| Mem0 | bộ công cụ phát triển Python (SDK) 2.2.1; Apache-2.0 | Trí nhớ tác tử/người dùng, không làm kho bằng chứng sách |
 | Khoj | 2.0.0-beta.28; AGPL-3.0 | Tham khảo trải nghiệm sản phẩm, thận trọng khi dùng lại mã |
 | Qwen3-Embedding-0.6B | Apache-2.0; 100+ ngôn ngữ; 32K; tối đa 1024 chiều | Ứng viên đầu cho biểu diễn ý nghĩa |
 | Qwen3-Reranker-0.6B | Apache-2.0; 100+ ngôn ngữ; 32K | Ứng viên đầu cho xếp hạng lại |
@@ -199,7 +199,7 @@ Qdrant hỗ trợ:
 - DBSF;
 - truy vấn nhiều tầng;
 - nhiều véc-tơ;
-- luồng xếp hạng lại kiểu late-interaction/ColBERT;
+- luồng xếp hạng kiểu ColBERT, so khớp chi tiết sau bước tìm ban đầu;
 - nhiều dạng lượng tử hóa để giảm bộ nhớ.
 
 Tài liệu lượng tử hóa hiện nêu scalar có thể giảm bộ nhớ khoảng 4 lần trong cấu hình thông dụng; các kỹ thuật khác có thể giảm mạnh hơn nhưng đổi lại tốc độ/chất lượng.
@@ -232,9 +232,9 @@ Hiện nay Qdrant có khả năng thực hiện phần lớn chuỗi này trong 
 **Qdrant trở thành ứng viên mặc định mạnh nhất cho chỉ mục kho sách ở bản đầu**, với phương án thử:
 
 ~~~text
-dense
+tìm theo ý nghĩa (véc-tơ dày)
 +
-BM25/sparse
+tìm thưa/BM25 theo chữ
 ↓
 RRF
 ↓
@@ -265,7 +265,7 @@ QMD mô tả chính nó là hệ tìm kiếm cục bộ cho tài liệu Markdown
 
 Từ QMD 2.0, dự án công bố giao diện thư viện ổn định QMDStore, không còn chỉ là công cụ dòng lệnh.
 
-QMD cũng có lệnh benchmark đo Precision/Recall/MRR/F1 cho các tuyến tìm kiếm.
+QMD cũng có lệnh đánh giá đo Precision/Recall/MRR/F1 cho các tuyến tìm kiếm.
 
 Nguồn:
 
@@ -301,7 +301,7 @@ Từ tháng 08/2026:
 - bộ công cụ phát triển hỗ trợ chế độ cục bộ;
 - có thể lập chỉ mục, truy hồi và trò chuyện trên máy;
 - PageIndex Flash là cách dựng cây nhanh mặc định cho PDF có chữ;
-- có PageIndex File System để tạo lớp cây ở mức nhiều tài liệu.
+- có PageIndex File System — lớp tổ chức nhiều tài liệu thành cây.
 
 Nguồn:
 
@@ -310,7 +310,7 @@ Nguồn:
 
 ## 7.2. Điều chỉnh so với nghiên cứu cũ
 
-Nhận định cũ rằng phần File System nhiều tài liệu chủ yếu là phía dịch vụ đã lỗi thời một phần: repo hiện công bố bộ công cụ cục bộ và lớp nhiều tài liệu.
+Nhận định cũ rằng lớp nhiều tài liệu chủ yếu là phía dịch vụ đã lỗi thời một phần: repo hiện công bố bộ công cụ cục bộ và lớp nhiều tài liệu.
 
 ## 7.3. Quyết định
 
@@ -320,7 +320,7 @@ Dù khả năng đã mạnh hơn, bản 0.x của PageIndex vẫn còn trẻ.
 
 > **vẫn ưu tiên dùng PageIndex sau khi hệ tìm kiếm rẻ đã thu hẹp còn một số tài liệu.**
 
-Sau này có thể đo PageIndex File System như một bộ định tuyến toàn kho. Chỉ thay kiến trúc khi bộ thử thực tế chứng minh tốt hơn.
+Sau này có thể đo lớp nhiều tài liệu của PageIndex như một bộ định tuyến toàn kho. Chỉ thay kiến trúc khi bộ thử thực tế chứng minh tốt hơn.
 
 ---
 
@@ -473,7 +473,7 @@ Dự án hiện có:
 - RAG kết hợp đồ thị;
 - nhập đa phương thức thông qua RagAnything/Docling/MinerU;
 - nhiều chiến lược chia đoạn;
-- triển khai cục bộ embedding, xếp hạng và kho lưu bằng Docker;
+- triển khai cục bộ mô hình biểu diễn ý nghĩa, xếp hạng và kho lưu bằng Docker;
 - WebUI và nhiều bộ lưu trữ.
 
 Nguồn:
@@ -533,7 +533,7 @@ Repo dùng Apache-2.0. GitHub hiện liệt kê Python SDK v2.2.1.
 
 Mem0 là lớp trí nhớ cho tác tử/ứng dụng.
 
-Một lưu ý quan trọng: README của Mem0 nói rõ một số kết quả benchmark mới dùng **nền tảng quản lý của Mem0 có tối ưu độc quyền không nằm trong SDK mã nguồn mở**.
+Một lưu ý quan trọng: README của Mem0 nói rõ một số kết quả đánh giá mới dùng **nền tảng quản lý của Mem0 có tối ưu độc quyền không nằm trong bộ công cụ phát triển (SDK) mã nguồn mở**.
 
 Nguồn:
 
@@ -550,7 +550,7 @@ Mem0 là lựa chọn bổ trợ cho:
 
 Không dùng làm kho nguồn sách có trích dẫn chính xác.
 
-Không lấy benchmark của dịch vụ quản lý để suy ra chất lượng của bản mã nguồn mở.
+Không lấy kết quả đánh giá của dịch vụ quản lý để suy ra chất lượng của bản mã nguồn mở.
 
 ---
 
@@ -587,7 +587,7 @@ Không sao chép hoặc tích hợp mã trực tiếp vào lõi mà chưa đánh
 
 ## 16.1. Qwen3-Embedding-0.6B
 
-Model card chính thức hiện ghi:
+Trang mô tả mô hình chính thức hiện ghi:
 
 - 0,6 tỷ tham số;
 - 100+ ngôn ngữ;
@@ -611,7 +611,7 @@ Ta có thể chọn **512 chiều** như một cấu hình thử nghiệm để 
 
 ## 16.2. Qwen3-Reranker-0.6B
 
-Model card ghi:
+Trang mô tả mô hình ghi:
 
 - 0,6 tỷ tham số;
 - 100+ ngôn ngữ;
@@ -642,9 +642,9 @@ BGE-M3:
 - 1024 chiều;
 - ngữ cảnh 8192;
 - hỗ trợ đồng thời:
-  - dense — tìm theo ý nghĩa;
-  - sparse — tìm theo chữ/thưa;
-  - multi-vector/ColBERT — nhiều véc-tơ để so khớp chi tiết.
+  - véc-tơ dày — tìm theo ý nghĩa;
+  - véc-tơ thưa — tìm theo chữ;
+  - nhiều véc-tơ/ColBERT — so khớp chi tiết hơn.
 
 Nhóm phát triển khuyến nghị tìm kiếm kết hợp + xếp hạng lại.
 
@@ -691,8 +691,8 @@ Phương án thử đầu tiên:
 
 ~~~text
 Qdrant
-├── dense
-└── sparse/BM25
+├── tìm theo ý nghĩa (véc-tơ dày)
+└── tìm thưa/BM25 theo chữ
       ↓
       RRF
       ↓
@@ -731,7 +731,7 @@ PageIndex
 chương/mục/trang
 ~~~
 
-Có thể đánh giá PageIndex File System ở giai đoạn sau.
+Có thể đánh giá lớp nhiều tài liệu của PageIndex ở giai đoạn sau.
 
 ## 18.5. Đồ thị và trí nhớ tác tử
 
@@ -793,6 +793,6 @@ Chỉ bật khi bài toán và bộ đánh giá chứng minh giá trị.
 5. **Docling hỗ trợ trực tiếp EPUB và nhiều định dạng**, có thể làm trình đọc mặc định rộng hơn dự kiến.
 6. **PP-OCRv6 liệt kê tiếng Việt nhưng đã có báo cáo vấn đề với ký tự có dấu**, nên đánh giá tiếng Việt là bắt buộc.
 7. **Qwen3-Embedding-0.6B có tối đa 1024 chiều, không phải cố định 512**; 512 chỉ nên là một cấu hình thử nghiệm.
-8. **Các kết quả benchmark của dịch vụ quản lý Mem0 không thể coi là benchmark của bản mã nguồn mở.**
+8. **Các kết quả đánh giá của dịch vụ quản lý Mem0 không thể coi là kết quả đánh giá của bản mã nguồn mở.**
 9. **Khoj là AGPL-3.0**, vì vậy phù hợp để học sản phẩm hơn là sao chép mã vào lõi.
 10. Kiến trúc “dữ liệu chuẩn của mình, công cụ ngoài là bộ máy” vẫn đúng và càng được củng cố sau vòng kiểm chứng.
