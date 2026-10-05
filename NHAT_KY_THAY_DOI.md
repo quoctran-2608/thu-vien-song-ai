@@ -47,7 +47,7 @@ Sau khi đối chiếu bản nghiên cứu dài với tài liệu trên GitHub, 
 Các thay đổi nhận thức quan trọng:
 
 - Qdrant hiện có thể đảm nhiệm phần lớn tìm kiếm kết hợp, không chỉ lưu véc-tơ.
-- PageIndex đã có chế độ cục bộ và lớp nhiều tài liệu.
+- PageIndex có chế độ cục bộ, nhưng sau khi kiểm chứng lại, File System nhiều tài liệu hiện là tính năng đám mây; kết luận cũ đã được đính chính.
 - RAGFlow Biên dịch tri thức với Wiki/Graph/Tree/PageIndex/... là tính năng thật.
 - QMD đã có giao diện thư viện ổn định và công cụ đánh giá.
 - Docling hỗ trợ trực tiếp nhiều định dạng, gồm EPUB.
@@ -87,3 +87,14 @@ Xem biên bản: `docs/_kiem-ke/kiem-toan-v1.0-buoc-7-2026-10-05.md`.
 - đồng bộ nhánh `v1.0` với commit chốt cuối của `main`.
 
 Từ mốc này, ưu tiên tiếp theo là **triển khai và đo bản kỹ thuật 0.1**, không tiếp tục mở rộng kiến trúc vĩ mô nếu chưa có dữ liệu thực nghiệm mới.
+
+
+### Vòng phản biện rủi ro — đính chính PageIndex
+
+Khi kiểm tra dự án theo hướng phản biện, phát hiện tài liệu Bước 6 đã ghép sai hai thông tin: “PageIndex có chế độ cục bộ” và “PageIndex có File System nhiều tài liệu”.
+
+Đã đính chính:
+
+- chế độ cục bộ: phù hợp PDF có chữ, lập chỉ mục/truy hồi/trò chuyện bằng mô hình của người dùng;
+- OCR/hiểu ảnh, metadata, thư mục, MCP và File System nhiều tài liệu hiện thuộc phía đám mây;
+- kiến trúc Thư Viện Sống không dựa vào File System của PageIndex cho định tuyến toàn kho.
