@@ -1,196 +1,252 @@
-# 6. Nghiên cứu các repo tham khảo
+# 6. Vai trò các công cụ và dự án tham khảo
 
-Tài liệu này ghi lại những repo đáng học nhất và **phần nào nên lấy tư tưởng**, không phải khuyến nghị ghép toàn bộ mã nguồn của chúng vào một siêu-repo.
+> Tài liệu này chỉ ghi **vai trò kiến trúc dự kiến** và những gì đáng học. Các thông tin dễ thay đổi như phiên bản mới nhất, số sao, tính năng hiện hành và giấy phép phải được kiểm chứng lại ở vòng rà nguồn bên ngoài trước khi chốt.
 
-## 6.1. RAGFlow
+## 6.1. Nguyên tắc sử dụng dự án bên ngoài
 
-Vai trò mạnh:
+Không bê nguyên một dự án lớn về làm “chủ” hệ thống.
 
-- RAG đầy đủ;
-- quản lý tài liệu;
-- truy hồi kết hợp;
-- xếp hạng;
-- dẫn nguồn;
-- tác tử;
-- biên dịch tri thức thành các dạng như Wiki, cây, đồ thị, PageIndex.
+Thay vào đó:
 
-Điều nên học:
-
-- cách tổ chức một hệ RAG sản xuất;
-- cách đánh giá truy hồi;
-- ý tưởng “biên dịch tri thức” thay vì chỉ truy hồi thô.
-
-Quyết định của dự án:
-
-- dùng qua bộ chuyển tiếp;
-- không để RAGFlow sở hữu duy nhất dữ liệu chuẩn hay Bộ não thứ hai.
+- học điểm mạnh;
+- dùng qua giao diện riêng;
+- giữ dữ liệu chuẩn ở Thư Viện Sống;
+- có khả năng thay thế công cụ về sau.
 
 ## 6.2. Docling
 
-Vai trò mạnh:
+Vai trò dự kiến:
 
-- đọc nhiều loại tài liệu;
-- bảo tồn cấu trúc;
-- hiểu bố cục;
-- tạo biểu diễn tài liệu có cấu trúc.
+> máy đọc và chuẩn hóa tài liệu có cấu trúc.
 
-Điều nên học:
+Điểm đáng học:
 
-- tài liệu phải được chuẩn hoá tốt trước khi nghĩ đến RAG.
+- bảo tồn bố cục;
+- thứ tự đọc;
+- biểu diễn tài liệu có cấu trúc;
+- xử lý nhiều định dạng.
 
 Quyết định:
 
-- ứng viên máy đọc mặc định cho PDF/EPUB born-digital.
+- có thể dùng làm máy đọc mặc định;
+- không để Docling sở hữu dữ liệu chuẩn.
 
 ## 6.3. PaddleOCR
 
-Vai trò mạnh:
+Vai trò:
 
-- OCR đa ngôn ngữ;
-- mô hình nhẹ cho trang dễ;
-- VLM cho trang khó và bố cục phức tạp.
+> nhận dạng chữ cho trang ảnh.
 
-Điều nên học:
+Điểm đáng học:
 
-- OCR theo tầng, không dùng mô hình mạnh cho mọi trang.
-
-## 6.4. QMD
-
-Vai trò mạnh:
-
-- tìm Markdown tại máy;
-- từ khóa + ý nghĩa + xếp hạng;
-- MCP;
-- có tư duy đánh giá chất lượng truy hồi.
+- dùng mô hình nhẹ cho trang dễ;
+- dùng mô hình hiểu bố cục mạnh hơn cho trang khó;
+- xử lý theo tầng thay vì dùng công cụ nặng cho mọi trang.
 
 Quyết định:
 
-- rất phù hợp cho chỉ mục Bộ não thứ hai.
+- chỉ dùng khi trang thật sự cần nhận dạng chữ.
 
-## 6.5. PageIndex
+## 6.4. RAGFlow
 
-Vai trò mạnh:
+Vai trò dự kiến:
 
-- duyệt tài liệu dài theo cấu trúc cây;
-- suy luận chương/mục liên quan.
+- quản lý và tìm tài liệu;
+- truy hồi;
+- xếp hạng;
+- dẫn nguồn;
+- tác tử tìm kiếm;
+- các khả năng biên dịch tri thức nếu phù hợp.
+
+Kiến trúc sử dụng:
+
+```text
+Thư Viện Sống
+↓
+bộ chuyển tiếp
+↓
+RAGFlow
+```
+
+Thư Viện Sống đưa vào dữ liệu chuẩn hoặc các đoạn đã chuẩn hóa, nhận lại các ứng viên, điểm xếp hạng và tham chiếu.
+
+Quyết định quan trọng:
+
+> **RAGFlow không phải nguồn dữ liệu chính.**
+
+Nếu xóa RAGFlow và dựng lại, hệ thống vẫn phải sống.
+
+## 6.5. Qdrant
+
+Vai trò dự kiến:
+
+> kho chuyên lưu và tìm các biểu diễn số của đoạn văn.
 
 Quyết định:
 
-- dùng sau khi đã chọn được tài liệu cần đọc;
-- không phụ thuộc vào nó cho tìm kiếm toàn kho.
+- là bộ máy tìm theo ý nghĩa;
+- có thể thay thế;
+- dữ liệu véc-tơ không phải nguồn chân lý.
 
-## 6.6. claude-obsidian
+## 6.6. QMD
 
-Điều đáng học nhất:
+Vai trò dự kiến:
 
-- nguồn bất biến;
-- AI tổ chức wiki Markdown;
-- dữ liệu con người sở hữu;
-- thay đổi có thể kiểm toán;
-- phân tách mã chương trình và vault tri thức.
+> tìm trong kho Markdown của Bộ não thứ hai.
+
+Phù hợp với:
+
+- tìm theo chữ;
+- tìm theo ý nghĩa;
+- xếp hạng lại;
+- giao tiếp với AI.
 
 Quyết định:
 
-- lấy mạnh tư tưởng vận hành Second Brain.
+- dùng cho Bộ não thứ hai;
+- không mặc định dùng làm chỉ mục cho hàng triệu đoạn sách.
 
-## 6.7. obsidian-wiki và các LLM Wiki kiểu Karpathy
+## 6.7. PageIndex
 
-Điều đáng học:
+Vai trò:
 
-- nhập nguồn → biên dịch → cập nhật trang cũ;
-- liên kết wiki;
+> đọc sâu tài liệu dài theo cấu trúc cây.
+
+Vị trí:
+
+```text
+toàn thư viện
+↓
+RAG chọn vài tài liệu
+↓
+PageIndex
+↓
+chương / mục liên quan
+↓
+đọc sâu
+```
+
+Không phụ thuộc vào PageIndex cho bước chọn tài liệu toàn thư viện.
+
+## 6.8. claude-obsidian
+
+Những tư tưởng đáng học:
+
+- nguồn sống lâu hơn bản tóm tắt;
+- dữ liệu người dùng sở hữu;
+- mỗi khẳng định phải biết dựa vào đâu;
+- thay đổi phải kiểm toán được;
+- nhiều tác tử có thể tạo đề xuất nhưng áp dụng thay đổi cần được kiểm soát;
+- wiki vẫn hữu ích ngay cả khi không còn tác tử AI.
+
+Quyết định:
+
+- học mạnh về kiến trúc Bộ não thứ hai;
+- không coi đây là bộ máy nhập liệu công nghiệp cho kho sách cực lớn.
+
+## 6.9. obsidian-wiki và các mô hình wiki do AI duy trì
+
+Điểm đáng học:
+
+- nhập nguồn rồi biên dịch thành tri thức;
+- liên kết Markdown;
+- cập nhật theo phần thay đổi;
+- phát hiện trùng;
 - phát hiện mâu thuẫn;
-- cập nhật gia tăng;
-- chống trùng;
-- Git/MCP.
+- phát hiện nội dung trôi khỏi nguồn.
 
 Quyết định:
 
-- dùng làm mẫu cho trình biên dịch Bộ não thứ hai, không làm lõi kho sách.
+- dùng làm hình mẫu cho trình duy trì Bộ não thứ hai.
 
-## 6.8. Hermes Agent — LLM Wiki
+## 6.10. Hermes Agent và kiểu “wiki do AI biên dịch”
 
-Ý nghĩa:
+Điểm đáng học:
 
-- mô hình LLM Wiki đã trở thành một kỹ năng tác tử được đóng gói, không còn chỉ là ý tưởng cá nhân.
-
-Điều nên học:
-
-- tác tử có thể coi wiki là trí nhớ đã biên dịch để tránh tiêu hoá lại nguồn thô ở mỗi lần hỏi.
-
-## 6.9. Cognee
-
-Vai trò mạnh:
-
-- trí nhớ lâu dài cho tác tử;
-- remember/recall/improve/forget;
-- thực thể, quan hệ, vector;
-- chắt lọc phiên làm việc thành trí nhớ lâu dài.
+> thông tin đã được tiêu hóa có thể được biên dịch một lần thành wiki thay vì mỗi câu hỏi đều tiêu hóa lại toàn bộ nguồn.
 
 Quyết định:
 
-- học API tư duy;
-- chưa đưa vào lõi bản đầu để tránh trùng kho dữ liệu.
+- học cách đóng gói quy trình này thành năng lực tác tử;
+- vẫn giữ nguồn gốc làm trọng tài.
 
-## 6.10. LightRAG
+## 6.11. Cognee
 
-Vai trò mạnh:
+Điểm đáng học:
 
-- vector + đồ thị tri thức;
-- truy vấn quan hệ xuyên tài liệu;
-- cập nhật gia tăng.
-
-Quyết định:
-
-- chỉ bật cho miền có nhu cầu graph thật sự.
-
-## 6.11. Graphiti
-
-Vai trò mạnh:
-
-- đồ thị có yếu tố thời gian;
-- phù hợp thông tin thay đổi theo thời gian.
+- trí nhớ lâu dài của tác tử;
+- tư tưởng ghi nhớ, nhớ lại, cải thiện, quên;
+- biến phiên làm việc thành trí nhớ lâu dài.
 
 Quyết định:
 
-- hữu ích cho lịch sử quyết định/nghiên cứu động;
-- không cần cho phần lớn sách bất biến ở bản đầu.
+- chưa đưa vào lõi phiên bản đầu;
+- tránh tạo quá nhiều kho dữ liệu trùng chức năng;
+- có thể xây giao diện của mình để sau này cắm Cognee hoặc công cụ tương đương.
 
-## 6.12. Mem0
+## 6.12. LightRAG
 
-Vai trò mạnh:
+Điểm đáng học:
 
-- trí nhớ của tác tử và người dùng;
-- giảm context nhờ lưu những điều đáng nhớ.
-
-Quyết định:
-
-- không phải lõi của thư viện sách;
-- có thể dùng về sau cho trí nhớ phiên/người dùng.
-
-## 6.13. Khoj
-
-Vai trò mạnh:
-
-- Second Brain dùng được ngay;
-- hỏi nhiều loại tài liệu;
-- tự lưu trữ;
-- agent/research.
+> kết hợp tìm kiếm với đồ thị quan hệ.
 
 Quyết định:
 
-- tốt để tham khảo trải nghiệm sản phẩm;
+- không xây đồ thị toàn thư viện ở bản đầu;
+- chỉ bật cho những miền thật sự cần truy vấn quan hệ.
+
+## 6.13. Graphiti
+
+Điểm đáng học:
+
+> mô hình hóa sự thật và quan hệ thay đổi theo thời gian.
+
+Phù hợp hơn với:
+
+- lịch sử quyết định;
+- trạng thái dự án;
+- ghi chú nghiên cứu thay đổi;
+- dữ liệu thời sự.
+
+Không phải ưu tiên cho phần lớn sách bất biến.
+
+## 6.14. Mem0
+
+Vai trò tham khảo:
+
+> trí nhớ lâu dài cho tác tử và người dùng.
+
+Không phải lõi kho bằng chứng sách.
+
+## 6.15. Khoj
+
+Vai trò tham khảo:
+
+- trải nghiệm “bộ não thứ hai” có thể dùng ngay;
+- hỏi đáp nhiều loại tài liệu;
+- tác tử và nghiên cứu.
+
+Quyết định:
+
+- tham khảo trải nghiệm sản phẩm;
 - không thay thế mô hình dữ liệu chuẩn riêng.
 
-## 6.14. Kết luận nghiên cứu repo
+## 6.16. Kết luận
 
-Không repo nào nên được bê nguyên làm “hệ điều hành tri thức” duy nhất.
+Không repo nào nên được lấy nguyên làm toàn bộ Thư Viện Sống.
 
-Cách tốt nhất là:
+Cách hợp lý hơn:
 
-- Docling/PaddleOCR xử lý nguồn;
-- RAGFlow/Qdrant làm động cơ bằng chứng;
-- QMD phục vụ wiki;
-- PageIndex đọc sâu;
-- LightRAG/Graphiti là tuỳ chọn;
-- lõi của mình giữ dữ liệu chuẩn, truy nguồn, sổ khẳng định và quy trình cập nhật.
+```text
+công cụ đọc / nhận dạng chữ
+↓
+KHO DỮ LIỆU CHUẨN CỦA MÌNH
+↓
+hệ tìm bằng chứng + Bộ não thứ hai + đọc sâu
+↓
+gói bằng chứng
+↓
+AI
+```
+
+Các dự án bên ngoài là các bộ máy chuyên môn có thể thay thế.
