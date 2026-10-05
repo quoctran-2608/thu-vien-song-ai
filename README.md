@@ -150,6 +150,7 @@ Nếu bỏ PageIndex, cấu trúc sách vẫn còn.
 - [Hướng dẫn bắt đầu triển khai bản kỹ thuật 0.1](docs/17-huong-dan-bat-dau-trien-khai-v0.1.md)
 - [Phản biện: rủi ro, giới hạn và điều kiện thất bại](docs/18-rui-ro-gioi-han-va-phan-bien.md)
 - [Kế hoạch khắc phục rủi ro: giải pháp, xác suất thành công và nguồn lực](docs/19-ke-hoach-khac-phuc-rui-ro.md)
+- [Đối chiếu Thư Viện Sống với tuyến đầu thế giới năm 2026](docs/20-doi-chieu-voi-tuyen-dau-the-gioi-2026.md)
 
 ### Kiểm soát thất lạc tri thức
 
