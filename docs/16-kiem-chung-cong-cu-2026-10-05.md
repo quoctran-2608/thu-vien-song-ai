@@ -290,37 +290,61 @@ Không mặc định dùng QMD làm chỉ mục chính cho hàng triệu đoạn
 
 # 7. PageIndex
 
-## 7.1. Điều đã xác minh
+## 7.1. Điều đã xác minh lại
 
 PageIndex mới nhất trên GitHub tại thời điểm kiểm tra là v0.2.20, phát hành 28/09/2026, giấy phép MIT.
 
 Dự án tự mô tả là hệ truy hồi dựa trên suy luận, không cần cơ sở dữ liệu véc-tơ và không chia đoạn theo kiểu RAG truyền thống.
 
-Từ tháng 08/2026:
+Chế độ cục bộ hiện cho phép:
 
-- bộ công cụ phát triển hỗ trợ chế độ cục bộ;
-- có thể lập chỉ mục, truy hồi và trò chuyện trên máy;
-- PageIndex Flash là cách dựng cây nhanh mặc định cho PDF có chữ;
-- có PageIndex File System — lớp tổ chức nhiều tài liệu thành cây.
+- lập chỉ mục, truy hồi và trò chuyện trên máy;
+- dùng mô hình của người dùng;
+- PageIndex Flash để dựng cây nhanh cho PDF có chữ.
+
+Nhưng README hiện hành phân biệt rõ cục bộ và đám mây:
+
+- cục bộ: PDF có chữ; không có OCR/hiểu ảnh tích hợp;
+- đám mây: PDF có chữ, PDF scan và tài liệu giàu hình ảnh;
+- metadata, thư mục, MCP và PageIndex File System nhiều tài liệu nằm phía đám mây;
+- PageIndex File System được mô tả là **Cloud-only**.
 
 Nguồn:
 
 - https://github.com/VectifyAI/PageIndex
+- https://github.com/VectifyAI/PageIndex/blob/main/README.md
+- https://github.com/VectifyAI/PageIndex/blob/main/pageindex/client.py
 - https://github.com/VectifyAI/PageIndex/releases
 
-## 7.2. Điều chỉnh so với nghiên cứu cũ
+## 7.2. Sửa kết luận cũ
 
-Nhận định cũ rằng lớp nhiều tài liệu chủ yếu là phía dịch vụ đã lỗi thời một phần: repo hiện công bố bộ công cụ cục bộ và lớp nhiều tài liệu.
+Bản kiểm chứng trước đã ghép hai sự thật khác nhau:
+
+1. PageIndex có chế độ cục bộ;
+2. PageIndex có lớp File System nhiều tài liệu.
+
+Từ đó suy ra sai rằng lớp nhiều tài liệu cũng có thể dùng cục bộ.
+
+Kết luận đúng là:
+
+> **PageIndex cục bộ có thật, nhưng PageIndex File System nhiều tài liệu hiện là tính năng đám mây.**
 
 ## 7.3. Quyết định
 
-Dù khả năng đã mạnh hơn, bản 0.x của PageIndex vẫn còn trẻ.
-
 Ở phiên bản đầu:
 
-> **vẫn ưu tiên dùng PageIndex sau khi hệ tìm kiếm rẻ đã thu hẹp còn một số tài liệu.**
+> **vẫn ưu tiên dùng PageIndex cục bộ sau khi hệ tìm kiếm của Thư Viện Sống đã thu hẹp còn một số PDF có chữ.**
 
-Sau này có thể đo lớp nhiều tài liệu của PageIndex như một bộ định tuyến toàn kho. Chỉ thay kiến trúc khi bộ thử thực tế chứng minh tốt hơn.
+Không dựa vào PageIndex File System trong kiến trúc cục bộ.
+
+Nếu sau này cân nhắc PageIndex Cloud hoặc File System của họ, phải đánh giá riêng:
+
+- dữ liệu có rời khỏi hệ thống của mình hay không;
+- chi phí;
+- chính sách lưu dữ liệu;
+- khả năng xuất dữ liệu;
+- phụ thuộc nhà cung cấp;
+- yêu cầu bảo mật/quyền riêng tư.
 
 ---
 
@@ -787,7 +811,7 @@ Chỉ bật khi bài toán và bộ đánh giá chứng minh giá trị.
 # 20. Những điều Bước 6 đã sửa trong nhận thức
 
 1. **Qdrant không còn chỉ là kho véc-tơ**; nó có thể đảm nhiệm phần lớn tìm kiếm kết hợp ở bản đầu.
-2. **PageIndex nay có chế độ cục bộ và lớp nhiều tài liệu**, nhưng vẫn chưa đủ lý do để bỏ kiến trúc tìm rẻ trước, đọc sâu sau.
+2. **PageIndex có chế độ cục bộ, nhưng File System nhiều tài liệu hiện là tính năng đám mây**; điều này càng củng cố kiến trúc tìm rẻ bằng hệ của mình trước, rồi mới dùng PageIndex đọc sâu.
 3. **RAGFlow Biên dịch tri thức là tính năng thật**, không còn là suy đoán.
 4. **QMD đã có giao diện thư viện ổn định và công cụ đánh giá**, nên phù hợp hơn nữa với Bộ não thứ hai.
 5. **Docling hỗ trợ trực tiếp EPUB và nhiều định dạng**, có thể làm trình đọc mặc định rộng hơn dự kiến.
