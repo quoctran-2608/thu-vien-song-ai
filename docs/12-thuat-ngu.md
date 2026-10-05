@@ -1,65 +1,93 @@
 # 12. Từ điển thuật ngữ
 
+Tài liệu này ưu tiên cách nói tiếng Việt. Thuật ngữ tiếng Anh chỉ giữ khi cần tra cứu kỹ thuật.
+
 ## RAG
 
-Cơ chế tìm các phần tài liệu liên quan rồi đưa chúng cho AI đọc trước khi trả lời. Trong repo này gọi nôm na là **trí nhớ bằng chứng**.
+Viết tắt của *Retrieval-Augmented Generation*.
 
-## Second Brain — Bộ não thứ hai
+Trong dự án này hiểu là:
 
-Kho tri thức được AI và con người tích lũy dần từ nhiều nguồn, gồm các trang khái niệm, tổng hợp, so sánh, mâu thuẫn và câu hỏi mở.
+> **tìm các phần tài liệu liên quan trước rồi mới cho AI đọc và trả lời.**
+
+## Bộ não thứ hai
+
+Kho tri thức đã được tổng hợp, liên kết và tích lũy qua nhiều lần nghiên cứu.
 
 ## OCR
 
-Nhận dạng ký tự từ hình ảnh hoặc trang scan.
+*Optical Character Recognition* — nhận dạng chữ từ ảnh hoặc trang quét.
 
-## Embedding
+## Embedding — biểu diễn số của ý nghĩa
 
-Biến văn bản thành một dãy số đại diện cho ý nghĩa để tìm những đoạn gần nhau về nội dung.
+Cách biến văn bản thành một dãy số đại diện tương đối cho ý nghĩa, giúp máy tìm các đoạn gần nhau về nội dung.
 
-## Vector database — cơ sở dữ liệu véc-tơ
+## Cơ sở dữ liệu véc-tơ
 
-Hệ lưu các dãy số embedding và tìm các mục gần nhau.
+Hệ thống chuyên lưu các biểu diễn số và tìm những mục gần nhau.
 
-## Hybrid search — tìm kiếm kết hợp
+## Tìm kiếm kết hợp
 
-Kết hợp tìm theo từ khóa và tìm theo ý nghĩa.
+Kết hợp tìm theo chữ và tìm theo ý nghĩa.
 
-## Reranker — bộ xếp hạng lại
+## Xếp hạng lại
 
-Mô hình đọc lại một số kết quả ứng viên và xếp thứ tự chính xác hơn.
+Dùng một mô hình riêng để sắp lại các kết quả tìm được sau bước tìm kiếm ban đầu.
 
 ## Chunk — đoạn tìm kiếm
 
-Đơn vị văn bản được lập chỉ mục để RAG truy hồi.
+Phần văn bản được chuẩn bị làm đơn vị tìm kiếm.
 
 ## MCP
 
-Chuẩn giao tiếp giúp AI gọi các công cụ và nguồn dữ liệu bên ngoài theo giao diện thống nhất.
+Tên một chuẩn giao tiếp giúp AI gọi công cụ và dữ liệu bên ngoài theo một giao diện thống nhất.
 
-## Claim — khẳng định
+## Khẳng định
 
-Một phát biểu tri thức có loại, nguồn và mức tin cậy.
+Một phát biểu tri thức cần được theo dõi về nguồn gốc và mức độ được bằng chứng hỗ trợ.
 
-## Evidence — bằng chứng
+## Bằng chứng
 
-Đoạn nguồn cụ thể hỗ trợ một khẳng định.
+Đoạn nguồn cụ thể hỗ trợ hoặc phản bác một khẳng định.
 
-## Provenance — truy nguồn
+## Ứng viên bằng chứng
+
+Một kết quả tìm được đáng xem nhưng chưa qua kiểm tra đầy đủ để trở thành bằng chứng.
+
+## Truy nguồn
 
 Khả năng lần ngược từ kết luận về tài liệu, ấn bản, trang và đoạn gốc.
 
-## Knowledge Graph — đồ thị tri thức
+## Gói bằng chứng
 
-Mạng các thực thể và quan hệ giữa chúng.
+Tập nhỏ gồm những bằng chứng tốt nhất, tri thức liên quan, điểm chưa chắc chắn và thông tin nguồn được đưa cho AI để suy luận.
+
+## Không gian nghiên cứu
+
+Bàn làm việc tạm thời cho một vấn đề cụ thể.
+
+## Bộ ghi duy nhất
+
+Mô hình trong đó nhiều tác tử có thể đề xuất thay đổi nhưng chỉ một bộ phận được áp dụng thay đổi chính thức.
+
+## Bảng kê xử lý
+
+Thường gọi là *manifest* trong tài liệu kỹ thuật.
+
+Ghi file nào đã xử lý, dấu vân tay số, phiên bản xử lý và kết quả đã sinh ra.
 
 ## PageIndex
 
-Cách tổ chức tài liệu dài thành cây để tìm theo chương/mục thay vì chỉ nearest-neighbor trên các đoạn.
+Tên một cách/công cụ tổ chức tài liệu theo cây để đi từ sách tới chương, mục và đoạn cần đọc.
 
-## Single Writer
+## Đồ thị tri thức
 
-Mô hình nhiều tác tử được tạo đề xuất nhưng chỉ một bộ phận được ghi thay đổi chính thức.
+Mạng các thực thể và quan hệ giữa chúng.
 
-## Evidence Pack — gói bằng chứng
+## Kiểm thử hồi quy
 
-Gói context nhỏ gồm các đoạn tốt nhất và thông tin nguồn, được đưa cho mô hình lớn để trả lời.
+Chạy lại cùng một bộ câu hỏi chuẩn sau mỗi thay đổi để xem chất lượng có giảm không.
+
+## Tác tử AI
+
+Một tiến trình AI được giao một vai trò hoặc nhiệm vụ cụ thể, thí dụ tìm tài liệu, kiểm chứng hoặc bảo trì Bộ não thứ hai.
