@@ -8,9 +8,11 @@ Mục tiêu của vòng này là đọc repo như một người hoàn toàn m�
 
 Đã rà toàn bộ cấu trúc repo, 24 file Markdown có trước khi bổ sung Bước 7, tài liệu tổng thể, README, tài liệu phiên bản, quy tắc tác tử, lộ trình, mô hình dữ liệu, tài liệu công cụ và bảng kiểm bảo toàn ý tưởng.
 
-Đã kiểm tra cơ học 28 liên kết Markdown nội bộ.
+Trước khi sửa đã kiểm tra cơ học 28 liên kết Markdown nội bộ và không thấy liên kết hỏng.
 
-**Kết quả: 0 liên kết nội bộ bị hỏng.**
+Sau khi bổ sung/sửa tài liệu ở Bước 7, đã kiểm tra lại **41 liên kết nội bộ**.
+
+**Kết quả cuối: 0 liên kết nội bộ bị hỏng.**
 
 ## Điểm mạnh đã đạt
 
@@ -66,10 +68,10 @@ Tài liệu này quy định:
 
 Các từ như dense, sparse, benchmark, SDK, model card, File System xuất hiện trong phần kiểm chứng công cụ.
 
-Đã quyết định:
+Đã sửa:
 
-- giữ tên riêng và ký hiệu cần thiết;
-- phần diễn giải ưu tiên tiếng Việt;
+- giữ tên riêng và ký hiệu thật sự cần thiết;
+- đổi phần diễn giải về tiếng Việt;
 - thuật ngữ bắt buộc phải có chú thích tiếng Việt.
 
 ### 5. Các chỉ số đánh giá chưa được giải thích đủ dễ hiểu
@@ -85,6 +87,14 @@ Cây repo tại thời điểm kiểm toán chưa có file LICENSE.
 Vòng kiểm toán **không tự chọn giấy phép** vì đây là quyết định của chủ repo.
 
 Trước khi khuyến khích người khác tái sử dụng mã/tài liệu hoặc đóng góp, chủ repo cần chọn giấy phép phù hợp cho chính dự án.
+
+### 7. Infographic hiện chỉ là bản thu nhỏ
+
+Ảnh `assets/infographic-rag-second-brain.png` hiện có kích thước **200 × 283 pixel**, dung lượng khoảng **6,8 KB**.
+
+Ảnh vẫn dùng được để minh họa nhỏ trong README nhưng không phải bản chất lượng cao.
+
+Vòng kiểm toán không tự thay file nhị phân này. Nên thay bằng bản tối ưu có độ phân giải lớn hơn trước khi chốt bản phát hành đẹp về hình thức.
 
 ## Những điểm không thay đổi
 
