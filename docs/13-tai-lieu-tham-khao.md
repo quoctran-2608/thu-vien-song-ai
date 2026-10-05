@@ -103,7 +103,7 @@ Các thông tin dễ thay đổi trong file này là ảnh chụp tại ngày ki
 
 - Mã nguồn: https://github.com/mem0ai/mem0
 - Bản phát hành: https://github.com/mem0ai/mem0/releases
-- Tình trạng khi kiểm tra: Python SDK v2.2.1; Apache-2.0.
+- Tình trạng khi kiểm tra: bộ công cụ phát triển Python (SDK) v2.2.1; Apache-2.0.
 
 ### Khoj
 
@@ -135,19 +135,19 @@ Các thông tin dễ thay đổi trong file này là ảnh chụp tại ngày ki
 
 ### Qwen3-Embedding-0.6B
 
-- Model card: https://huggingface.co/Qwen/Qwen3-Embedding-0.6B
+- Trang mô tả mô hình: https://huggingface.co/Qwen/Qwen3-Embedding-0.6B
 - Tình trạng khi kiểm tra: Apache-2.0; 100+ ngôn ngữ; 32K; tối đa 1024 chiều.
 
 ### Qwen3-Reranker-0.6B
 
-- Model card: https://huggingface.co/Qwen/Qwen3-Reranker-0.6B
+- Trang mô tả mô hình: https://huggingface.co/Qwen/Qwen3-Reranker-0.6B
 - Tình trạng khi kiểm tra: 100+ ngôn ngữ; 32K.
 
 ### BGE-M3
 
-- Model card: https://huggingface.co/BAAI/bge-m3
+- Trang mô tả mô hình: https://huggingface.co/BAAI/bge-m3
 - Mã nguồn FlagEmbedding: https://github.com/FlagOpen/FlagEmbedding
-- Tình trạng khi kiểm tra: MIT; 100+ ngôn ngữ; 1024 chiều; ngữ cảnh 8192; hỗ trợ dense+sparse+multi-vector.
+- Tình trạng khi kiểm tra: MIT; 100+ ngôn ngữ; 1024 chiều; ngữ cảnh 8192; hỗ trợ tìm theo ý nghĩa + tìm thưa + nhiều véc-tơ.
 
 ---
 
