@@ -61,7 +61,31 @@ CÂU HỎI CẦN NGHIÊN CỨU THÊM
 NGUỒN
 ```
 
-## 4.5. RAG có độ phủ rộng, Bộ não thứ hai có độ sâu
+## 4.5. Liên kết có chủ ý giữa các trang tri thức
+
+Bộ não thứ hai không chỉ là một tập hợp các file đứng riêng lẻ. Các trang cần liên kết với nhau để biểu diễn những quan hệ mà hệ thống đã thật sự xác định.
+
+Ví dụ:
+
+```text
+[[Vô ngã]]
+[[Ngũ uẩn]]
+[[Duyên khởi]]
+```
+
+Một trang `Vô-ngã.md` có thể liên kết tới `[[Ngũ uẩn]]`, `[[Duyên khởi]]`, `[[Chấp thủ]]` hoặc các trang tác giả, truyền thống và tranh luận liên quan.
+
+Nguyên tắc:
+
+- chỉ tạo liên kết khi có quan hệ có ý nghĩa;
+- không tạo hàng loạt liên kết chỉ vì hai từ cùng xuất hiện;
+- liên kết phải giúp người đọc hoặc AI lần theo mạch tri thức;
+- liên kết bị hỏng phải được phát hiện trong bước tự bảo trì;
+- Markdown là dữ liệu gốc, còn Obsidian hay công cụ xem đồ thị chỉ là giao diện.
+
+Các liên kết này có thể dùng dạng `[[tên-trang]]` khi phù hợp với kho Markdown, nhưng ý nghĩa quan trọng hơn cú pháp cụ thể.
+
+## 4.6. RAG có độ phủ rộng, Bộ não thứ hai có độ sâu
 
 Nếu có hàng chục nghìn sách:
 
@@ -70,7 +94,7 @@ Nếu có hàng chục nghìn sách:
 
 Không nên cho AI tiêu hóa toàn bộ thư viện ngay ngày đầu.
 
-## 4.6. Sổ khẳng định
+## 4.7. Sổ khẳng định
 
 Một khẳng định quan trọng cần bản ghi có cấu trúc:
 
@@ -100,7 +124,7 @@ tình trạng bằng chứng
 
 Hai chiều này không nên trộn thành một.
 
-## 4.7. Phân biệt nguyên văn, bản dịch và suy luận
+## 4.8. Phân biệt nguyên văn, bản dịch và suy luận
 
 Tối thiểu nên tách:
 
@@ -113,7 +137,7 @@ Tối thiểu nên tách:
 
 Không được để người đọc hiểu nhầm bản dịch AI là bản dịch xuất bản.
 
-## 4.8. Cập nhật gia tăng
+## 4.9. Cập nhật gia tăng
 
 Khi thêm vài tài liệu mới vào thư viện lớn:
 
@@ -123,7 +147,7 @@ Khi thêm vài tài liệu mới vào thư viện lớn:
 
 Không đọc lại toàn bộ thư viện.
 
-## 4.9. Bảng kê xử lý
+## 4.10. Bảng kê xử lý
 
 Một bảng kê xử lý, thường gọi là `manifest`, nên biết:
 
@@ -133,7 +157,7 @@ Một bảng kê xử lý, thường gọi là `manifest`, nên biết:
 - kết quả gì đã sinh ra;
 - phần nào có thể bị ảnh hưởng.
 
-## 4.10. Nhiều AI nhưng một bộ ghi
+## 4.11. Nhiều AI nhưng một bộ ghi
 
 ```text
 AI 1 ─┐
@@ -143,7 +167,7 @@ AI 3 ─┘
 
 Nhiều AI được đọc và đề xuất. Chỉ một bộ phận được ghi chính thức.
 
-## 4.11. Mỗi cập nhật phải có tính toàn vẹn
+## 4.12. Mỗi cập nhật phải có tính toàn vẹn
 
 Nếu cần sửa nhiều trang, phải:
 
@@ -151,7 +175,7 @@ Nếu cần sửa nhiều trang, phải:
 
 Không để wiki ở trạng thái nửa cũ nửa mới.
 
-## 4.12. Tự bảo trì nhưng không tự bịa
+## 4.13. Tự bảo trì nhưng không tự bịa
 
 Có thể tự kiểm tra:
 
@@ -164,7 +188,7 @@ Có thể tự kiểm tra:
 
 Nhưng khi hai nguồn bất đồng, không được tự động xóa một bên hoặc chọn người thắng nếu chưa đủ căn cứ.
 
-## 4.13. QMD trong kiến trúc
+## 4.14. QMD trong kiến trúc
 
 QMD phù hợp làm công cụ tìm trong kho Markdown của Bộ não thứ hai.
 
