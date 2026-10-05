@@ -1,104 +1,160 @@
-# 2. Số hoá và chuẩn hoá nguồn
+# 2. Số hóa và kho dữ liệu chuẩn
 
-## 2.1. Nguyên tắc: không OCR tất cả
+## 2.1. Nguyên tắc: không nhận dạng chữ từ ảnh toàn bộ PDF
 
-OCR là nhận dạng chữ từ ảnh. Đây là bước có thể gây lỗi và tốn tài nguyên, vì vậy chỉ dùng khi cần.
-
-Đối với từng trang PDF:
-
-1. kiểm tra có lớp chữ không;
-2. kiểm tra chữ có đủ và hợp lệ không;
-3. kiểm tra mã Unicode có bị rác không;
-4. kiểm tra thứ tự đọc có hợp lý không;
-5. nếu đạt, lấy chữ trực tiếp;
-6. nếu không đạt, mới OCR.
-
-Một cuốn 500 trang có thể chỉ cần OCR 20–50 trang. Không có lý do chạy mô hình nhìn ảnh cho cả cuốn.
-
-## 2.2. EPUB và MOBI
-
-### EPUB
-
-EPUB thường đã có XHTML, mục lục, chương và metadata. Cần giữ cấu trúc này thay vì biến EPUB thành ảnh.
-
-### MOBI
-
-Dùng Calibre để chuyển MOBI sang EPUB hoặc HTML trước rồi xử lý theo luồng EPUB.
-
-## 2.3. Chuỗi OCR đề xuất
+Đối với từng trang:
 
 ```text
-Trang cần OCR
-   ↓
-PP-OCRv6
-   ↓
-độ tin cậy đạt?
- ├─ có → chấp nhận
- └─ không
-      ↓
- PaddleOCR-VL
-      ↓
- vẫn nghi ngờ?
-      ↓
- đánh dấu kiểm tra hoặc dịch vụ mạnh hơn
+kiểm tra trang
+↓
+có lớp chữ tốt?
+├── có → lấy chữ trực tiếp
+└── không → nhận dạng chữ từ ảnh
 ```
 
-Lý do dùng chuỗi nhiều tầng: trang dễ không cần công cụ mạnh; trang khó mới trả chi phí cao hơn.
+Có thể kiểm tra:
 
-## 2.4. Luôn giữ dữ liệu gốc và dữ liệu làm sạch
+- có lớp chữ hay không;
+- lượng ký tự;
+- Unicode có hợp lệ không;
+- chữ có bị rác không;
+- thứ tự đọc có hợp lý không.
 
-Mỗi khối văn bản nên có tối thiểu:
+Một cuốn 500 trang có thể chỉ có một phần nhỏ thật sự cần nhận dạng chữ từ ảnh.
 
-- `text_raw`: chữ lấy trực tiếp từ nguồn/OCR;
-- `text_clean`: chữ đã làm sạch;
-- `source_method`: lấy trực tiếp hay OCR;
-- `ocr_engine` nếu có;
-- `ocr_confidence` nếu có;
-- `page_id`;
-- `bbox` hoặc vị trí trên trang nếu có.
+## 2.2. Nhận dạng chữ nhiều tầng
 
-Không xoá `text_raw` sau khi sửa.
-
-## 2.5. Truy nguồn theo trang
-
-Một đoạn tìm kiếm phải có đường quay về:
+Không dùng công cụ mạnh nhất cho mọi trang.
 
 ```text
-đoạn tìm kiếm
-→ khối
-→ trang
-→ ấn bản
-→ file nguồn
+trang cần xử lý
+↓
+công cụ nhận dạng thông thường
+↓
+đủ tin cậy?
+├── có → dùng
+└── không → công cụ hiểu bố cục mạnh hơn
 ```
 
-Nếu trang là scan, giữ cả ảnh trang để kiểm tra trích dẫn khi OCR có độ tin cậy thấp.
+Trong lựa chọn hiện tại, PP-OCRv6 và PaddleOCR-VL là các ứng viên đáng thử, nhưng tên công cụ cụ thể phải được kiểm chứng trên dữ liệu thật.
 
-## 2.6. Khử trùng
+## 2.3. EPUB
+
+EPUB thường đã có:
+
+- XHTML;
+- mục lục;
+- tiêu đề;
+- chương;
+- thông tin sách.
+
+Không được biến EPUB thành ảnh rồi nhận dạng chữ.
+
+## 2.4. MOBI
+
+Chuẩn hóa qua Calibre:
+
+```text
+MOBI
+→ EPUB hoặc HTML
+→ đọc cấu trúc
+```
+
+## 2.5. Giữ văn bản thô và văn bản sạch
+
+Luôn giữ song song:
+
+```text
+text_raw
+= chữ lấy trực tiếp từ nguồn hoặc nhận dạng chữ
+
+text_clean
+= chữ đã chuẩn hóa
+```
+
+Không ghi đè dữ liệu thô.
+
+## 2.6. Thông tin kèm theo mỗi khối
+
+Nên có:
+
+- trang;
+- chương/mục;
+- phương pháp lấy chữ;
+- công cụ đã dùng;
+- mức tin cậy;
+- vị trí trên trang nếu có;
+- ảnh trang nếu cần.
+
+Nếu câu trích quan trọng đến từ kết quả nhận dạng chữ có độ tin cậy thấp, nên kiểm lại ảnh trang hoặc một công cụ khác.
+
+## 2.7. Dấu vân tay số và chống trùng
 
 ### Trùng tuyệt đối
 
-Dùng SHA-256 của file.
+Dùng SHA-256 — có thể hiểu là dấu vân tay số của file.
 
 ### Gần trùng
 
-Dùng dấu vân tay văn bản như MinHash/SimHash hoặc so sánh nội dung chuẩn hoá.
+Có thể dùng MinHash, SimHash hoặc cách tương đương để phát hiện hai nội dung gần giống.
 
-Cần phân biệt:
+## 2.8. Không đánh mất ấn bản
 
-- cùng tác phẩm nhưng khác ấn bản;
-- cùng ấn bản nhưng khác file;
-- bản scan khác chất lượng;
-- PDF và EPUB có cùng nội dung.
+Cùng một tác phẩm có thể có:
 
-Không nên làm mất thông tin về ấn bản chỉ vì nội dung gần giống.
+- nhiều lần xuất bản;
+- nhiều bản dịch;
+- nhiều bản scan;
+- nhiều định dạng.
 
-## 2.7. Phiên bản xử lý
+Không gộp mất thông tin về ấn bản chỉ vì nội dung gần giống.
 
-Mỗi kết quả cần biết:
+## 2.9. Mô hình dữ liệu chuẩn
 
-- phiên bản parser;
-- phiên bản OCR;
-- phiên bản quy tắc làm sạch;
-- phiên bản embedding.
+```text
+Tác phẩm
+↓
+Ấn bản
+↓
+Nguồn file
+↓
+Chương / mục
+↓
+Trang
+↓
+Khối
+↓
+Đoạn tìm kiếm
+```
 
-Nhờ đó khi nâng cấp một công cụ, hệ thống biết chính xác tài liệu nào cần chạy lại.
+Một đoạn tìm kiếm phải lần ngược được về đúng file, đúng ấn bản và đúng trang.
+
+## 2.10. Bốn tầng dữ liệu
+
+### Tầng 0 — Danh mục
+
+Tên sách, tác giả, dịch giả, nhà xuất bản, năm, ngôn ngữ, chủ đề.
+
+### Tầng 1 — Cấu trúc
+
+Mục lục, phần, chương, mục, khoảng trang.
+
+### Tầng 2 — Tìm kiếm
+
+Các đoạn đã chuẩn bị cho hệ tìm kiếm.
+
+### Tầng 3 — Nguồn
+
+File gốc, chữ thô, chữ sạch, ảnh trang, vị trí chữ, độ tin cậy.
+
+## 2.11. Phiên bản xử lý
+
+Cần biết tối thiểu:
+
+- phiên bản trình đọc;
+- phiên bản nhận dạng chữ;
+- phiên bản làm sạch;
+- phiên bản chia đoạn;
+- phiên bản mô hình tìm theo ý nghĩa.
+
+Nhờ đó khi nâng cấp công cụ, ta biết tài liệu nào cần xử lý lại.
