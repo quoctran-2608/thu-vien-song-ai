@@ -175,32 +175,32 @@ Không mặc định dùng QMD làm chỉ mục chính cho toàn bộ kho sách 
 
 ### Họ thật sự có gì?
 
-PageIndex hiện đã có:
+PageIndex hiện có chế độ chạy cục bộ để lập chỉ mục, truy hồi và trò chuyện trên máy bằng mô hình do người dùng chọn. Tuy nhiên, phạm vi cục bộ hiện **hẹp hơn chế độ đám mây**:
 
-- chế độ chạy cục bộ;
-- lập chỉ mục và truy hồi cục bộ;
-- dựng cây nhanh cho PDF có chữ;
-- lớp PageIndex File System — cơ chế tổ chức nhiều tài liệu thành cây.
+- chế độ cục bộ tập trung vào PDF có lớp chữ;
+- không có nhận dạng chữ và hiểu ảnh tích hợp;
+- không có thư mục, metadata quản lý và máy chủ MCP như phía đám mây;
+- PageIndex File System — lớp tổ chức nhiều tài liệu thành cây — hiện là **tính năng đám mây**.
 
-Nhận định cũ rằng lớp nhiều tài liệu chủ yếu thuộc phía dịch vụ đã không còn đúng hoàn toàn.
+Vì vậy nhận định “PageIndex File System đã có thể dùng cục bộ” là không chính xác và đã được sửa trong vòng phản biện này.
 
 ### Quyết định
 
 Ở bản đầu vẫn dùng:
 
 ~~~text
-tìm toàn thư viện
+tìm toàn thư viện bằng hệ của Thư Viện Sống
 ↓
 thu hẹp còn vài tài liệu
 ↓
-PageIndex
+PageIndex cục bộ
 ↓
 đọc sâu chương / mục / trang
 ~~~
 
-Lý do không phải PageIndex thiếu khả năng, mà vì kiến trúc “tìm rẻ trước, đọc sâu sau” dễ đo, dễ thay và an toàn hơn.
+Cách đặt này còn hợp lý hơn sau khi kiểm chứng lại: PageIndex cục bộ làm tốt vai trò đọc sâu PDF có chữ, còn định tuyến toàn kho và quyền sở hữu metadata vẫn thuộc Thư Viện Sống.
 
-Sau này có thể đo lớp nhiều tài liệu của PageIndex như bộ định tuyến toàn kho.
+Không dựa vào PageIndex File System cho kiến trúc cục bộ. Nếu sau này cân nhắc tính năng nhiều tài liệu của PageIndex Cloud, phải đánh giá riêng chi phí, quyền riêng tư, nơi lưu dữ liệu và khả năng rời dịch vụ.
 
 ---
 
