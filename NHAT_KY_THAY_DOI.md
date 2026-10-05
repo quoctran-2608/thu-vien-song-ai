@@ -132,3 +132,20 @@ Tài liệu:
 - đề xuất đội tối thiểu và thời gian cho bản 0.1 đã có các kiểm soát P0/P1;
 - bổ sung ngưỡng GO/NO-GO ban đầu;
 - cập nhật khung pháp lý bảo vệ dữ liệu cá nhân hiện hành sang Luật 91/2025/QH15 và Nghị định 356/2025/NĐ-CP.
+
+
+### Đối chiếu với tuyến đầu thế giới 2026
+
+Đã bổ sung `docs/20-doi-chieu-voi-tuyen-dau-the-gioi-2026.md`.
+
+Các phát hiện chính:
+
+- kiến trúc dữ liệu chuẩn, truy nguồn và bằng chứng vẫn phù hợp rất tốt với tuyến đầu;
+- cần thêm đường thử tìm trực tiếp từ ảnh trang và tương tác muộn nhiều véc-tơ;
+- cần benchmark tìm thưa học được thay vì chỉ BM25;
+- cần so sánh chia đoạn hiện tại với contextual retrieval và late chunking;
+- Qwen3 0.6B được giữ làm mốc tiết kiệm, còn 4B/8B dùng làm trần chất lượng;
+- RAG phải cạnh tranh trực tiếp với đọc ngữ cảnh dài/DOS-RAG và PageIndex dưới cùng ngân sách;
+- cần thử adaptive-k và vòng tìm lặp dựa trên khoảng trống bằng chứng;
+- đánh giá tiếng Việt phải dùng VN-MTEB, ViRE và bộ câu hỏi sách tiếng Việt riêng;
+- không mặc định bật graph, trí nhớ học tăng cường hay tác tử phức tạp khi chưa có bằng chứng giá trị.
