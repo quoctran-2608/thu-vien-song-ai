@@ -126,3 +126,19 @@ Sau vòng phản biện, dự án đã nghiên cứu biện pháp giảm thiểu
 > [Kế hoạch khắc phục rủi ro: giải pháp, xác suất thành công và nguồn lực](docs/19-ke-hoach-khac-phuc-rui-ro.md)
 
 Các tỷ lệ phần trăm trong tài liệu này là **ước lượng kỹ thuật**, không phải xác suất thống kê đã được chứng minh. Chúng dùng để ưu tiên nguồn lực và phải được cập nhật khi bản 0.1 có số liệu thực nghiệm.
+
+
+## Đối chiếu với tuyến đầu thế giới năm 2026
+
+Dự án đã được đối chiếu với các hướng nghiên cứu và công cụ tiên tiến năm 2025–2026 về truy hồi tài liệu, tài liệu đa phương thức, ngữ cảnh dài, nghiên cứu nhiều vòng, tổng hợp theo bằng chứng và trí nhớ tác tử.
+
+Tài liệu:
+
+> [Đối chiếu Thư Viện Sống với tuyến đầu thế giới năm 2026](docs/20-doi-chieu-voi-tuyen-dau-the-gioi-2026.md)
+
+Kết luận:
+
+- nền tảng kiến trúc về dữ liệu chuẩn, truy nguồn, Claim/Evidence, bộ máy thay được và đánh giá là rất mạnh, gần tuyến đầu;
+- phần thử nghiệm kỹ thuật chưa bao phủ đủ các hướng mới nhất;
+- các khoảng trống đáng benchmark nhất là tìm trực tiếp từ ảnh trang, tương tác muộn nhiều véc-tơ, tìm thưa học được, biểu diễn đoạn có ngữ cảnh, ngữ cảnh dài đối chứng với RAG, chọn số bằng chứng thích ứng, tìm lặp theo khoảng trống bằng chứng và đánh giá chuyên biệt tiếng Việt;
+- không đưa tất cả kỹ thuật mới vào đường chính; chúng phải cạnh tranh trên cùng dữ liệu, cùng ngân sách và cùng bộ đánh giá.
