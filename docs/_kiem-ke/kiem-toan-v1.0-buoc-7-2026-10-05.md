@@ -90,7 +90,7 @@ Tại thời điểm Bước 7, repo chưa có file LICENSE.
 
 Tại thời điểm Bước 7, ảnh `assets/infographic-rag-second-brain.png` chỉ có kích thước **200 × 283 pixel**, khoảng **6,8 KB**.
 
-Ở Bước 8, ảnh đã được thay bằng bản **280 × 396 pixel**, khoảng **18,6 KB**. Bản này rõ hơn đáng kể nhưng vẫn đủ nhẹ cho README.
+Ở Bước 8, ảnh đã được thay bằng bản **280 × 396 pixel**, khoảng **8,7 KB**. Bản này rõ hơn đáng kể nhưng vẫn đủ nhẹ cho README.
 
 ## Những điểm không thay đổi
 
