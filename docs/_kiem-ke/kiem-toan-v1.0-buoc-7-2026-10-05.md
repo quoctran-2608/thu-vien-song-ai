@@ -10,7 +10,7 @@ Mục tiêu của vòng này là đọc repo như một người hoàn toàn m�
 
 Trước khi sửa đã kiểm tra cơ học 28 liên kết Markdown nội bộ và không thấy liên kết hỏng.
 
-Sau khi bổ sung/sửa tài liệu ở Bước 7, đã kiểm tra lại **41 liên kết nội bộ**.
+Sau khi bổ sung/sửa tài liệu ở Bước 7, đã kiểm tra lại **43 liên kết nội bộ**.
 
 **Kết quả cuối: 0 liên kết nội bộ bị hỏng.**
 
