@@ -80,21 +80,17 @@ Các tên Recall@5, MRR, nDCG, Precision, F1 cần được diễn giải bằng
 
 Đã bổ sung giải thích trong tài liệu đánh giá và từ điển thuật ngữ.
 
-### 6. Repo công khai chưa có giấy phép của chính repo
+### 6. Giấy phép của chính repo — đã xử lý ở Bước 8
 
-Cây repo tại thời điểm kiểm toán chưa có file LICENSE.
+Tại thời điểm Bước 7, repo chưa có file LICENSE.
 
-Vòng kiểm toán **không tự chọn giấy phép** vì đây là quyết định của chủ repo.
+Ở Bước 8, repo đã được chốt dùng **Apache License 2.0** cho nội dung gốc do dự án tạo, kèm `NOTICE` để làm rõ nội dung bên thứ ba vẫn giữ giấy phép và bản quyền riêng.
 
-Trước khi khuyến khích người khác tái sử dụng mã/tài liệu hoặc đóng góp, chủ repo cần chọn giấy phép phù hợp cho chính dự án.
+### 7. Infographic thu nhỏ — đã xử lý ở Bước 8
 
-### 7. Infographic hiện chỉ là bản thu nhỏ
+Tại thời điểm Bước 7, ảnh `assets/infographic-rag-second-brain.png` chỉ có kích thước **200 × 283 pixel**, khoảng **6,8 KB**.
 
-Ảnh `assets/infographic-rag-second-brain.png` hiện có kích thước **200 × 283 pixel**, dung lượng khoảng **6,8 KB**.
-
-Ảnh vẫn dùng được để minh họa nhỏ trong README nhưng không phải bản chất lượng cao.
-
-Vòng kiểm toán không tự thay file nhị phân này. Nên thay bằng bản tối ưu có độ phân giải lớn hơn trước khi chốt bản phát hành đẹp về hình thức.
+Ở Bước 8, ảnh đã được thay bằng bản **280 × 396 pixel**, khoảng **18,6 KB**. Bản này rõ hơn đáng kể nhưng vẫn đủ nhẹ cho README.
 
 ## Những điểm không thay đổi
 
