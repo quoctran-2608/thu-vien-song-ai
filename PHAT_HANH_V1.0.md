@@ -44,4 +44,4 @@ Xem:
 
 ## Mốc Git
 
-Nhánh `v1.0` được dùng làm mốc tài liệu v1.0 và phải được đồng bộ với commit chốt cuối của `main`.
+Nhánh `v1.0` được dùng làm mốc tài liệu v1.0 và được đồng bộ với commit chốt cuối của `main`.
