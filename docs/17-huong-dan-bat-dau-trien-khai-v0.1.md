@@ -371,3 +371,137 @@ Ví dụ:
 - trích dẫn sai → sửa cửa bằng chứng trước.
 
 Đây là cách giữ dự án đơn giản và kiểm toán được.
+
+
+---
+
+## 17.15. Các làn đối chứng tuyến đầu
+
+Sau vòng đối chiếu với nghiên cứu thế giới năm 2026, bản 0.1 vẫn giữ **một đường chính đơn giản** để làm mốc, nhưng bổ sung các làn thử nghiệm. Không được đưa tất cả vào sản xuất cùng lúc.
+
+### Làn A — mốc đơn giản mạnh
+
+~~~text
+chia đoạn theo cấu trúc
++ BM25
++ Qwen3-Embedding-0.6B
++ hợp nhất thứ hạng
++ Qwen3-Reranker-0.6B
+~~~
+
+Đây là mốc chi phí thấp và phải chạy đầu tiên.
+
+### Làn B — trần chất lượng bằng mô hình lớn hơn
+
+So:
+
+- Qwen3-Embedding-0.6B với 4B/8B;
+- Qwen3-Reranker-0.6B với 4B/8B.
+
+Mục đích không phải chọn mô hình lớn nhất mà đo **mỗi phần chất lượng tăng thêm tốn bao nhiêu tài nguyên**.
+
+### Làn C — tìm thưa học được
+
+So:
+
+- BM25;
+- tín hiệu thưa của BGE-M3;
+- SPLADE hoặc mô hình thưa đa ngôn ngữ phù hợp;
+- tìm kết hợp chữ + nghĩa;
+- nếu đáng giá, hợp nhất ba đường: BM25 + tìm thưa học được + tìm theo ý nghĩa.
+
+### Làn D — đoạn có ngữ cảnh
+
+So:
+
+1. đoạn thông thường;
+2. đoạn + tiêu đề sách/chương/mục;
+3. đoạn + ngữ cảnh ngắn sinh riêng cho đoạn;
+4. chia muộn — cho mô hình nhìn vùng ngữ cảnh rộng trước khi tạo biểu diễn cho từng đoạn.
+
+### Làn E — nhiều véc-tơ / tương tác muộn
+
+Thử một bộ tìm kiểu ColBERT hoặc BGE-M3 nhiều véc-tơ để kiểm tra xem câu hỏi chi tiết có được cải thiện đủ để bù dung lượng và độ phức tạp chỉ mục hay không.
+
+### Làn F — tìm trực tiếp từ ảnh trang
+
+Trên các trang có:
+
+- bảng;
+- biểu đồ;
+- bố cục nhiều cột;
+- chữ nhỏ;
+- chú thích;
+- nội dung mà OCR làm mất cấu trúc,
+
+thử một bộ tìm thị giác như ColModernVBERT hoặc phương án tương đương.
+
+Tuyến thị giác **đứng song song**, không thay tuyến văn bản.
+
+### Làn G — RAG so với đọc ngữ cảnh dài
+
+Khi đã thu hẹp còn một số sách/chương, so dưới cùng ngân sách:
+
+- RAG theo đoạn;
+- DOS-RAG/đọc theo thứ tự tài liệu;
+- đưa ngữ cảnh dài trực tiếp;
+- PageIndex.
+
+Không mặc định RAG luôn thắng.
+
+### Làn H — nghiên cứu sâu nhiều vòng
+
+Chỉ sau khi các làn tìm kiếm cơ bản ổn:
+
+~~~text
+phân rã câu hỏi
+↓
+tìm bằng chứng
+↓
+đánh giá đã đủ chưa
+├── đủ → tổng hợp
+└── chưa
+    ↓
+    ghi rõ khoảng trống
+    ↓
+    tạo truy vấn tiếp
+    ↓
+    tìm lại
+~~~
+
+Mỗi vòng phải lưu truy vấn, ứng viên, bằng chứng được chọn và lý do dừng.
+
+---
+
+## 17.16. Đánh giá riêng cho tiếng Việt
+
+Không chốt mô hình chỉ từ bảng xếp hạng tiếng Anh hoặc đa ngôn ngữ chung.
+
+Ít nhất phải đối chiếu:
+
+- **VN-MTEB** — tập đánh giá biểu diễn tiếng Việt;
+- **ViRE** — nghiên cứu truy hồi tiếng Việt nhiều miền;
+- bộ câu hỏi riêng từ chính kho sách của dự án.
+
+Mục tiêu là tìm mô hình **ổn định trên tiếng Việt và sách thật**, không tìm mô hình có tên lớn nhất.
+
+---
+
+## 17.17. Thứ tự để tránh nổ phạm vi
+
+Các làn trên là **bộ thí nghiệm**, không phải danh sách công nghệ phải xây.
+
+Thứ tự:
+
+1. làm Làn A chạy đúng;
+2. khóa bộ dữ liệu và bộ câu hỏi;
+3. chạy B/C/D/F/G như đối chứng;
+4. chỉ giữ phương án tạo cải thiện có ý nghĩa;
+5. sau đó mới thử adaptive-k — chọn số đoạn động;
+6. sau đó mới thử Làn H — tìm nhiều vòng theo khoảng trống bằng chứng.
+
+Nếu một phương pháp mới không thắng về chất lượng hoặc không đáng với chi phí/độ phức tạp:
+
+> **loại khỏi đường chính dù nó là công nghệ mới hơn.**
+
+Xem toàn bộ lập luận tại [Đối chiếu Thư Viện Sống với tuyến đầu thế giới năm 2026](20-doi-chieu-voi-tuyen-dau-the-gioi-2026.md).
