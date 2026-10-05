@@ -117,3 +117,18 @@ Vòng này không tìm cách bảo vệ kiến trúc mà chủ động tìm đi�
 - cần đánh giá kín/đối kháng để tránh tối ưu quá mức theo bộ câu hỏi chuẩn.
 
 Đã đính chính thêm phạm vi PageIndex: File System nhiều tài liệu hiện là tính năng đám mây.
+
+
+### Kế hoạch khắc phục 42 rủi ro
+
+Đã bổ sung `docs/19-ke-hoach-khac-phuc-rui-ro.md`.
+
+Tài liệu:
+
+- đưa giải pháp cụ thể cho 42 rủi ro/giới hạn;
+- ước lượng khả năng đưa từng rủi ro xuống mức chấp nhận được;
+- ước lượng ngày công và vai trò cần thiết;
+- gom thành 9 chương trình dùng chung để tránh cộng trùng nguồn lực;
+- đề xuất đội tối thiểu và thời gian cho bản 0.1 đã có các kiểm soát P0/P1;
+- bổ sung ngưỡng GO/NO-GO ban đầu;
+- cập nhật khung pháp lý bảo vệ dữ liệu cá nhân hiện hành sang Luật 91/2025/QH15 và Nghị định 356/2025/NĐ-CP.
