@@ -149,6 +149,7 @@ Nếu bỏ PageIndex, cấu trúc sách vẫn còn.
 - [Kiểm chứng công cụ và dự án tham khảo — 05/10/2026](docs/16-kiem-chung-cong-cu-2026-10-05.md)
 - [Hướng dẫn bắt đầu triển khai bản kỹ thuật 0.1](docs/17-huong-dan-bat-dau-trien-khai-v0.1.md)
 - [Phản biện: rủi ro, giới hạn và điều kiện thất bại](docs/18-rui-ro-gioi-han-va-phan-bien.md)
+- [Kế hoạch khắc phục rủi ro: giải pháp, xác suất thành công và nguồn lực](docs/19-ke-hoach-khac-phuc-rui-ro.md)
 
 ### Kiểm soát thất lạc tri thức
 
