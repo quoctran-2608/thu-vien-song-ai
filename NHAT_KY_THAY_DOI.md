@@ -57,3 +57,19 @@ Các thay đổi nhận thức quan trọng:
 - Khoj dùng AGPL-3.0 nên cần thận trọng nếu tái sử dụng mã.
 
 Kiến trúc cốt lõi không đổi: dữ liệu chuẩn thuộc về Thư Viện Sống, các công cụ ngoài là bộ máy có thể thay.
+
+
+### Kiểm toán toàn repo — Bước 7
+
+Đã đọc repo như một người mới và kiểm tra cơ học 28 liên kết Markdown nội bộ; không phát hiện liên kết nội bộ bị hỏng.
+
+Đã sửa các điểm dễ gây hiểu nhầm:
+
+- phân biệt “tài liệu/đặc tả v1.0” với “phần mềm sản xuất 1.0” trong tương lai;
+- ghi rõ repo hiện đang công khai và không nên chứa kho sách/dữ liệu nội bộ;
+- bổ sung hướng dẫn bắt đầu triển khai bản kỹ thuật 0.1;
+- giải thích các chỉ số đánh giá bằng tiếng Việt;
+- chuẩn hóa thêm thuật ngữ tiếng Việt;
+- ghi nhận repo hiện chưa có file LICENSE và cần chủ repo quyết định giấy phép.
+
+Xem biên bản: `docs/_kiem-ke/kiem-toan-v1.0-buoc-7-2026-10-05.md`.
