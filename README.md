@@ -6,6 +6,18 @@
 
 ![Infographic kết hợp RAG và Bộ não thứ hai](assets/infographic-rag-second-brain.png)
 
+## Trạng thái hiện tại
+
+Repo hiện là **bộ tài liệu nghiên cứu và đặc tả kiến trúc**, chưa phải phần mềm sản xuất hoàn chỉnh.
+
+- **v1.0 hiện tại** là phiên bản tài liệu/đặc tả.
+- **Phần mềm sản xuất 1.0** là một mốc tương lai trong lộ trình triển khai.
+- Repo hiện công khai; không đưa sách có bản quyền, dữ liệu nội bộ hoặc kho nguồn thật vào repo công khai này.
+
+Kỹ sư muốn bắt đầu xây ngay nên đọc:
+
+👉 **[Hướng dẫn bắt đầu triển khai bản kỹ thuật 0.1](docs/17-huong-dan-bat-dau-trien-khai-v0.1.md)**
+
 ## Đọc tài liệu nào trước?
 
 ### Muốn hiểu toàn bộ dự án
@@ -131,6 +143,7 @@ Nếu bỏ PageIndex, cấu trúc sách vẫn còn.
 - [Cấu trúc repo kỹ thuật](docs/14-cau-truc-repo-ky-thuat.md)
 - [Chế độ nghiên cứu nghiêm ngặt](docs/15-che-do-nghien-cuu-nghiem-ngat.md)
 - [Kiểm chứng công cụ và dự án tham khảo — 05/10/2026](docs/16-kiem-chung-cong-cu-2026-10-05.md)
+- [Hướng dẫn bắt đầu triển khai bản kỹ thuật 0.1](docs/17-huong-dan-bat-dau-trien-khai-v0.1.md)
 
 ### Kiểm soát thất lạc tri thức
 
