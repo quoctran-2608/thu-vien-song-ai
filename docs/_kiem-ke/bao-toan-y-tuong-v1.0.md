@@ -24,6 +24,8 @@ Tài liệu này dùng để ngăn các phiên bản sau vô tình làm mất nh
 | Gói bằng chứng | Tài liệu tổng thể; 03; 05 |
 | RAG có độ phủ rộng, Bộ não thứ hai có độ sâu | 04 |
 | Second Brain không tiêu hóa toàn thư viện trước | 04 |
+| Liên kết giữa các trang tri thức phải có chủ ý, không tạo máy móc | 04; 14 |
+| Markdown là dữ liệu, Obsidian chỉ là giao diện | 04; 06 |
 | Sổ khẳng định | 04; 07 |
 | Tách cách tạo khẳng định và tình trạng bằng chứng | 04; 07 |
 | Phân biệt nguyên văn, bản dịch, diễn giải và tổng hợp AI | 04; 07; 15 |
