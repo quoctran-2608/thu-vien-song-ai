@@ -132,9 +132,9 @@ Trước đây ta có thể cần một bộ máy tìm theo chữ riêng và Qdr
 Phương án thử đầu tiên:
 
 ~~~text
-dense
+tìm theo ý nghĩa (véc-tơ dày)
 +
-sparse/BM25
+tìm thưa/BM25 theo chữ
 ↓
 RRF
 ↓
@@ -180,7 +180,7 @@ PageIndex hiện đã có:
 - chế độ chạy cục bộ;
 - lập chỉ mục và truy hồi cục bộ;
 - dựng cây nhanh cho PDF có chữ;
-- lớp File System cho nhiều tài liệu.
+- lớp PageIndex File System — cơ chế tổ chức nhiều tài liệu thành cây.
 
 Nhận định cũ rằng lớp nhiều tài liệu chủ yếu thuộc phía dịch vụ đã không còn đúng hoàn toàn.
 
@@ -200,7 +200,7 @@ PageIndex
 
 Lý do không phải PageIndex thiếu khả năng, mà vì kiến trúc “tìm rẻ trước, đọc sâu sau” dễ đo, dễ thay và an toàn hơn.
 
-Sau này có thể đo PageIndex File System như bộ định tuyến toàn kho.
+Sau này có thể đo lớp nhiều tài liệu của PageIndex như bộ định tuyến toàn kho.
 
 ---
 
@@ -360,7 +360,7 @@ Không phải ưu tiên cho phần lớn sách bất biến.
 
 Mem0 là lớp trí nhớ cho tác tử/ứng dụng.
 
-Một điểm cần thận trọng: dự án phân biệt một số benchmark của nền tảng quản lý có tối ưu riêng với bản thư viện mã nguồn mở.
+Một điểm cần thận trọng: dự án phân biệt một số kết quả đánh giá của nền tảng quản lý có tối ưu riêng với bản thư viện mã nguồn mở.
 
 ### Quyết định
 
@@ -372,7 +372,7 @@ Dùng bổ trợ cho:
 
 Không dùng làm kho bằng chứng sách có truy nguồn chính xác.
 
-Không lấy benchmark của dịch vụ quản lý để suy ra chất lượng của bản mã nguồn mở.
+Không lấy kết quả đánh giá của dịch vụ quản lý để suy ra chất lượng của bản mã nguồn mở.
 
 ---
 
@@ -472,8 +472,8 @@ KHO DỮ LIỆU CHUẨN
 
 ~~~text
 Qdrant
-├── dense
-└── sparse/BM25
+├── tìm theo ý nghĩa (véc-tơ dày)
+└── tìm thưa/BM25 theo chữ
       ↓
       RRF
       ↓
