@@ -58,7 +58,15 @@ nguon_dung:
 - tỷ lệ lấy đúng trang;
 - chất lượng sau khi xếp hạng lại.
 
-Có thể dùng các chỉ số kỹ thuật như Recall@5, Recall@10, MRR và nDCG; trong tài liệu cho người dùng cần giải thích chúng bằng tiếng Việt.
+Có thể dùng các chỉ số kỹ thuật sau, nhưng phải hiểu chúng bằng ý nghĩa thực tế:
+
+- **Recall@5 / Recall@10 — tỷ lệ tìm thấy:** trong 5 hoặc 10 kết quả đầu, hệ thống có đưa nguồn đúng vào hay không.
+- **MRR — thứ hạng đối ứng trung bình:** nguồn đúng xuất hiện càng sớm thì điểm càng cao.
+- **nDCG — chất lượng thứ hạng có trọng số:** đánh giá thứ tự kết quả khi có nhiều mức độ liên quan khác nhau.
+- **Precision — độ chính xác của tập kết quả:** trong những kết quả được trả về, bao nhiêu là đúng/liên quan.
+- **F1 — điểm cân bằng:** kết hợp độ chính xác và tỷ lệ tìm thấy thành một chỉ số cân bằng.
+
+Các tên viết tắt được giữ để đối chiếu với công cụ đánh giá, còn quyết định triển khai phải dựa trên ý nghĩa phía trên.
 
 ## 9.4. So sánh các phương án
 
