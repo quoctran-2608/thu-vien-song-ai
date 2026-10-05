@@ -91,7 +91,7 @@ BỘ NÃO THỨ HAI
 
 ## 5. Công nghệ chỉ là các bộ máy có thể thay
 
-Các lựa chọn hiện tại có thể gồm Docling, PaddleOCR, Qdrant, RAGFlow, QMD, PageIndex và các công cụ khác.
+Các lựa chọn đã kiểm chứng ngày 05/10/2026 gồm Docling, PaddleOCR, Qdrant, QMD, PageIndex và RAGFlow; các mô hình đầu tiên để thử gồm Qwen3-Embedding-0.6B và Qwen3-Reranker-0.6B, với BGE-M3 làm đường chuẩn so sánh.
 
 Nhưng nguyên tắc là:
 
@@ -130,6 +130,7 @@ Nếu bỏ PageIndex, cấu trúc sách vẫn còn.
 - [Tài liệu và dự án tham khảo](docs/13-tai-lieu-tham-khao.md)
 - [Cấu trúc repo kỹ thuật](docs/14-cau-truc-repo-ky-thuat.md)
 - [Chế độ nghiên cứu nghiêm ngặt](docs/15-che-do-nghien-cuu-nghiem-ngat.md)
+- [Kiểm chứng công cụ và dự án tham khảo — 05/10/2026](docs/16-kiem-chung-cong-cu-2026-10-05.md)
 
 ### Kiểm soát thất lạc tri thức
 
