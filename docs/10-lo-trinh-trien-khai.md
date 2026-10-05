@@ -1,88 +1,116 @@
 # 10. Lộ trình triển khai
 
-## Giai đoạn 0 — thí nghiệm dữ liệu thật
+## Giai đoạn 0 — Thử nghiệm dữ liệu thật
 
-- lấy 200–500 trang đại diện;
-- benchmark Docling/PyMuPDF/PaddleOCR;
-- xác định quy tắc preflight;
+Chọn 200–500 trang đại diện cho những tình huống khó khác nhau.
+
+Làm:
+
+- thử các cách đọc PDF;
+- thử nhận dạng chữ;
+- kiểm tra EPUB/MOBI;
+- xác định quy tắc chọn trang cần nhận dạng chữ;
 - xây 100–300 câu hỏi chuẩn.
 
-Mục tiêu: biết chính xác dữ liệu thực khó ở đâu trước khi xây lớn.
+Mục tiêu:
 
-## Bản kỹ thuật 0.1 — nguồn và bằng chứng
+> biết dữ liệu thật khó ở đâu trước khi xây lớn.
+
+## Bản kỹ thuật 0.1 — Nguồn và bằng chứng
 
 Làm:
 
 - kho nguồn bất biến;
 - SHA-256;
-- parser;
-- OCR theo tầng;
-- mô hình Work/Edition/Section/Page/Block/Chunk;
+- mô hình tác phẩm/ấn bản/trang;
+- lấy chữ trực tiếp;
+- nhận dạng chữ theo tầng;
+- chống trùng;
 - tìm theo chữ;
 - tìm theo ý nghĩa;
 - xếp hạng lại;
-- dẫn nguồn trang.
+- dẫn nguồn trang;
+- bộ kiểm thử cơ bản.
 
 Chưa làm:
 
-- graph;
-- tự động Second Brain toàn diện.
+- đồ thị toàn kho;
+- tự động hóa Bộ não thứ hai toàn diện.
 
 ## Bản kỹ thuật 0.2 — Bộ não thứ hai
 
 Làm:
 
-- Markdown vault;
-- QMD;
-- BrainPage;
-- Claim/Evidence;
-- wikilink;
+- Markdown;
+- tìm trong Markdown;
+- trang tri thức;
+- sổ khẳng định;
+- liên kết giữa các trang;
 - Git;
-- quy tắc AI.
+- quy tắc dành cho AI.
 
-## Bản kỹ thuật 0.3 — nghiên cứu sâu và tự bảo trì
+Chưa cho AI sửa tự động hoàn toàn.
+
+## Bản kỹ thuật 0.3 — Nghiên cứu sâu và tự bảo trì
 
 Làm:
 
-- ResearchWorkspace;
-- Proposal;
-- single-writer;
-- kiểm tra mâu thuẫn;
+- gói bằng chứng;
+- không gian nghiên cứu;
+- kiểm tra câu trích;
+- kiểm tra khẳng định;
+- tìm bằng chứng phản bác;
+- đề xuất;
+- một bộ ghi;
+- cập nhật toàn vẹn;
 - chống trùng;
-- lint wiki;
-- cập nhật gia tăng.
+- phát hiện mâu thuẫn;
+- kiểm tra wiki.
 
-## Bản kỹ thuật 0.4 — đọc sâu và adapter
+## Bản kỹ thuật 0.4 — Điều phối và đọc sâu
 
-- adapter RAGFlow;
-- PageIndex sau bước chọn sách;
-- bộ định tuyến câu hỏi;
-- evidence pack tối ưu.
+Làm:
 
-## Bản kỹ thuật 0.5 — graph theo nhu cầu
+- bộ chọn cách xử lý câu hỏi;
+- PageIndex cho đọc sâu;
+- bộ chuyển tiếp RAGFlow hoặc công cụ tương đương;
+- tối ưu gói bằng chứng;
+- MCP ổn định.
 
-Chỉ khi có use case rõ:
+## Bản kỹ thuật 0.5 — Quan hệ phức tạp
 
-- LightRAG cho quan hệ xuyên nguồn;
+Chỉ khi có bài toán thực sự cần:
+
+- đồ thị quan hệ;
+- LightRAG hoặc công cụ tương đương;
 - Graphiti cho tri thức thay đổi theo thời gian;
-- Cognee nếu cần bộ nhớ tác tử tổng quát.
+- các hệ trí nhớ tác tử như Cognee nếu chứng minh được giá trị.
 
 ## Bản sản xuất 1.0
 
-- web UI;
-- MCP server;
+Hoàn thiện:
+
+- giao diện web;
 - phân quyền;
 - sao lưu;
+- phục hồi;
 - giám sát;
 - kiểm thử tự động;
 - tài liệu vận hành;
-- chính sách nâng cấp động cơ.
+- chính sách nâng cấp công cụ.
 
 ## Thứ tự ưu tiên
 
-1. đúng nguồn;
-2. đúng cấu trúc;
-3. đúng truy hồi;
-4. ít context;
-5. tích lũy tri thức;
-6. graph và tự động hoá nâng cao.
+```text
+1. Đúng nguồn
+2. Đúng cấu trúc
+3. Đúng trang
+4. Tìm đúng
+5. Trích dẫn đúng
+6. Giảm lượng chữ AI phải đọc
+7. Tích lũy hiểu biết
+8. Tự động hóa
+9. Đồ thị và tính năng nâng cao
+```
+
+Không đảo ngược thứ tự này.
