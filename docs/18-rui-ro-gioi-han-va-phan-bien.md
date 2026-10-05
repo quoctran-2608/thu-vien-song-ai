@@ -997,4 +997,775 @@ Với sách scan:
 scan
 ↓
 Thư Viện Sống OCR và chuẩn hóa
+↓tạo tài liệu có chữ/cấu trúc phù hợp
 ↓
+mới cân nhắc PageIndex
+```
+
+Cách đặt PageIndex sau bước thu hẹp vẫn hợp lý.
+
+---
+
+# 18.27. QMD phù hợp Bộ não thứ hai nhưng không nên bị thần thánh hóa
+
+QMD ban đầu được xây như công cụ cá nhân cho:
+
+- ghi chú Markdown;
+- nhật ký;
+- biên bản họp.
+
+Nó dùng SQLite/FTS/sqlite-vec.
+
+Nhật ký phát hành cho thấy dự án đã phải xử lý:
+
+- khóa cơ sở dữ liệu khi nhiều tiến trình cùng ghi;
+- phiên nhúng có giới hạn thời gian;
+- lỗi nền tảng khác nhau;
+- bộ lọc rất chọn lọc có thể chỉ đạt tính đầy đủ “cố gắng tối đa” trong top-K.
+
+Điều này không làm QMD xấu.
+
+Nó chỉ củng cố quyết định:
+
+> QMD cho Bộ não thứ hai cục bộ; không biến nó thành hạ tầng tìm kiếm chính của toàn kho lớn hoặc hệ nhiều người ghi.
+
+---
+
+# 18.28. Kiểm thử 100–300 câu hỏi vẫn có thể tạo ảo tưởng chất lượng
+
+Một bộ câu hỏi chuẩn là bắt buộc.
+
+Nhưng nếu đội ngũ nhìn kết quả rồi liên tục tinh chỉnh:
+
+- chia đoạn;
+- bộ lọc;
+- trọng số;
+- truy vấn;
+- mô hình;
+
+trên cùng 100–300 câu, hệ thống có thể **học cách thắng bài kiểm tra**.
+
+## Đề xuất
+
+Chia ít nhất:
+
+- tập phát triển;
+- tập kiểm tra kín;
+- tập khó đối kháng;
+- tập mới theo thời gian.
+
+Một phần câu hỏi không được dùng khi tinh chỉnh.
+
+---
+
+# 18.29. Bộ kiểm thử phải có câu “không có đáp án”
+
+Nếu tất cả câu hỏi chuẩn đều có đáp án trong thư viện, hệ thống được huấn luyện hành vi:
+
+> luôn tìm một thứ gì đó để trả lời.
+
+Đó là ngược với triết lý “chưa đủ bằng chứng là câu trả lời hợp lệ”.
+
+Bộ thử phải có:
+
+- câu không có bằng chứng;
+- câu chỉ có bằng chứng yếu;
+- câu có hai nguồn mâu thuẫn;
+- câu có nguồn gần giống nhưng không hỗ trợ;
+- câu có câu trích giả.
+
+---
+
+# 18.30. Điểm tự tin của AI không phải xác suất sự thật
+
+Không nên dùng:
+
+```text
+confidence: 0.97
+```
+
+nếu không định nghĩa rõ 0.97 được hiệu chỉnh như thế nào.
+
+Mô hình có thể rất tự tin khi sai.
+
+## Đề xuất
+
+Nếu chưa có hiệu chỉnh xác suất thực nghiệm:
+
+- dùng nhãn định tính;
+- hoặc gọi trường đó là `model_score`;
+- không hiển thị như “97% chắc đúng”.
+
+---
+
+# 18.31. Lưu nguồn bất biến có thể xung đột với yêu cầu xóa
+
+“Không sửa nguồn” là nguyên tắc tốt cho nghiên cứu.
+
+Nhưng trong thực tế có thể có:
+
+- dữ liệu cá nhân phải xóa;
+- tài liệu nhập nhầm;
+- bí mật bị đưa vào hệ thống;
+- yêu cầu pháp lý;
+- quyền truy cập bị thu hồi.
+
+Do đó “bất biến” không được hiểu thành:
+
+> không bao giờ có thể xóa.
+
+## Đề xuất
+
+Định nghĩa:
+
+> **bất biến trong lịch sử xử lý thông thường, nhưng có quy trình xóa có kiểm toán vì pháp lý/bảo mật.**
+
+Cần:
+
+- tombstone — dấu mộ dữ liệu;
+- lý do xóa;
+- người phê duyệt;
+- xóa khỏi bản sao;
+- xóa khỏi chỉ mục;
+- xác nhận xóa;
+- nhật ký không chứa lại nội dung nhạy cảm.
+
+---
+
+# 18.32. Bản quyền là rủi ro thực tế nếu số hóa hàng loạt sách
+
+Việc sở hữu một bản sách không tự động đồng nghĩa có quyền:
+
+- số hóa toàn bộ;
+- sao chép hàng loạt;
+- chia sẻ;
+- đưa lên dịch vụ;
+- cho nhiều người truy cập.
+
+Phạm vi ngoại lệ phụ thuộc:
+
+- quốc gia;
+- mục đích;
+- loại tổ chức;
+- cách truy cập;
+- tình trạng bản quyền;
+- giấy phép từng tài liệu.
+
+Pháp luật Việt Nam có ngoại lệ thư viện và nghiên cứu nhất định, nhưng có điều kiện và giới hạn; không nên biến chúng thành giả định “scan kho sách là luôn hợp pháp”.
+
+## Đề xuất dữ liệu
+
+Mỗi nguồn nên có:
+
+```text
+rights_status
+license
+access_scope
+digitization_basis
+redistribution_allowed
+cloud_processing_allowed
+retention_policy
+```
+
+Đây không phải tư vấn pháp lý. Với kho lớn hoặc dùng thương mại, cần rà pháp lý chuyên nghiệp.
+
+---
+
+# 18.33. Dữ liệu cá nhân và dữ liệu nhạy cảm cần chính sách riêng
+
+Nếu kho có:
+
+- hồ sơ nội bộ;
+- thư từ;
+- nghiên cứu người thật;
+- thông tin sức khỏe;
+- thông tin cá nhân;
+
+thì “lập chỉ mục để AI tìm” chính là một dạng xử lý dữ liệu.
+
+Ở Việt Nam, Nghị định 13/2023 quy định các nguyên tắc như:
+
+- xử lý đúng mục đích;
+- giới hạn dữ liệu;
+- bảo vệ/bảo mật trong quá trình xử lý.
+
+## Hệ quả kiến trúc
+
+Không thể chỉ có:
+
+```text
+source_id
+```
+
+Mà còn cần:
+
+```text
+sensitivity
+owner
+purpose
+retention
+allowed_users
+allowed_models
+allowed_clouds
+```
+
+---
+
+# 18.34. Cloud fallback có thể phá vỡ lời hứa “dữ liệu không rời hệ thống”
+
+Nếu:
+
+- OCR khó → gọi dịch vụ đám mây;
+- PageIndex nhiều tài liệu → dùng Cloud;
+- mô hình xếp hạng → gọi API;
+- nghiên cứu sâu → gọi mô hình bên ngoài;
+
+thì tài liệu có thể rời khỏi nơi lưu cục bộ.
+
+## Đề xuất
+
+Mỗi công cụ phải khai báo:
+
+```text
+data_location = LOCAL | CLOUD
+sends_full_text = yes/no
+sends_images = yes/no
+provider
+retention_terms
+allowed_sensitivity
+```
+
+Bộ định tuyến không được chọn một công cụ cloud chỉ vì chất lượng tốt hơn nếu nguồn không cho phép.
+
+---
+
+# 18.35. Chi phí lưu trữ sẽ lớn hơn kích thước kho sách rất nhiều
+
+Một cuốn sách có thể sinh ra:
+
+- file gốc;
+- ảnh trang;
+- văn bản thô;
+- văn bản sạch;
+- tọa độ;
+- kết quả OCR;
+- đoạn tìm kiếm;
+- véc-tơ;
+- chỉ mục thưa;
+- tóm tắt;
+- cây cấu trúc;
+- lịch sử phiên bản.
+
+Do đó:
+
+> **1 TB sách gốc không có nghĩa hệ thống chỉ cần hơn 1 TB một chút.**
+
+Hệ số phình phải được đo trong bản 0.1.
+
+## Đề xuất
+
+Theo dõi:
+
+```text
+raw_bytes
+page_image_bytes
+parsed_bytes
+ocr_bytes
+index_bytes
+embedding_bytes
+brain_bytes
+backup_bytes
+```
+
+trên mỗi 1 GB nguồn.
+
+---
+
+# 18.36. Chi phí lập lại chỉ mục là rủi ro vòng đời, không phải chi phí một lần
+
+Nếu đổi:
+
+- bộ đọc;
+- thuật toán chia đoạn;
+- mô hình nhúng;
+- số chiều véc-tơ;
+- metadata;
+- cách chống trùng;
+
+có thể phải xử lý lại hàng triệu đoạn.
+
+Versioning giúp biết phải làm gì.
+
+Versioning **không làm việc đó miễn phí**.
+
+## Đề xuất
+
+Trước khi tăng quy mô phải đo:
+
+- số trang/giờ;
+- số đoạn/giờ;
+- chi phí GPU;
+- chi phí mô hình;
+- thời gian lập lại toàn bộ;
+- dung lượng tạm cần khi di chuyển.
+
+Qdrant cũng lưu ý một số kiểu di chuyển có thể cần RAM và đĩa ở đích cao hơn đáng kể trong lúc chuyển.
+
+---
+
+# 18.37. Sao lưu không đồng nghĩa khôi phục được
+
+Dự án nói về backup nhưng cần nhấn mạnh:
+
+> **bản sao lưu chưa từng khôi phục thử thì chưa phải kế hoạch khôi phục.**
+
+Qdrant có snapshot, nhưng:
+
+- cụm phân tán cần snapshot theo nút;
+- snapshot có yêu cầu tương thích phiên bản.
+
+Git bảo vệ Markdown nhưng không tự bảo vệ:
+
+- PostgreSQL;
+- file gốc;
+- Qdrant;
+- bí mật cấu hình;
+- các hàng đợi.
+
+## Đề xuất
+
+Có lịch:
+
+- sao lưu;
+- khôi phục thử;
+- kiểm tra SHA-256;
+- đo thời gian phục hồi.
+
+---
+
+# 18.38. “Công cụ thay được” có một loại chi phí ẩn: thuế bộ chuyển tiếp
+
+Mỗi bộ chuyển tiếp phải:
+
+- ánh xạ dữ liệu;
+- xử lý lỗi;
+- theo dõi phiên bản;
+- chuyển đổi điểm số;
+- kiểm thử.
+
+Nếu có quá nhiều công cụ:
+
+```text
+RAGFlow
+PageIndex
+QMD
+Qdrant
+LightRAG
+Graphiti
+Cognee
+...
+```
+
+thì đội ngũ phải trả **thuế tích hợp** lâu dài.
+
+## Nguyên tắc phản biện
+
+> Chỉ thêm công cụ mới nếu nó thay thế một thứ cũ hoặc tạo giá trị đo được đủ lớn để bù chi phí tích hợp.
+
+“Có thể dùng” không phải lý do để thêm.
+
+---
+
+# 18.39. Mô hình dữ liệu chuẩn có thể trở thành nút thắt nếu quá cứng
+
+`Work → Edition → Section → Page → Block → Chunk` rất tốt cho sách.
+
+Nhưng kho tương lai có thể có:
+
+- thư;
+- bài báo web;
+- audio;
+- video;
+- bản thảo;
+- bộ ảnh;
+- cơ sở dữ liệu;
+- cuộc trò chuyện.
+
+Không phải mọi nguồn đều tự nhiên có “Edition” hay “Page”.
+
+## Đề xuất
+
+Giữ mô hình sách mạnh nhưng cho phép mở rộng qua:
+
+```text
+SourceDocument
+Locator
+StructuralNode
+```
+
+thay vì buộc mọi nguồn vào một cây sách.
+
+---
+
+# 18.40. Tính đúng của Bộ não thứ hai phụ thuộc vào quản trị, không chỉ thuật toán
+
+Một wiki tốt cần quyết định:
+
+- khi nào tạo trang mới;
+- khi nào gộp;
+- tên chuẩn;
+- cách xử lý đồng nghĩa;
+- ngôn ngữ;
+- mức chi tiết;
+- khi nào một tranh luận thành trang riêng.
+
+Đây là bài toán biên tập.
+
+AI hỗ trợ được, nhưng không thể tự động giải quyết hoàn toàn.
+
+## Rủi ro
+
+Nếu không có quy ước:
+
+- trùng trang;
+- taxonomy trôi;
+- liên kết dày đặc vô nghĩa;
+- trang quá rộng;
+- trang quá hẹp;
+- khẳng định lặp.
+
+---
+
+# 18.41. Trải nghiệm người dùng có thể quá nặng
+
+Kiến trúc có nhiều trạng thái:
+
+- trích xuất;
+- suy luận;
+- tổng hợp;
+- được hỗ trợ;
+- tranh luận;
+- yếu;
+- chưa đủ;
+- bị phản bác;
+- nguồn;
+- ấn bản;
+- độ tin cậy;
+- phạm vi tìm.
+
+Điều này tốt cho nghiên cứu nghiêm ngặt.
+
+Nhưng nếu giao diện bắt người dùng hiểu hết mọi khái niệm, hệ thống sẽ khó dùng.
+
+## Đề xuất
+
+Hai chế độ:
+
+### Chế độ đọc bình thường
+
+Hiện:
+
+- câu trả lời;
+- nguồn;
+- cảnh báo quan trọng.
+
+### Chế độ kiểm chứng
+
+Mở:
+
+- sổ khẳng định;
+- bằng chứng;
+- độ phủ;
+- mâu thuẫn;
+- lịch sử;
+- phiên bản.
+
+---
+
+# 18.42. Có nguy cơ xây “hệ điều hành tri thức” nhưng người dùng chỉ cần tìm sách
+
+Đây là phản biện kinh doanh/sản phẩm quan trọng nhất.
+
+Có thể sau thử nghiệm người dùng chỉ thật sự cần:
+
+- OCR tốt;
+- tìm rất nhanh;
+- trích dẫn đúng;
+- đọc trang.
+
+Nếu vậy:
+
+> phần lớn Bộ não thứ hai, tác tử và đồ thị có thể chưa tạo đủ giá trị.
+
+Không nên xem việc không xây hết tầm nhìn ban đầu là thất bại.
+
+Thành công có thể là một hệ nhỏ hơn nhưng được dùng hàng ngày.
+
+---
+
+# 18.43. Các giới hạn không nên hứa sẽ “giải quyết hoàn toàn”
+
+Dự án không nên hứa:
+
+- AI không bao giờ sai;
+- tìm kiếm không bao giờ bỏ sót;
+- trích dẫn luôn đầy đủ;
+- mọi tài liệu đều có số trang ổn định;
+- mọi PDF đều đọc đúng bố cục;
+- mọi mâu thuẫn đều tự giải quyết được;
+- chèn lệnh độc hại có thể chặn 100%;
+- Bộ não thứ hai tự bảo trì hoàn toàn;
+- thay công cụ không có chi phí;
+- chạy cục bộ luôn cho chất lượng bằng dịch vụ mạnh nhất;
+- nguồn có trích dẫn thì đáng tin.
+
+Những giới hạn này nên trở thành một phần của lời hứa sản phẩm.
+
+---
+
+# 18.44. Những thay đổi kiến trúc nên bổ sung trước khi mở rộng
+
+## P0 — trước khi xử lý dữ liệu thật quy mô lớn
+
+### 1. Chính sách nguồn
+
+Thêm:
+
+```text
+SourcePolicy
+- rights_status
+- sensitivity
+- authority_scope
+- trust_status
+- independence_group
+- allowed_users
+- allowed_models
+- cloud_processing_allowed
+- retention_policy
+```
+
+### 2. Ranh giới nội dung không đáng tin
+
+Mọi nội dung nhập phải được xem là dữ liệu, không phải chỉ dẫn.
+
+### 3. Phân quyền ở lớp tìm kiếm
+
+Quyền truy cập phải đi vào truy vấn Qdrant/QMD/kho nguồn trước khi mô hình thấy kết quả.
+
+### 4. Quy trình xóa có kiểm toán
+
+Bổ sung ngoại lệ hợp pháp cho nguyên tắc nguồn bất biến.
+
+### 5. Thế hệ dữ liệu và chỉ mục
+
+Mỗi chỉ mục phải biết được xây từ thế hệ dữ liệu nào.
+
+---
+
+## P1 — trong bản kỹ thuật 0.1
+
+### 6. Tách bốn thước đo RAG
+
+- tìm thấy;
+- xếp hạng;
+- trả lời;
+- trích dẫn.
+
+### 7. Tập kiểm thử kín và đối kháng
+
+Không tinh chỉnh trên toàn bộ bộ câu hỏi chuẩn.
+
+### 8. Tập lỗi số hóa
+
+Mọi trang từng làm parser/OCR sai phải trở thành trường hợp hồi quy.
+
+### 9. Đo hệ số phình dữ liệu
+
+Biết 1 GB nguồn sinh bao nhiêu GB dữ liệu phát sinh.
+
+### 10. Đo chi phí lập lại
+
+Giả lập đổi mô hình nhúng hoặc bộ chia đoạn.
+
+---
+
+## P1 — trước khi Bộ não thứ hai được phép tự đề xuất thường xuyên
+
+### 11. Độ mới của trang tri thức
+
+Mỗi trang phải biết tập nguồn và lần cập nhật gần nhất.
+
+### 12. Giới hạn vòng tự bảo trì
+
+Có ngân sách, gộp đề xuất và chống vòng lặp.
+
+### 13. Kiểm tra độc lập
+
+Không để cùng một tác tử vừa tạo, vừa kiểm, vừa phê duyệt.
+
+---
+
+## P0 — trước khi có nhiều người dùng
+
+### 14. Xác thực và phân quyền hoàn chỉnh
+
+- TLS;
+- khóa truy cập;
+- quyền theo kho;
+- quyền đọc/ghi;
+- nhật ký kiểm toán.
+
+### 15. Cô lập dữ liệu người dùng
+
+Không để tìm kiếm xuyên kho ngoài quyền.
+
+### 16. Kiểm thử chèn lệnh độc hại
+
+Tạo PDF/EPUB có các lệnh độc hại giả để thử xem tác tử có gọi công cụ hay không.
+
+---
+
+# 18.45. Tiêu chí dừng hoặc thu nhỏ dự án
+
+Cần xác định trước những trường hợp mà câu trả lời đúng là:
+
+> **không xây tiếp.**
+
+Nên thu nhỏ hoặc đổi hướng nếu bản 0.1 cho thấy:
+
+- không bảo toàn được vị trí/trang đủ tốt cho mục đích chính;
+- chất lượng OCR tiếng Việt không đạt yêu cầu mà chi phí sửa quá cao;
+- tìm kiếm vẫn bỏ sót quá nhiều nguồn quan trọng;
+- chi phí vận hành vượt giá trị người dùng nhận được;
+- người dùng chủ yếu dùng tìm kiếm và hầu như không dùng Bộ não thứ hai;
+- khối lượng kiểm duyệt Bộ não thứ hai lớn hơn giá trị tiết kiệm;
+- quyền số hóa/phân phối của kho không rõ;
+- dữ liệu nhạy cảm không thể dùng với các dịch vụ cần thiết;
+- đội ngũ không đủ khả năng vận hành nhiều hệ thống.
+
+Đây không phải thất bại kỹ thuật.
+
+Đó là quản trị phạm vi tốt.
+
+---
+
+# 18.46. Năm câu hỏi phải trả lời bằng bản 0.1
+
+Trước khi xây thêm PageIndex nhiều hơn, RAGFlow sâu hơn, đồ thị hay nhiều tác tử, bản 0.1 phải trả lời:
+
+## Câu 1
+
+> Với 200–500 trang khó, hệ thống có giữ đúng chữ, thứ tự đọc và vị trí nguồn không?
+
+## Câu 2
+
+> Với câu hỏi thật, nguồn đúng có lọt vào tập ứng viên đủ thường xuyên không?
+
+## Câu 3
+
+> Khi nguồn không đủ, hệ thống có thực sự biết dừng không?
+
+## Câu 4
+
+> Chi phí xử lý, lưu trữ và lập lại chỉ mục là bao nhiêu trên mỗi 1.000 trang?
+
+## Câu 5
+
+> Người dùng có thật sự quay lại dùng tri thức đã lưu trong Bộ não thứ hai không?
+
+Nếu chưa trả lời được năm câu này, mọi tranh luận về đồ thị, tác tử hay mở rộng quy mô đều còn quá sớm.
+
+---
+
+# 18.47. Phán quyết phản biện
+
+Thư Viện Sống **không có một lỗi kiến trúc chết người rõ ràng ở mức ý tưởng**.
+
+Nhưng nó có một nguy cơ chết người ở mức thực thi:
+
+> **quá nhiều cơ chế đúng được xây cùng lúc trước khi có bằng chứng rằng người dùng cần chúng và chúng hoạt động trên dữ liệu thật.**
+
+Điểm mạnh nhất của dự án là:
+
+> dữ liệu chuẩn + truy nguồn + đánh giá + khả năng thay công cụ.
+
+Do đó cách bảo vệ dự án tốt nhất không phải thêm nhiều công nghệ hơn.
+
+Mà là:
+
+> **đóng băng phạm vi, xây một lát cắt 0.1 thật nhỏ, cố tình đưa dữ liệu xấu vào, đo thất bại, rồi chỉ mở rộng những phần đã chứng minh được giá trị.**
+
+Nếu làm được điều đó, kiến trúc hiện tại là nền tảng tốt.
+
+Nếu không làm được, chính sự đầy đủ của kiến trúc sẽ trở thành gánh nặng lớn nhất của dự án.
+
+---
+
+# 18.48. Nguồn bên ngoài dùng trong vòng phản biện
+
+## An toàn AI
+
+- OWASP LLM01: Prompt Injection  
+  https://genai.owasp.org/llmrisk/llm01-prompt-injection/
+- OWASP LLM03: Supply Chain  
+  https://genai.owasp.org/llmrisk/llm032025-supply-chain/
+- OWASP LLM04: Data and Model Poisoning  
+  https://genai.owasp.org/llmrisk/llm042025-data-and-model-poisoning/
+- OWASP LLM06: Excessive Agency  
+  https://genai.owasp.org/llmrisk/llm062025-excessive-agency/
+- OWASP LLM08: Vector and Embedding Weaknesses  
+  https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/
+- NIST AI RMF — Generative AI Profile  
+  https://nvlpubs.nist.gov/nistpubs/ai/NIST.AI.600-1.pdf
+
+## RAG và trích dẫn
+
+- Citation Failure: Definition, Analysis and Efficient Mitigation, TACL 2026  
+  https://aclanthology.org/2026.tacl-1.66/
+- Collapse of Dense Retrievers, ACL 2025  
+  https://aclanthology.org/2025.acl-long.447/
+- GaRAGe: A Benchmark with Grounding Annotations for RAG Evaluation, ACL 2025  
+  https://aclanthology.org/2025.findings-acl.875/
+- Retrieval-Augmented Generation with Estimation of Source Reliability, EMNLP 2025  
+  https://aclanthology.org/2025.emnlp-main.1738/
+
+## Công cụ
+
+- Qdrant Security  
+  https://qdrant.tech/documentation/security/
+- Qdrant Consistency Guarantees  
+  https://qdrant.tech/documentation/scaling/consistency-guarantees/
+- Qdrant Quantization  
+  https://qdrant.tech/documentation/manage-data/quantization/
+- Qdrant Snapshots  
+  https://qdrant.tech/documentation/operations/snapshots/
+- QMD Changelog  
+  https://github.com/tobi/qmd/blob/main/CHANGELOG.md
+- RAGFlow 1.0.0-rc1 Release Notes  
+  https://ragflow.io/docs/v1.0.0-rc1/release_notes
+- RAGFlow Knowledge Compilation FAQ  
+  https://ragflow.io/docs/v1.0.0-rc1/knowledge_compilation/faq
+- PageIndex README  
+  https://github.com/VectifyAI/PageIndex/blob/main/README.md
+- PageIndex client  
+  https://github.com/VectifyAI/PageIndex/blob/main/pageindex/client.py
+- Docling advanced options  
+  https://github.com/docling-project/docling/blob/main/docs/usage/advanced_options.md
+- Docling issue #3773  
+  https://github.com/docling-project/docling/issues/3773
+- Docling issue #3461  
+  https://github.com/docling-project/docling/issues/3461
+
+## EPUB
+
+- W3C EPUB 3.4  
+  https://www.w3.org/TR/epub-34/
+- W3C EPUB Accessibility 1.2  
+  https://www.w3.org/TR/epub-a11y-12/
+
+## Pháp lý và dữ liệu tại Việt Nam
+
+- Luật số 07/2022/QH15 sửa đổi Luật Sở hữu trí tuệ — WIPO Lex  
+  https://www.wipo.int/wipolex/en/legislation/details/21740
+- Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân  
+  https://xaydungchinhsach.chinhphu.vn/toan-van-nghi-dinh-13-2023-nd-cp-bao-ve-du-lieu-ca-nhan-119230516104357809.htm
