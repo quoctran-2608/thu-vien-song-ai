@@ -135,3 +135,104 @@ Không tuyên bố loại bỏ hoàn toàn sai sót.
 Mục tiêu là:
 
 > **sai sót khó lọt qua kiểm tra hơn, dễ phát hiện hơn, truy được nguyên nhân và sửa được.**
+
+
+## 9.10. Đánh giá theo tuyến đầu 2026
+
+Sau vòng nghiên cứu mới, bộ đánh giá không chỉ kiểm RAG văn bản.
+
+### Tìm kiếm văn bản
+
+So ít nhất:
+
+- BM25;
+- tìm theo ý nghĩa;
+- tìm kết hợp;
+- tìm thưa học được;
+- nhiều véc-tơ/tương tác muộn;
+- các phương án hợp nhất.
+
+### Tìm trực tiếp từ ảnh trang
+
+Tạo riêng câu hỏi mà đáp án phụ thuộc vào:
+
+- bảng;
+- biểu đồ;
+- bố cục;
+- chú thích;
+- vị trí trên trang.
+
+Đo:
+
+- trang đúng có lọt vào top-k không;
+- vùng đúng trên trang có được xác định không;
+- hợp nhất văn bản + thị giác có tốt hơn từng đường riêng không.
+
+### Tiếng Việt
+
+Chạy:
+
+- phần phù hợp của VN-MTEB;
+- ViRE;
+- bộ câu hỏi riêng của kho sách.
+
+Không suy ra chất lượng tiếng Việt từ MTEB tiếng Anh.
+
+### Ngữ cảnh dài
+
+Với cùng câu hỏi và cùng ngân sách lượng chữ, so:
+
+- RAG theo đoạn;
+- đọc tài liệu giữ nguyên thứ tự/cấu trúc;
+- ngữ cảnh dài trực tiếp;
+- PageIndex khi phù hợp.
+
+### Chọn số bằng chứng thích ứng
+
+So:
+
+- top-k cố định;
+- số đoạn thay đổi theo độ khó/phân bố điểm.
+
+Đo đồng thời:
+
+- độ đúng;
+- lượng chữ đưa vào mô hình;
+- độ trễ;
+- chi phí.
+
+### Nghiên cứu nhiều vòng
+
+Ngoài câu trả lời cuối, đo cả quá trình:
+
+- lượt đầu đã đủ bằng chứng chưa;
+- hệ có nhận ra phần còn thiếu không;
+- truy vấn tiếp theo có nhắm đúng khoảng trống không;
+- có dừng đúng lúc không;
+- có tích lũy nhiễu qua các vòng không.
+
+### Tổng hợp dài
+
+Đo tách biệt:
+
+- khẳng định có bằng chứng;
+- bằng chứng có hỗ trợ khẳng định;
+- **độ phủ**: các khía cạnh quan trọng của câu hỏi đã có đủ bằng chứng chưa;
+- phản chứng/mâu thuẫn có được phản ánh không.
+
+---
+
+## 9.11. Nguyên tắc so sánh công bằng
+
+Khi một kỹ thuật mới cạnh tranh với baseline:
+
+- dùng cùng tập dữ liệu;
+- cùng tập câu hỏi kín;
+- cùng chính sách lọc quyền;
+- cùng ngân sách token nếu so RAG/ngữ cảnh dài;
+- báo cả chất lượng, độ trễ, bộ nhớ, GPU/CPU và dung lượng chỉ mục;
+- không chỉ báo một điểm tổng hợp.
+
+Một kỹ thuật chỉ được đưa vào đường chính khi:
+
+> **cải thiện đủ lớn để bù chi phí, độ phức tạp và rủi ro vận hành mà nó thêm vào.**
