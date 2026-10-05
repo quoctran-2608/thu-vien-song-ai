@@ -2389,3 +2389,38 @@ Mục tiêu cuối cùng không phải tạo thêm một ứng dụng RAG.
 Mục tiêu là:
 
 > **xây một nền tảng tri thức có thể sống qua nhiều thế hệ AI.**
+
+---
+
+# Phụ lục sau v1.0 — Đối chiếu với tuyến đầu thế giới năm 2026
+
+Sau khi chốt kiến trúc v1.0, dự án tiếp tục được đối chiếu với các phương pháp tiên tiến năm 2025–2026.
+
+Kết luận quan trọng:
+
+> **Nền móng kiến trúc vẫn đúng, nhưng bộ phương pháp cần đem ra thử nghiệm phải rộng hơn.**
+
+Các hướng cần bổ sung vào **ma trận thử nghiệm**, không mặc định đưa vào đường chính:
+
+- tìm trực tiếp từ ảnh trang cho tài liệu giàu bố cục, bảng và biểu đồ;
+- tương tác muộn nhiều véc-tơ để giữ chi tiết tốt hơn một véc-tơ duy nhất;
+- tìm thưa học được ngoài BM25;
+- biểu diễn đoạn có ngữ cảnh và chia muộn;
+- mô hình biểu diễn/xếp hạng lớn hơn làm trần chất lượng;
+- đọc ngữ cảnh dài/DOS-RAG làm đối chứng trực tiếp với RAG;
+- chọn số bằng chứng thích ứng theo câu hỏi;
+- vòng nghiên cứu nhiều lượt dựa trên phần bằng chứng còn thiếu;
+- tổng hợp dài có đo độ phủ bằng chứng;
+- đánh giá chuyên biệt tiếng Việt bằng VN-MTEB, ViRE và bộ câu hỏi riêng.
+
+Nguyên tắc không thay đổi:
+
+> **Công nghệ mới không được thăng lên đường chính chỉ vì mới hơn. Nó phải thắng trên cùng dữ liệu, cùng ngân sách và cùng bộ đánh giá.**
+
+Xem nghiên cứu đầy đủ tại:
+
+> [Đối chiếu Thư Viện Sống với tuyến đầu thế giới năm 2026](20-doi-chieu-voi-tuyen-dau-the-gioi-2026.md)
+
+Và ma trận triển khai tại:
+
+> [Hướng dẫn bắt đầu triển khai bản kỹ thuật 0.1](17-huong-dan-bat-dau-trien-khai-v0.1.md)
