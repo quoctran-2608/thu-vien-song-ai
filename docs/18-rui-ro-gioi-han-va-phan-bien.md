@@ -1183,11 +1183,16 @@ Nếu kho có:
 
 thì “lập chỉ mục để AI tìm” chính là một dạng xử lý dữ liệu.
 
-Ở Việt Nam, Nghị định 13/2023 quy định các nguyên tắc như:
+Tại thời điểm rà soát hiện nay, Việt Nam đã có **Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15**, có hiệu lực từ 01/01/2026, và **Nghị định 356/2025/NĐ-CP** quy định chi tiết. Nghị định 356 cũng quy định Nghị định 13/2023/NĐ-CP hết hiệu lực từ 01/01/2026.
 
-- xử lý đúng mục đích;
-- giới hạn dữ liệu;
-- bảo vệ/bảo mật trong quá trình xử lý.
+Các yêu cầu liên quan trực tiếp tới dự án gồm:
+
+- thực hiện quyền của chủ thể dữ liệu, trong đó có yêu cầu xóa;
+- phân quyền và biện pháp bảo mật với dữ liệu nhạy cảm;
+- bảo vệ dữ liệu cá nhân ngay từ khi xử lý dữ liệu lớn và hệ thống AI;
+- hồ sơ đánh giá tác động xử lý dữ liệu cá nhân trong các trường hợp áp dụng;
+- đánh giá tác động khi chuyển dữ liệu cá nhân xuyên biên giới;
+- chính sách lưu trữ, xóa/hủy và kiểm tra định kỳ.
 
 ## Hệ quả kiến trúc
 
@@ -1767,5 +1772,7 @@ Nếu không làm được, chính sự đầy đủ của kiến trúc sẽ tr�
 
 - Luật số 07/2022/QH15 sửa đổi Luật Sở hữu trí tuệ — WIPO Lex  
   https://www.wipo.int/wipolex/en/legislation/details/21740
-- Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân  
-  https://xaydungchinhsach.chinhphu.vn/toan-van-nghi-dinh-13-2023-nd-cp-bao-ve-du-lieu-ca-nhan-119230516104357809.htm
+- Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15  
+  https://chinhphu.vn/?classid=1&docid=214590&pageid=27160&typegroupid=3
+- Nghị định 356/2025/NĐ-CP quy định chi tiết Luật Bảo vệ dữ liệu cá nhân  
+  https://vbpl.vn/bocongan/Pages/vbpq-toanvan.aspx?ItemID=187276
