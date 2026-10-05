@@ -1,87 +1,163 @@
 # 7. Mô hình dữ liệu và truy nguồn
 
-## 7.1. Thực thể chính
+## 7.1. Mục tiêu
 
-### Tác phẩm (`Work`)
+Mô hình dữ liệu phải cho phép:
 
-Nội dung trí tuệ chung, ví dụ một cuốn sách với nhiều ấn bản.
+- phân biệt tác phẩm và ấn bản;
+- bảo tồn file nguồn;
+- truy đúng trang;
+- giữ văn bản thô và văn bản sạch;
+- tạo đoạn phục vụ tìm kiếm mà không làm mất nguồn gốc;
+- nối bằng chứng với khẳng định;
+- nối khẳng định với trang tri thức;
+- lưu lịch sử nghiên cứu.
 
-### Ấn bản (`Edition`)
+## 7.2. Thực thể chính
 
-Một lần xuất bản cụ thể: nhà xuất bản, năm, người dịch, ISBN, ngôn ngữ.
+### Tác phẩm — `Work`
 
-### Nguồn file (`SourceFile`)
+Nội dung trí tuệ chung.
 
-PDF/EPUB/MOBI/ảnh thực tế cùng SHA-256.
+### Ấn bản — `Edition`
 
-### Mục (`Section`)
+Một lần xuất bản hoặc bản dịch cụ thể.
+
+### File nguồn — `SourceFile`
+
+PDF, EPUB, MOBI hoặc file thật cùng dấu vân tay số.
+
+### Mục — `Section`
 
 Phần, chương, mục, tiểu mục.
 
-### Trang (`Page`)
+### Trang — `Page`
 
-Trang vật lý hoặc trang logic tương đương.
+Trang vật lý hoặc vị trí logic tương đương.
 
-### Khối (`Block`)
+### Khối — `Block`
 
 Tiêu đề, đoạn văn, bảng, chú thích, hình, công thức.
 
-### Đoạn tìm kiếm (`Chunk`)
+### Đoạn tìm kiếm — `Chunk`
 
-Đơn vị tối ưu cho truy hồi, có thể bao gồm nhiều block nhỏ.
+Đơn vị được chuẩn bị cho hệ tìm kiếm.
 
-### Khẳng định (`Claim`)
+### Bằng chứng — `Evidence`
 
-Một phát biểu có loại và nguồn.
+Một đoạn nguồn cụ thể được kiểm tra và dùng để hỗ trợ hoặc phản bác khẳng định.
 
-### Bằng chứng (`Evidence`)
+### Khẳng định — `Claim`
 
-Liên kết Claim với một hoặc nhiều đoạn nguồn.
+Một phát biểu tri thức có nguồn gốc và tình trạng bằng chứng.
 
-### Trang tri thức (`BrainPage`)
+### Trang tri thức — `BrainPage`
 
-Trang Markdown trong Bộ não thứ hai.
+Trang trong Bộ não thứ hai.
 
-### Không gian nghiên cứu (`ResearchWorkspace`)
+### Không gian nghiên cứu — `ResearchWorkspace`
 
 Bộ dữ liệu tạm cho một câu hỏi sâu.
 
-### Đề xuất thay đổi (`Proposal`)
+### Đề xuất thay đổi — `Proposal`
 
-Gói thay đổi chưa được áp dụng vào Bộ não thứ hai.
+Gói thay đổi chưa được ghi chính thức vào Bộ não thứ hai.
 
-## 7.2. Sơ đồ quan hệ tối giản
+### Hồ sơ lần nghiên cứu — `ResearchRun`
+
+Ghi lại câu hỏi, phiên bản dữ liệu, cách tìm, bằng chứng, khẳng định và kết quả của một lần nghiên cứu.
+
+## 7.3. Quan hệ chính
 
 ```text
-Work
- └─ Edition
-     └─ SourceFile
-         └─ Section
-             └─ Page
-                 └─ Block
-                     └─ Chunk
-
-Chunk ─→ Evidence ─→ Claim ─→ BrainPage
-ResearchWorkspace ─→ Proposal ─→ BrainPage
+Tác phẩm
+└─ Ấn bản
+   └─ File nguồn
+      └─ Mục
+         └─ Trang
+            └─ Khối
+               └─ Đoạn tìm kiếm
 ```
 
-## 7.3. Nguyên tắc nguồn gốc
+và:
 
-Mọi Claim quan trọng phải có ít nhất một Evidence hoặc được đánh dấu rõ là giả thuyết chưa có bằng chứng.
+```text
+Đoạn nguồn
+↓
+Bằng chứng
+↓
+Khẳng định
+↓
+Trang tri thức
+```
 
-## 7.4. Phiên bản xử lý
+Không gian nghiên cứu tạo ra các đề xuất, nhưng đề xuất chỉ vào Bộ não thứ hai sau khi kiểm tra.
 
-Chunk cần lưu:
+## 7.4. Đường truy nguồn bắt buộc
 
-- parser_version;
-- cleaner_version;
-- ocr_version;
-- chunker_version;
-- embedding_version.
+Mỗi đoạn tìm kiếm phải lần ngược được:
 
-Điều này giúp tái tạo và kiểm tra hồi quy.
+```text
+đoạn
+→ khối
+→ trang
+→ mục
+→ ấn bản
+→ file nguồn
+```
 
-## 7.5. Ví dụ bản ghi chunk
+Mỗi khẳng định quan trọng phải lần ngược:
+
+```text
+khẳng định
+→ bằng chứng
+→ đoạn nguồn
+→ nguồn gốc
+```
+
+## 7.5. Hai chiều trạng thái của khẳng định
+
+### Cách khẳng định được tạo ra
+
+- `TRICH_XUAT`: nguồn nói trực tiếp;
+- `SUY_LUAN`: AI rút ra từ một hoặc nhiều bằng chứng;
+- `TONG_HOP`: AI kết hợp nhiều nguồn.
+
+### Tình trạng bằng chứng
+
+- `DUOC_HO_TRO`;
+- `CO_TRANH_LUAN`;
+- `HO_TRO_YEU`;
+- `CHUA_DU_DU_LIEU`;
+- `CHUA_BIET`;
+- `BI_PHAN_BAC`.
+
+Không nên gộp hai chiều này thành một nhãn.
+
+## 7.6. Bằng chứng phải có vị trí
+
+Tối thiểu nên biết:
+
+- mã tài liệu;
+- ấn bản;
+- chương/mục;
+- trang hoặc mã đoạn;
+- nội dung;
+- phiên bản nguồn;
+- trạng thái kiểm tra.
+
+## 7.7. Phân biệt nguyên văn và các lớp diễn giải
+
+Mô hình phải có khả năng phân biệt:
+
+1. nguyên văn;
+2. bản dịch xuất bản;
+3. bản dịch AI;
+4. diễn đạt lại;
+5. diễn giải của học giả;
+6. tổng hợp của AI.
+
+## 7.8. Ví dụ bản ghi đoạn tìm kiếm
 
 ```json
 {
@@ -99,11 +175,31 @@ Chunk cần lưu:
 }
 ```
 
-## 7.6. Dữ liệu không được ghi đè
+Đây chỉ là ví dụ khái niệm. Tên trường cuối cùng sẽ được chốt khi triển khai.
+
+## 7.9. Phiên bản xử lý
+
+Nên lưu:
+
+- phiên bản trình đọc;
+- phiên bản làm sạch;
+- phiên bản nhận dạng chữ;
+- phiên bản chia đoạn;
+- phiên bản mô hình tìm theo ý nghĩa.
+
+## 7.10. Dữ liệu không được ghi đè
+
+Không ghi đè:
 
 - file nguồn;
-- text_raw của một phiên bản xử lý;
-- lịch sử Claim;
-- lịch sử Git của BrainPage.
+- văn bản thô của một phiên bản xử lý;
+- lịch sử khẳng định;
+- lịch sử Git của trang tri thức.
 
-Nếu sửa, tạo phiên bản mới.
+Nếu thay đổi, tạo phiên bản mới.
+
+## 7.11. Dữ liệu phát sinh có thể xây lại
+
+Các chỉ mục tìm kiếm, véc-tơ, bộ nhớ đệm và dữ liệu trung gian có thể xóa và dựng lại.
+
+Chúng không phải nguồn dữ liệu chính.
