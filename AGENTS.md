@@ -55,7 +55,7 @@ Khẳng định đáng tin phải truy được tối thiểu tới:
 
 ## 6. Trích dẫn thật chưa chắc chứng minh được khẳng định
 
-Không chỉ kiểm tra citation có tồn tại.
+Không chỉ kiểm tra trích dẫn có tồn tại.
 
 Phải kiểm tra đoạn được dẫn có thực sự hỗ trợ điều đang nói.
 
