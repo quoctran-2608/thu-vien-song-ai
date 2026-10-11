@@ -142,3 +142,8 @@ Kết luận:
 - phần thử nghiệm kỹ thuật chưa bao phủ đủ các hướng mới nhất;
 - các khoảng trống đáng benchmark nhất là tìm trực tiếp từ ảnh trang, tương tác muộn nhiều véc-tơ, tìm thưa học được, biểu diễn đoạn có ngữ cảnh, ngữ cảnh dài đối chứng với RAG, chọn số bằng chứng thích ứng, tìm lặp theo khoảng trống bằng chứng và đánh giá chuyên biệt tiếng Việt;
 - không đưa tất cả kỹ thuật mới vào đường chính; chúng phải cạnh tranh trên cùng dữ liệu, cùng ngân sách và cùng bộ đánh giá.
+
+
+## Đối chiếu BCR 2.0 với hai repo liên quan — 11/10/2026
+
+Xem [báo cáo đối chiếu ba repo](docs/21-doi-chieu-ba-repo-bcr-2.0.md). Đây là bản khảo sát trạng thái và đề xuất liên thông, không phải bằng chứng các chức năng đã được tích hợp hoặc nghiệm thu trong Thư Viện Sống.
