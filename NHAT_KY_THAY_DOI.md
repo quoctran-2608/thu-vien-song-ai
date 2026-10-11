@@ -149,3 +149,10 @@ Các phát hiện chính:
 - cần thử adaptive-k và vòng tìm lặp dựa trên khoảng trống bằng chứng;
 - đánh giá tiếng Việt phải dùng VN-MTEB, ViRE và bộ câu hỏi sách tiếng Việt riêng;
 - không mặc định bật graph, trí nhớ học tăng cường hay tác tử phức tạp khi chưa có bằng chứng giá trị.
+
+
+### Đối chiếu ba repo theo BCR 2.0 — 11/10/2026
+
+Thêm [báo cáo so sánh ba repo](docs/21-doi-chieu-ba-repo-bcr-2.0.md), kiểm chứng theo ba commit hiện tại. Ghi nhận BCR 2.0 đã có mã A–E kiểm câu trích, luận điểm, phản chứng và hồ sơ nghiên cứu nhưng chưa có nghiệm thu công bố học thuật; Băng Hà có kho dữ liệu đa ngữ, giao diện và sổ học thuật mẫu; Thư Viện Sống hiện là đặc tả.
+
+Ưu tiên thử adapter liên thông nguồn và bằng chứng, giải trùng/độc lập nguồn, rồi mới đầu tư kho ngoài Phật học, Bộ não thứ hai và luồng viết sách. Đây là báo cáo/đề xuất, chưa sửa mã hoặc hợp nhất các repo.
