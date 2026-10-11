@@ -151,6 +151,7 @@ Nếu bỏ PageIndex, cấu trúc sách vẫn còn.
 - [Phản biện: rủi ro, giới hạn và điều kiện thất bại](docs/18-rui-ro-gioi-han-va-phan-bien.md)
 - [Kế hoạch khắc phục rủi ro: giải pháp, xác suất thành công và nguồn lực](docs/19-ke-hoach-khac-phuc-rui-ro.md)
 - [Đối chiếu Thư Viện Sống với tuyến đầu thế giới năm 2026](docs/20-doi-chieu-voi-tuyen-dau-the-gioi-2026.md)
+- [Đối chiếu ba repo theo BCR 2.0 và đề xuất kết nối cho dự án sách](docs/21-doi-chieu-ba-repo-bcr-2.0.md)
 
 ### Kiểm soát thất lạc tri thức
 
